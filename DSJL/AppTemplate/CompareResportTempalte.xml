@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <table remark="测试信息">
+    <row>
+      <cell label="测试地点" value=""/>
+      <cell label="测试目的" value=""/>
+      <cell label="测试时间" value=""/>
+    </row>
+    <row>
+      <cell label="测试关节" value=""/>
+      <cell label="测试侧" value=""/>
+      <cell label="测试模式" value=""/>
+    </row>
+    <row>
+      <cell label="运动方式" value=""/>
+      <cell label="运动范围" value=""/>
+      <cell label="测试速度" value=""/>
+    </row>
+    <row>
+      <cell label="休息时间" value=""/>
+      <cell label="测试组数" value=""/>
+      <cell label="重复次数" value=""/>
+    </row>
+    <row>
+      <cell label="伤病等情况说明" value="" colspan="5"/>
+      <cell label="" value=""/>
+      <cell label="" value=""/>
+    </row>
+  </table>
+  <table remark="动作1对比信息">
+    <row>
+      <cell label=""/>
+      <cell label="受试者1" colspan="2"/>
+      <cell label=""/>
+      <cell label="受试者2" colspan="2"/>
+      <cell label=""/>
+      <cell label="对比" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label=""/>
+      <cell label="动作1" colspan="2"/>
+      <cell label=""/>
+      <cell label="动作1" colspan="2"/>
+      <cell label=""/>
+      <cell label="动作1（%）" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="参数" rowspan="2"/>
+      <cell label="极值"/>
+      <cell label="平均值"/>
+      <cell label="极值"/>
+      <cell label="平均值"/>
+      <cell label="极值"/>
+      <cell label="平均值"/>
+    </row>
+    <row>
+      <cell label="峰力矩（N•m）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="峰力矩时关节角(°)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="相对峰力矩(Nm/kg)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="做功(J)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="相对功(J/kg)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="峰值功率(W)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="相对峰值功率(W/kg)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="终点角度(°)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="慢速测试前50ms力矩（N•m）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="慢速测试前100ms力矩（N•m）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="50-100ms力矩斜率(N*m/ms)" />
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="达到最大力矩20%所用时间（ms）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="达到最大力矩70%所用时间（ms）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="20-70%最大力矩的斜率(N*m/ms)" />
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="疲劳下降率1" />
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="疲劳下降率2" />
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="峰值力矩比值" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="做功比值" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="功率比值" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label=""/>
+      <cell label="动作2" colspan="2"/>
+      <cell label=""/>
+      <cell label="动作2" colspan="2"/>
+      <cell label=""/>
+      <cell label="动作2（%）" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="参数" rowspan="2"/>
+      <cell label="极值"/>
+      <cell label="平均值"/>
+      <cell label="极值"/>
+      <cell label="平均值"/>
+      <cell label="极值"/>
+      <cell label="平均值"/>
+    </row>
+    <row>
+      <cell label="峰力矩（N•m）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="峰力矩时关节角(°)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="相对峰力矩(Nm/kg)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="做功(J)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="相对功(J/kg)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="峰值功率(W)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="相对峰值功率(W/kg)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="终点角度(°)" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="慢速测试前50ms力矩（N•m）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="慢速测试前100ms力矩（N•m）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="50-100ms力矩斜率(N*m/ms)" />
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="达到最大力矩20%所用时间（ms）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="达到最大力矩70%所用时间（ms）" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="20-70%最大力矩的斜率(N*m/ms)" />
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="疲劳下降率1" />
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="疲劳下降率2" />
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+      <cell label="" colspan="2"/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="峰值力矩比值" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="做功比值" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+    <row>
+      <cell label="功率比值" />
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+      <cell label=""/>
+    </row>
+  </table>
+</root>

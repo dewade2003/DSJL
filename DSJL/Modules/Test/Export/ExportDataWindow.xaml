@@ -1,0 +1,19 @@
+﻿<Window x:Class="DSJL.Modules.Test.Export.ExportDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CheckParamsWindow" Height="350" Width="640" Style="{StaticResource ResourceKey=WindowStyle}"  ShowInTaskbar="False"  WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="tbTitle" Text="导出数据" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        <Button Name="btnClose" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnClose_Click" Style="{StaticResource ResourceKey=btnCloseStyle}" >
+            <Image Width="16" Height="16" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/DSJL;component/Assets/Images/close.png" />
+        </Button>
+
+        <Grid Grid.Row="1" Background="White">
+            <Frame Name="frame" Source="CheckParamsPage.xaml" BorderBrush="#bdc4ca" NavigationUIVisibility="Hidden" Margin="0" SnapsToDevicePixels="True" Navigating="Frame_Navigating"/>
+        </Grid>
+    </Grid>
+</Window>

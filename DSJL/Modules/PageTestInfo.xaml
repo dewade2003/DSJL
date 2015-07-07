@@ -1,0 +1,105 @@
+﻿<Page x:Class="DSJL.Modules.PageTestInfo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+       xmlns:Converter="clr-namespace:Converters;assembly=Converters"
+       xmlns:Coms="clr-namespace:DSJL.Compoments"
+       xmlns:dsjl="clr-namespace:DSJL"
+      mc:Ignorable="d" 
+       d:DesignHeight="600" d:DesignWidth="1004"
+	Title="PageTestInfo" Loaded="Page_Loaded">
+    <Page.Resources>
+        <Converter:DateTimeConverter x:Key="dtConv"/>
+        <Converter:TimeConverter x:Key="timeConv"/>
+        <dsjl:CheckConverter x:Key="checkConv"/>
+    </Page.Resources>
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Coms:TestManager x:Name="testManager" Width="200" ItemSelectionChangedEvent="testManager_ItemSelectionChangedEvent"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Style="{DynamicResource ResourceKey=toolBarStyle}">
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <Button Name="btnImport" Margin="5,0" Content="导入数据" Click="btnImport_Click"/>
+                    <Button Name="btnQuickImport" Margin="5,0" Content="快速导入数据" Click="btnQuickImport_Click"/>
+                    <Button Name="btnShowChart" Margin="20,0,5,0" Width="80" Content="查看图表" Click="btnShowChart_Click"/>
+                    <Button Name="btnAddStandard" Margin="5,0" Content="加入测试参考值" Click="btnAddStandard_Click"/>
+                    <Button Name="btnShowCompareChart" Margin="5,0" Content="平均曲线对比" Click="btnShowCompareChart_Click"/>
+                    <Button Name="btnExportReport" Margin="20,0,5,0" Content="导出测试报告" Click="btnExportReport_Click"/>
+                    <Button Name="btnExport" Margin="5,0" Content="导出测试数据" Click="btnExport_Click"/>
+                    <Button Name="btnDelete" Margin="20,0,10,0" Width="60" Content="删除" Click="btnDelete_Click"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1" Style="{DynamicResource ResourceKey=toolBarStyle}" Background="#f8f8f8">
+                <StackPanel Orientation="Horizontal" Margin="5,0">
+                    <StackPanel.Resources>
+                        <DataTemplate x:Key="dictDT">
+                            <Grid Height="24">
+                                <TextBlock Text="{Binding Dict_Value}" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </StackPanel.Resources>
+                    <TextBlock Text="姓名关键字：" VerticalAlignment="Center"/>
+                    <TextBox Name="txtKeyWord" Width="100" Height="26" VerticalAlignment="Center" TextChanged="txtKeyWord_TextChanged"/>
+                    <TextBlock Text="测试关节：" TextAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <ComboBox Name="cbJoint" Width="150" Height="26" VerticalAlignment="Center" ItemTemplate="{StaticResource ResourceKey=dictDT}" 
+                              SelectionChanged="cbJoint_SelectionChanged"/>
+                    <TextBlock Text="测试模式：" TextAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <ComboBox Name="cbTestMode" Width="150" Height="26" VerticalAlignment="Center" ItemTemplate="{StaticResource ResourceKey=dictDT}" 
+                              SelectionChanged="cbJoint_SelectionChanged"/>
+                    <TextBlock Text="测试侧：" TextAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <ComboBox Name="cbJointSide" Width="150" Height="26" VerticalAlignment="Center" ItemTemplate="{StaticResource ResourceKey=dictDT}" 
+                              SelectionChanged="cbJoint_SelectionChanged"/>
+                </StackPanel>
+            </Border>
+
+            <DataGrid Name="dgTestInfo" Grid.Row="2" SelectionChanged="dgTestInfo_SelectionChanged" LoadingRow="dgTestInfo_LoadingRow" MouseDoubleClick="dgTestInfo_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="序号" MinWidth="50">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="0">
+                                    <CheckBox Name="checkAll" Margin="3,0,0,0" Content="全选" Foreground="White" Checked="checkAll_Checked" Unchecked="checkAll_Checked"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="5,0" Width="16" Height="16" VerticalAlignment="Center" Source="{Binding IsChecked, Converter={StaticResource ResourceKey=checkConv}}"/>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Index}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="姓名" IsReadOnly="True" Binding="{Binding Ath_Name}" SortMemberPath="Ath_PinYin" MinWidth="60"/>
+                    <DataGridTextColumn Header="文件编号" IsReadOnly="True" Binding="{Binding BaseFileName}" MinWidth="80"/>
+                    <DataGridTextColumn Header="测试日期" IsReadOnly="True" Binding="{Binding TestDate, Converter={StaticResource ResourceKey=dtConv}}" MinWidth="80"/>
+                    <DataGridTextColumn Header="测试时间" IsReadOnly="True" Binding="{Binding TestTime, Converter={StaticResource ResourceKey=timeConv}}" MinWidth="80"/>
+                    <DataGridTextColumn Header="测试侧" IsReadOnly="True" Binding="{Binding DJointSide}" MinWidth="80"/>
+                    <DataGridTextColumn Header="测试模式" IsReadOnly="True" Binding="{Binding DTestMode}" MinWidth="80"/>
+                    <DataGridTextColumn Header="测试关节" IsReadOnly="True" Binding="{Binding DJoint}" MinWidth="80"/>
+                    <DataGridTextColumn Header="运动方式" IsReadOnly="True" Binding="{Binding DPlane}" MinWidth="80"/>
+                    <DataGridTextColumn Header="运动范围" IsReadOnly="True" Binding="{Binding MotionRange}" MinWidth="80"/>
+                    <DataGridTextColumn Header="测试速度" IsReadOnly="True" Binding="{Binding Speed}" MinWidth="80"/>
+                    <DataGridTextColumn Header="休息时间(s)" IsReadOnly="True" Binding="{Binding Break}" MinWidth="80"/>
+                    <DataGridTextColumn Header="测试组数" IsReadOnly="True" Binding="{Binding NOOfSets}" MinWidth="80"/>
+                    <DataGridTextColumn Header="重复次数" IsReadOnly="True" Binding="{Binding NOOfRepetitions}" MinWidth="80"/>
+                    <DataGridTextColumn Header="受伤侧" IsReadOnly="True" Binding="{Binding DInsuredSide}" MinWidth="80"/>
+                    <DataGridTextColumn Header="重力补偿" IsReadOnly="True" Binding="{Binding DGravitycomp}" MinWidth="80"/>
+                    <DataGridTextColumn Header="测试者" IsReadOnly="True" Binding="{Binding Therapist}" MinWidth="80"/>
+                    <DataGridTextColumn Header="备注" IsReadOnly="True" Binding="{Binding Remark}" MinWidth="80"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Page>

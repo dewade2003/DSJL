@@ -1,0 +1,104 @@
+﻿<Window x:Class="DSJL.Modules.Test.AvgCurveCompareWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:Converter="clr-namespace:Converters;assembly=Converters"
+            xmlns:dsjl="clr-namespace:DSJL"
+        xmlns:coms="clr-namespace:DSJL.Compoments" Icon="/DSJL;component/Assets/Icons/dsjl.ico"
+        Title="平均曲线对比" Height="700" Width="1020" Style="{StaticResource ResourceKey=WindowStyle}" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" MouseDown="Window_MouseDown">
+    <Window.Resources>
+        <Converter:DateTimeConverter x:Key="dtConv"/>
+        <Converter:TimeConverter x:Key="timeConv"/>
+        <dsjl:CheckConverter x:Key="checkConv"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--title-->
+        <TextBlock Name="tbTitle" Text="" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        
+        <Button Name="btnMin" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ResourceKey=btnMinStyle}" Click="btnMin_Click">
+            <Button.Content>
+                <Image HorizontalAlignment="Center" Height="2" Source="/DSJL;component/Assets/Images/min.png" Stretch="Fill" Width="16"/>
+            </Button.Content>
+        </Button>
+        <Button Name="btnMax" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ResourceKey=btnMaxStyle}" Click="btnMax_Click">
+            <Button.Content>
+                <Image HorizontalAlignment="Center" Height="14" Source="/DSJL;component/Assets/Images/max.png" Stretch="Fill" Width="14"/>
+            </Button.Content>
+        </Button>
+        <Button Name="btnClose" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnClose_Click" Style="{StaticResource ResourceKey=btnCloseStyle}" >
+            <Image Width="16" Height="16" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/DSJL;component/Assets/Images/close.png" />
+        </Button>
+
+        <Grid Grid.Row="1" Background="#FFFFFF">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <coms:TestStandardManager x:Name="stand" Grid.Column="0"/>
+            <Grid Name="grid" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="300"/>
+                </Grid.RowDefinitions>
+                <Border Style="{DynamicResource ResourceKey=toolBarStyle}">
+                    <StackPanel Orientation="Horizontal" Margin="10,0">
+                        <TextBlock VerticalAlignment="Center" Text="导出选项："/>
+                        <RadioButton Name="rbMode1" VerticalAlignment="Center" IsChecked="True" GroupName="exportmode" Content="互相对比"/>
+                        <RadioButton Name="rbMode2" Margin="5,0" VerticalAlignment="Center" GroupName="exportmode" Content="个人与平均曲线对比"/>
+                        <RadioButton Name="rbMode3" Margin="5,0" VerticalAlignment="Center" GroupName="exportmode" Content="个人与参考值对比"/>
+                        <Button Name="btnExportReport" Content="导出报告" Margin="10,0" HorizontalAlignment="Left" Click="btnExportReport_Click"/>
+                    </StackPanel>
+                </Border>
+                
+                <DataGrid Name="dgTestInfo" Grid.Row="1" SelectionChanged="dgTestInfo_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="序号" MinWidth="50">
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="0">
+                                        <CheckBox Name="checkAll" Margin="3,0,0,0" Content="全选" Foreground="White" Checked="checkAll_Checked" Unchecked="checkAll_Checked"/>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Margin="5,0" Width="16" Height="16" VerticalAlignment="Center" Source="{Binding IsChecked, Converter={StaticResource ResourceKey=checkConv}}"/>
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding Index}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="姓名" IsReadOnly="True" Binding="{Binding Ath_Name}" SortMemberPath="Ath_PinYin" MinWidth="60"/>
+                        <DataGridTextColumn Header="文件编号" IsReadOnly="True" Binding="{Binding BaseFileName}" MinWidth="80"/>
+                        <DataGridTextColumn Header="测试日期" IsReadOnly="True" Binding="{Binding TestDate, Converter={StaticResource ResourceKey=dtConv}}" MinWidth="80"/>
+                        <DataGridTextColumn Header="测试时间" IsReadOnly="True" Binding="{Binding TestTime, Converter={StaticResource ResourceKey=timeConv}}" MinWidth="80"/>
+                        <DataGridTextColumn Header="测试侧" IsReadOnly="True" Binding="{Binding DJointSide}" MinWidth="80"/>
+                        <DataGridTextColumn Header="测试模式" IsReadOnly="True" Binding="{Binding DTestMode}" MinWidth="80"/>
+                        <DataGridTextColumn Header="测试关节" IsReadOnly="True" Binding="{Binding DJoint}" MinWidth="80"/>
+                        <DataGridTextColumn Header="运动方式" IsReadOnly="True" Binding="{Binding DPlane}" MinWidth="80"/>
+                        <DataGridTextColumn Header="运动范围" IsReadOnly="True" Binding="{Binding MotionRange}" MinWidth="80"/>
+                        <DataGridTextColumn Header="测试速度" IsReadOnly="True" Binding="{Binding Speed}" MinWidth="80"/>
+                        <DataGridTextColumn Header="休息时间(s)" IsReadOnly="True" Binding="{Binding Break}" MinWidth="80"/>
+                        <DataGridTextColumn Header="测试组数" IsReadOnly="True" Binding="{Binding NOOfSets}" MinWidth="80"/>
+                        <DataGridTextColumn Header="重复次数" IsReadOnly="True" Binding="{Binding NOOfRepetitions}" MinWidth="80"/>
+                        <DataGridTextColumn Header="受伤侧" IsReadOnly="True" Binding="{Binding DInsuredSide}" MinWidth="80"/>
+                        <DataGridTextColumn Header="重力补偿" IsReadOnly="True" Binding="{Binding DGravitycomp}" MinWidth="80"/>
+                        <DataGridTextColumn Header="测试者" IsReadOnly="True" Binding="{Binding Therapist}" MinWidth="80"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Grid Name="chartGrid" Grid.Row="2">
+                    <StackPanel Name="avgPanel" Orientation="Horizontal" Width="800" Height="300" Background="White" HorizontalAlignment="Left">
+                        <Grid Name="gridOdd" Width="390" Height="300"/>
+                        <Label Width="20"/>
+                        <Grid Name="gridEven" Width="390" Height="300" Grid.Column="2"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,71 @@
+﻿<Page x:Class="DSJL.Modules.Setup.MonitorSetupPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+         xmlns:dsjl="clr-namespace:DSJL"
+      d:DesignHeight="500" d:DesignWidth="700"
+	Title="MonitorSetupPage" Loaded="Page_Loaded">
+    <Page.Resources>
+        <dsjl:CheckConverter x:Key="checkConv"/>
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Style="{DynamicResource ResourceKey=toolBarStyle}">
+            <Grid Margin="5,0" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="监视文件夹设置"/>
+                    <CheckBox Name="cbIsMonitor" Visibility="Hidden" VerticalAlignment="Center" Content="开启监视功能" Margin="20,0,0,0" Checked="cbIsMonitor_Checked" Unchecked="cbIsMonitor_Checked"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="btnAddDir" Content="添加文件夹"  Click="btnAddDir_Click"/>
+                    <Button Name="btnDeleteCheckedItems" Content="删除所选" Margin="10,0" Click="btnDeleteCheckedItems_Click"/>
+                    <Button Name="btnDeleteAll" Content="删除全部" Click="btnDeleteAll_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <DataGrid Name="dgDir" Margin="0" Grid.Row="1" SelectionChanged="dgDir_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="序号" MinWidth="50">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0">
+                                <CheckBox Name="checkAll" Margin="3,0,0,0" Content="全选" Foreground="White" Checked="checkAll_Checked" Unchecked="checkAll_Unchecked"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="5,0" Width="16" Height="16" VerticalAlignment="Center" Source="{Binding IsChecked, Converter={StaticResource ResourceKey=checkConv}}"/>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Index}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="添加时间" IsReadOnly="True" MinWidth="150" Binding="{Binding DirAddDate}"/>
+                <DataGridTextColumn Header="文件夹名称" IsReadOnly="True" MinWidth="150" Binding="{Binding DirName}"/>
+                <DataGridTextColumn Header="文件夹位置" IsReadOnly="True" MinWidth="300" Binding="{Binding DirPath}"/>
+                <DataGridTemplateColumn Header="打开文件夹" IsReadOnly="True" MinWidth="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnOpenDir" VerticalAlignment="Center" Tag="{Binding Index}" Content="打开文件夹" Click="btnOpenDir_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="删除文件夹" IsReadOnly="True" MinWidth="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnDeleteDir" VerticalAlignment="Center" Tag="{Binding Index}" Content="删除文件夹" Click="btnDeleteDir_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

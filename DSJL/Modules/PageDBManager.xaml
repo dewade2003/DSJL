@@ -1,0 +1,55 @@
+﻿<Page x:Class="DSJL.Modules.PageDBManager"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:dsjl="clr-namespace:DSJL"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1004" Loaded="Page_Loaded"
+	Title="PageDBManager">
+    <Page.Resources>
+        <dsjl:CheckConverter x:Key="checkConv"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Style="{DynamicResource ResourceKey=toolBarStyle}"/>
+        <StackPanel Grid.Row="0" Margin="10,0,0,0" Orientation="Horizontal" >
+            <TextBlock  Text="新备份名称：" Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <TextBox Name="txtBackupName" Width="180" Height="26" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Button Name="btnBackup" Content="开始备份" Click="btnBackup_Click" Margin="5,0,10,0"/>
+
+            <Button Name="btnRestore" Content="数据还原" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0" Click="btnRestore_Click"/>
+            <Button Name="btnMerge" Content="数据合并" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0" Click="btnMerge_Click"/>
+            <Button Name="btnDelete" Content="删除备份记录" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0" Click="btnDelete_Click"/>
+        </StackPanel>
+       
+
+        <DataGrid Name="dgBackupInfo" Margin="0" Grid.Row="1" SelectionChanged="dgBackupInfo_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="序号" MinWidth="50">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="0">
+                                <CheckBox Name="checkAll" Margin="3,0,0,0" Content="全选" Foreground="White" Checked="checkAll_Checked" Unchecked="checkAll_Checked"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="5,0" Width="16" Height="16" VerticalAlignment="Center" Source="{Binding IsChecked, Converter={StaticResource ResourceKey=checkConv}}"/>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Index}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="备份名称" IsReadOnly="True" MinWidth="150" Binding="{Binding BackupName}"/>
+                <DataGridTextColumn Header="备份时间" IsReadOnly="True" MinWidth="120" Binding="{Binding BackupDate}"/>
+                <DataGridTextColumn Header="文件位置" IsReadOnly="True" MinWidth="300" Binding="{Binding BackupPath}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

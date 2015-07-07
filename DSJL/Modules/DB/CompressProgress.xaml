@@ -1,0 +1,22 @@
+﻿<Window x:Class="DSJL.Modules.DB.CompressProgress"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Style="{DynamicResource ResourceKey=WindowStyle}" 
+        Title="备份进度" Height="150" Width="500" Icon="/DSJL;component/Assets/Icons/dsjl.ico"
+         Loaded="Window_Loaded" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" MouseDown="Window_MouseDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="tbTitle" Text="备份进度" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
+        <Grid Grid.Row="1" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ProgressBar Name="pbCompression" Maximum="100" Height="30" VerticalAlignment="Bottom" Margin="10,5"/>
+            <TextBlock Name="tbState" Grid.Row="1" Margin="10,5" VerticalAlignment="Top" FontSize="14"/>
+        </Grid>
+    </Grid>
+</Window>

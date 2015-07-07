@@ -1,0 +1,8 @@
+﻿<Window x:Class="DSJL.ControlWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ControlWindow" Height="300" Width="300">
+    <Grid>
+        <Border BorderThickness="0" BorderBrush="Blue"/>
+    </Grid>
+</Window>

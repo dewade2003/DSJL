@@ -1,0 +1,674 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D8FCD02E-E246-42DF-9878-7B010842DB1F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DSJL</RootNamespace>
+    <AssemblyName>DSJL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\dsjl\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Assets\Icons\dsjl.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>E76FB872B5D373EBBADE338E5E2F4B28A8E2BB00</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>DSJL_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>DSJL.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CYLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\CYLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="dog_net_windows, Version=1.0.1.28668, Culture=neutral, PublicKeyToken=56120be447701319, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\dog_net_windows.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>bin\Release\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="iTextAsian, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\iTextAsian.dll</HintPath>
+    </Reference>
+    <Reference Include="iTextAsianCmaps, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\iTextAsianCmaps.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>bin\Release\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="NPinyin, Version=0.2.4588.20158, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\NPinyin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\WPFHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFVisifire.Charts, Version=5.0.0.3, Culture=neutral, PublicKeyToken=0cd785983078370b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\WPFVisifire.Charts.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock">
+      <HintPath>bin\Release\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
+      <HintPath>bin\Release\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
+      <HintPath>bin\Release\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
+      <HintPath>bin\Release\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid">
+      <HintPath>bin\Release\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>bin\Release\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Utils\FileDialog.cs" />
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="BaseDataAnalysis.xaml.cs">
+      <DependentUpon>BaseDataAnalysis.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\CheckConverter.cs" />
+    <Compile Include="Compoments\AddHiddenPwdWindow.xaml.cs">
+      <DependentUpon>AddHiddenPwdWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Compoments\CheckHiddenPwdWindow.xaml.cs">
+      <DependentUpon>CheckHiddenPwdWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Compoments\HiddenManagerWindow.xaml.cs">
+      <DependentUpon>HiddenManagerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Compoments\TestStandardManager.xaml.cs">
+      <DependentUpon>TestStandardManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\TestItemConverter.cs" />
+    <Compile Include="DataUtil\AthleteSexUtil.cs" />
+    <Compile Include="DataUtil\BaseDataUtil.cs" />
+    <Compile Include="DataUtil\ComputeAvgCurve.cs" />
+    <Compile Include="DataUtil\PersonNamePinYinUtil.cs" />
+    <Compile Include="Dog\Dog.cs" />
+    <Compile Include="Export\AbsExportPDF.cs" />
+    <Compile Include="Export\ChartWindow.xaml.cs">
+      <DependentUpon>ChartWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Export\ExportAvgReport.cs" />
+    <Compile Include="Export\ExportCompareReport.cs" />
+    <Compile Include="Export\GenerateAvgReportXML.cs" />
+    <Compile Include="Export\GenerateCompareResportXml.cs" />
+    <Compile Include="Export\SaveUIElementToImage.cs" />
+    <Compile Include="Model\AppPath.cs" />
+    <Compile Include="Model\ExistsFileModel.cs" />
+    <Compile Include="Model\ImportDataErrorModel.cs" />
+    <Compile Include="Model\Parameter.cs" />
+    <Compile Include="Model\StandInfoTreeDataModel.cs" />
+    <Compile Include="Model\TestModeDict.cs" />
+    <Compile Include="Modules\DB\CompressProgress.xaml.cs">
+      <DependentUpon>CompressProgress.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DB\ExtractProgressWindow.xaml.cs">
+      <DependentUpon>ExtractProgressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DB\MergeDB.xaml.cs">
+      <DependentUpon>MergeDB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Setup\AppPwdSetupPage.xaml.cs">
+      <DependentUpon>AppPwdSetupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Setup\HiddenSetupPage.xaml.cs">
+      <DependentUpon>HiddenSetupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Setup\MonitorSetupPage.xaml.cs">
+      <DependentUpon>MonitorSetupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Standard\EditStandardWindow.xaml.cs">
+      <DependentUpon>EditStandardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Standard\ExportData.cs" />
+    <Compile Include="Modules\Standard\PageAvgCurve.xaml.cs">
+      <DependentUpon>PageAvgCurve.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Standard\ShowAvgCurveWindow.xaml.cs">
+      <DependentUpon>ShowAvgCurveWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\AvgCurveCompareWindow.xaml.cs">
+      <DependentUpon>AvgCurveCompareWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\CheckActionWindow.xaml.cs">
+      <DependentUpon>CheckActionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\CheckAthWindow.xaml.cs">
+      <DependentUpon>CheckAthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\Export\CheckParamsPage.xaml.cs">
+      <DependentUpon>CheckParamsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\Export\ExportDataWindow.xaml.cs">
+      <DependentUpon>ExportDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\Export\ExportProgressPage.xaml.cs">
+      <DependentUpon>ExportProgressPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\Export\ExportReportWindow.xaml.cs">
+      <DependentUpon>ExportReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\ImportDataErrorWindow.xaml.cs">
+      <DependentUpon>ImportDataErrorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\ImportFromDataFileWindow.xaml.cs">
+      <DependentUpon>ImportFromDataFileWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\ImportTestDataWindow.xaml.cs">
+      <DependentUpon>ImportTestDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\QuickImportTestDataWindow.xaml.cs">
+      <DependentUpon>QuickImportTestDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\ShowTestInfoWindow.xaml.cs">
+      <DependentUpon>ShowTestInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\SmoothDataWindow.xaml.cs">
+      <DependentUpon>SmoothDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MonitorSetting\MonitorDirModel.cs" />
+    <Compile Include="MonitorSetting\MonitorSettingUtil.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SingleInstance.cs" />
+    <Compile Include="TestAvgCurveWindow.xaml.cs">
+      <DependentUpon>TestAvgCurveWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddTestItemWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Assets\Skins\BaseResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Skins\BlueSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Skins\DarkSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseDataAnalysis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Compoments\AddHiddenPwdWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Compoments\AddOrUpdateStandInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Compoments\CheckHiddenPwdWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Compoments\HiddenManagerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Compoments\StandardManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Compoments\TestManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Compoments\TestStandardManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ControlWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Export\ChartWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="AddTestItemWindow.xaml.cs">
+      <DependentUpon>AddTestItemWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Compoments\AddOrUpdateStandInfoWindow.xaml.cs">
+      <DependentUpon>AddOrUpdateStandInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Compoments\StandardManager.xaml.cs">
+      <DependentUpon>StandardManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Compoments\TestManager.xaml.cs">
+      <DependentUpon>TestManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ControlWindow.xaml.cs">
+      <DependentUpon>ControlWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Export\ExportReport.cs" />
+    <Compile Include="Export\PDFHelper.cs" />
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Modules\Athletes\AddOrEditAthlete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Athletes\ImportAthlete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\DB\CompressProgress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\DB\ExtractProgressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\DB\MergeDB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PageAthleteManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PageDBManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PageSetup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PageStandard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\PageTestInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Setup\AppPwdSetupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Setup\HiddenSetupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Setup\MonitorSetupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Standard\AddToStandardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Standard\EditStandardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Standard\PageAvgCurve.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Standard\ShowAvgCurveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\AvgCurveCompareWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\CheckActionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\CheckAthWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\CorrectDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\Export\CheckParamsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\Export\ExportDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\Export\ExportProgressPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\Export\ExportReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\ImportDataErrorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\ImportFromDataFileWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\ImportTestDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\QuickImportTestDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\ShowChartWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\ShowTestInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Test\SmoothDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestAvgCurveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\MenuSource.cs" />
+    <Compile Include="Model\TestCountModel.cs" />
+    <Compile Include="Modules\Athletes\AddOrEditAthlete.xaml.cs">
+      <DependentUpon>AddOrEditAthlete.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Athletes\ImportAthlete.xaml.cs">
+      <DependentUpon>ImportAthlete.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PageAthleteManager.xaml.cs">
+      <DependentUpon>PageAthleteManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PageDBManager.xaml.cs">
+      <DependentUpon>PageDBManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PageSetup.xaml.cs">
+      <DependentUpon>PageSetup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PageStandard.xaml.cs">
+      <DependentUpon>PageStandard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\PageTestInfo.xaml.cs">
+      <DependentUpon>PageTestInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Standard\AddToStandardWindow.xaml.cs">
+      <DependentUpon>AddToStandardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\CorrectDataWindow.xaml.cs">
+      <DependentUpon>CorrectDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Test\ShowChartWindow.xaml.cs">
+      <DependentUpon>ShowChartWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Content Include="AppTemplate\avgreport.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\Images\file.png" />
+    <Resource Include="Assets\Images\folder_opened.png" />
+    <Resource Include="Assets\Images\folder.png" />
+    <Content Include="MonitorSetting\MonitorSettings.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\Images\ctb.png" />
+    <Resource Include="Assets\Images\ctbcheck.png" />
+    <Resource Include="Assets\Images\help.png" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <Content Include="AppTemplate\CompareResportTempalte.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppTemplate\listofnames.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppTemplate\exportdata.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="DSJL_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppData\DSJLDB.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AppTemplate\report.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\Images\check.png" />
+    <Resource Include="Assets\Images\uncheck.png" />
+    <Resource Include="Assets\Images\dgheaderbg.png" />
+    <Resource Include="AppTemplate\DataTemplate.xml" />
+    <Resource Include="Assets\Images\pencil.png" />
+    <Resource Include="Assets\Images\add.png" />
+    <Resource Include="Assets\Images\delete.png" />
+    <Resource Include="Assets\Images\db.png" />
+    <Resource Include="Assets\Images\statics.png" />
+    <Resource Include="Assets\Images\test.png" />
+    <Resource Include="Assets\Images\athlete.png" />
+    <Resource Include="Assets\Images\setup.png" />
+    <Resource Include="Assets\Images\close.png" />
+    <Resource Include="Assets\Images\max.png" />
+    <Resource Include="Assets\Images\min.png" />
+    <Resource Include="dsjl.ico" />
+    <Resource Include="Assets\Icons\dsjl.ico" />
+    <Resource Include="Assets\Images\dsjl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{38D7AA58-C95B-449B-86C6-A8073A56E11F}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Converters\Converters.csproj">
+      <Project>{EE95CD94-6DD4-4586-B555-C434C2F27773}</Project>
+      <Name>Converters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{9FE00521-3A8B-42B1-814E-585E99407B2E}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBUtility\DBUtility.csproj">
+      <Project>{D28F4A07-5D1B-4DFF-B03E-0DEE3698CA9D}</Project>
+      <Name>DBUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExcelDao\ExcelDao.csproj">
+      <Project>{39C070D4-98F7-4D71-909C-D555EBE77749}</Project>
+      <Name>ExcelDao</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{53995DBB-9836-4647-AD22-865884FDEB9E}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security\Security.csproj">
+      <Project>{938CCB89-C84D-4A4E-926A-0E452B1F4CE4}</Project>
+      <Name>Security</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

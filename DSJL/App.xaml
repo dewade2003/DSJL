@@ -1,0 +1,12 @@
+﻿<Application x:Class="DSJL.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Application.Resources>
+        <ResourceDictionary x:Name="AppResources">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/Skins/BaseResource.xaml"/>
+                <ResourceDictionary Source="Assets/Skins/BlueSkin.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

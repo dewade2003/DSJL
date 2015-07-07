@@ -1,0 +1,79 @@
+﻿<Page x:Class="DSJL.Modules.PageAthleteManager"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Coms="clr-namespace:DSJL.Compoments"
+      xmlns:dsjl="clr-namespace:DSJL"
+      xmlns:Converter="clr-namespace:Converters;assembly=Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1004"
+	Title="PageAthleteManager" Loaded="Page_Loaded">
+    <Page.Resources>
+        <Converter:DateTimeConverter x:Key="dtConv"/>
+        <dsjl:CheckConverter x:Key="checkConv"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Coms:TestManager x:Name="testManager" ItemSelectionChangedEvent="testManager_ItemSelectionChangedEvent"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Style="{DynamicResource ResourceKey=toolBarStyle}">
+                <StackPanel Orientation="Horizontal" Margin="5,0">
+                    <TextBlock Text="姓名关键字：" VerticalAlignment="Center"/>
+                    <TextBox Name="txtKeyWord" Width="120" Height="26" VerticalAlignment="Center" Margin="0,0,20,0" TextChanged="txtKeyWord_TextChanged"/>
+
+                    <Button Name="btnImport" Width="140" Margin="10,0" Content="导入人员信息" Click="btnImport_Click"/>
+                    <Button Name="btnExport" Width="140" Margin="10,0" Content="导出人员信息" Click="btnExport_Click"/>
+                    <Button Name="btnAdd" Content="添加" Margin="10,0" Click="btnAdd_Click"/>
+                    <Button Name="btnDelete" Content="删除" Margin="10,0" Click="btnDelete_Click"/>
+                    <Button Name="btnHidden" Content="设为隐藏" Margin="10,0" Click="btnHidden_Click"/>
+                    <Button Name="btnHiddenManager" Content="隐藏数据管理" Margin="10,0" Click="btnHiddenManager_Click"/>
+                </StackPanel>
+            </Border>
+
+            <DataGrid Name="dgAthlete" Grid.Row="1" HorizontalGridLinesBrush="#FF898989" VerticalGridLinesBrush="#FF898989" 
+                      SelectionChanged="dgAthlete_SelectionChanged" LoadingRow="dgAthlete_LoadingRow">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="序号" IsReadOnly="True" MinWidth="50">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <CheckBox Name="checkAll" Margin="3,0,0,0" Foreground="#FFFFFF" Content="全选" Checked="checkAll_Checked" Unchecked="checkAll_Checked"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Margin="5,0" Width="16" Height="16" VerticalAlignment="Center" Source="{Binding IsChecked, Converter={StaticResource ResourceKey=checkConv}}"/>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Index}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="编号" IsReadOnly="True" Binding="{Binding Ath_Code}" MinWidth="60" />
+                    <DataGridTextColumn Header="姓名" IsReadOnly="True" Binding="{Binding Ath_Name}" SortMemberPath="Ath_PinYin" MinWidth="60"/>
+                    <DataGridTextColumn Header="性别" IsReadOnly="True" Binding="{Binding Ath_Sex}" MinWidth="60" />
+                    <DataGridTextColumn Header="出生日期" IsReadOnly="True" Binding="{Binding Ath_Birthday, Converter={StaticResource ResourceKey=dtConv}}" MinWidth="60" />
+                    <DataGridTextColumn Header="身高(cm)" IsReadOnly="True" Binding="{Binding Ath_Height}" MinWidth="60" />
+                    <DataGridTextColumn Header="体重(kg)" IsReadOnly="True" Binding="{Binding Ath_Weight}" MinWidth="60"/>
+                    <DataGridTextColumn Header="运动项目" IsReadOnly="True" Binding="{Binding Ath_Project}" MinWidth="80"/>
+                    <DataGridTextColumn Header="主项" IsReadOnly="True" Binding="{Binding Ath_MainProject}" MinWidth="60"/>
+                    <DataGridTextColumn Header="专业训练年限" IsReadOnly="True" Binding="{Binding Ath_TrainYears}" MinWidth="100"/>
+                    <DataGridTextColumn Header="运动等级" IsReadOnly="True" Binding="{Binding Ath_Level}" MinWidth="80"/>
+                    <DataGridTextColumn Header="运动队" IsReadOnly="True" Binding="{Binding Ath_Team}" MinWidth="70"/>
+                    <DataGridTextColumn Header="测试地点" IsReadOnly="True" Binding="{Binding Ath_TestAddress}" MinWidth="80" />
+                    <DataGridTextColumn Header="测试仪器" IsReadOnly="True" Binding="{Binding Ath_TestMachine}" MinWidth="80" />
+                    <DataGridTextColumn Header="测试目的" IsReadOnly="True" Binding="{Binding Ath_TestState}" MinWidth="80" />
+                    <DataGridTextColumn Header="测试日期" IsReadOnly="True" Binding="{Binding Ath_TestDate, Converter={StaticResource ResourceKey=dtConv}}" MinWidth="80" />
+                    <DataGridTextColumn Header="备注" IsReadOnly="True" Binding="{Binding Ath_Remark}" MinWidth="60"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Page>

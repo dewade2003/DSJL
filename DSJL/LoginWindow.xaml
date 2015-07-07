@@ -1,0 +1,51 @@
+﻿<Window x:Class="DSJL.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="登录" Height="310" Width="440" 
+        WindowStartupLocation="CenterScreen" 
+        Style="{StaticResource ResourceKey=WindowStyle}" 
+        MouseDown="Window_MouseDown" 
+        Loaded="Window_Loaded"
+        Icon="/DSJL;component/Assets/Icons/dsjl.ico" KeyDown="Window_KeyDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="119" />
+            <RowDefinition Height="120" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Button Name="btnClose" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ResourceKey=btnCloseStyle}" >
+            <Image Width="16" Height="16" Source="Assets/Images/close.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Image_MouseDown"/>
+        </Button>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+            <Image Source="Assets/Images/dsjl.png" Margin="0"/>
+            <TextBlock Text="等速肌力测试评价软件" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="SimHei" Foreground="White" Margin="10,0,0,0" TextWrapping="Wrap" Height="27" Width="257" />
+        </StackPanel>
+
+
+        <Border Grid.Row="1" Padding="5,5,5,10">
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
+                <StackPanel Height="40" Orientation="Horizontal">
+                    <TextBlock Text="用户名：" Width="60" TextAlignment="Right" VerticalAlignment="Center" FontSize="13" FontFamily="SimSun" FontWeight="Normal" Foreground="#FF2B2929" />
+                    <TextBox Name="txtName" Width="250" Height="30" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Height="40" Orientation="Horizontal">
+                    <TextBlock Text="密码：" Width="60" TextAlignment="Right" VerticalAlignment="Center" FontSize="13" FontFamily="SimSun" FontWeight="Normal" Foreground="#FF2B2929" />
+                    <PasswordBox Name="txtPwd" Width="250" Height="30" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Height="25" Orientation="Horizontal"></StackPanel>
+            </StackPanel>
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE2E2F5" Offset="0" />
+                    <GradientStop Color="White" Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <Border Grid.Row="3" Height="50" Background="White">
+            <Button x:Name="btnLogin" Content="登录" Width="250" Height="35" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="btnLogin_Click"/>
+        </Border>
+    </Grid>
+</Window>

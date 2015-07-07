@@ -1,0 +1,53 @@
+﻿<Window x:Class="DSJL.Modules.Test.CorrectDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CorrectDataWindow" Height="700" Width="1224" ShowInTaskbar="False" Style="{StaticResource ResourceKey=WindowStyle}" WindowStartupLocation="CenterOwner" Loaded="Window_Loaded" MouseDown="Window_MouseDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="tbTitle" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" Text="原始数据校正"/>
+
+        <Button Name="btnSaveClose" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Content="保存并关闭" Margin="5,0"
+                 Style="{DynamicResource ResourceKey=greenButton}" Click="btnSaveClose_Click"/>
+        <Button Name="btnCancleClose" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Content="取消并关闭" Margin="0,0,125,0"
+                 Style="{DynamicResource ResourceKey=redButton}" Click="btnCancleClose_Click"/>
+       
+        <Grid Grid.Row="1" Background="#FFFFFF">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="220"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" Style="{DynamicResource ResourceKey=toolBarStyle}">
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Margin="5,0">
+
+                    <Button Name="btnSetStart" IsEnabled="False" Content="设为测试起点" Margin="10,0" Click="btnSetStart_Click"/>
+                    
+                    <Button Name="btnSetPreEnd" IsEnabled="False" Content="设为上一次终点" Margin="20,0,10,0" Click="btnSetPreEnd_Click"/>
+                    <Button Name="btnSetNextStart" IsEnabled="False" Content="设为下一次起点" Margin="10,0" Click="btnSetNextStart_Click"/>
+
+                    <Button Name="btnSetSmoothStart" IsEnabled="False" Content="设为平滑处理起点" Margin="20,0,10,0" Click="btnSetSmoothStart_Click"/>
+                    <Button Name="btnSetSmoothEnd" IsEnabled="False" Content="设为平滑处理终点" Margin="10,0" Click="btnSetSmoothEnd_Click"/>
+                </StackPanel>
+            </Border>
+
+            <Grid Name="grid" Grid.Row="1"/>
+            <ListView Name="lv" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" BorderThickness="0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="时间" Width="50" DisplayMemberBinding="{Binding Path=Attribute[c0].Value}"/>
+                        <GridViewColumn Header="角度" Width="50" DisplayMemberBinding="{Binding Path=Attribute[c1].Value}"/>
+                        <GridViewColumn Header="力矩" Width="50" DisplayMemberBinding="{Binding Path=Attribute[c2].Value}"/>
+                        <GridViewColumn Header="动作数" DisplayMemberBinding="{Binding Path=Attribute[c5].Value}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</Window>
