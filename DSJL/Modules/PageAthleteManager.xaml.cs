@@ -184,14 +184,44 @@ namespace DSJL.Modules
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
             List<Model.TB_AthleteInfo> selectedAthleteList = athleteList.FindAll(model => model.IsChecked == true);
-            if (selectedAthleteList.Count == 0 || selectedAthleteList.Count > 1)
+            if (selectedAthleteList.Count == 0 )
             {
                 MessageBox.Show("请选择要导出的受试者信息！");
                 return;
             }
             string fileName;
             if (FileDialog.openSaveFileDialog(out fileName,FileDialog.excelFilter,FileDialog.excelExt,"受试者信息")) {
-                MessageBox.Show(fileName);
+                string tempFileName = AppDomain.CurrentDomain.BaseDirectory + "\\AppTemplate\\listofnames.xls";
+                string[,] contents=new string[selectedAthleteList.Count,15];
+                for (int i = 0; i < selectedAthleteList.Count; i++)
+                {
+                    Model.TB_AthleteInfo item=selectedAthleteList[i];
+                    contents[i,0] = item.Ath_TestDate.ToString("yyyy年MM月dd日");
+                    contents[i,1] = item.Ath_Name;
+                    contents[i,2] = item.Ath_Sex;
+                    contents[i,3] = ((DateTime)item.Ath_Birthday).ToString("yyyy年MM月dd日");
+                    contents[i,4] = item.Ath_Height;
+                    contents[i,5] = item.Ath_Weight;
+                    contents[i,6] = item.Ath_Project;
+                    contents[i,7] = item.Ath_MainProject;
+                    contents[i,8] = item.Ath_TrainYears;
+                    contents[i,9] = item.Ath_Level;
+                    contents[i,10] = item.Ath_Team;
+                    contents[i,11] = item.Ath_TestAddress;
+                    contents[i,12] = item.Ath_TestMachine;
+                    contents[i,13] = item.Ath_TestState;
+                    contents[i,14] = item.Ath_Remark;
+                }
+                try
+                {
+                    ExcelDao.ExcelUtil.SaveExcelFile(fileName, tempFileName, contents, 1, 3);
+                    MessageBox.Show("导出成功！", "系统信息", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show("导出受试者信息出错！\r\n" + ee.Message, "系统错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+              
             }
         }
 

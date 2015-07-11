@@ -42,6 +42,32 @@ namespace DSJL.ExcelDao
             return textList;
         }
 
+        public static void SaveExcelFile(string fileName, string tempFileName,string[,] contents, int startColumn, int startRow) {
+            try
+            {
+                excelApp = new ApplicationClass();
+                Workbooks myWorkBooks = excelApp.Workbooks;
+                myWorkBooks.Open(tempFileName, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing, missing);
+                Sheets sheets = excelApp.Sheets;
+                mySheet1 = (Worksheet)sheets[1];
+                mySheet1.Activate();
+
+                //写入测试信息
+                Range range1 = mySheet1.get_Range(mySheet1.Cells[startRow, startColumn], mySheet1.Cells[contents.GetLength(0)+startRow,contents.GetLength(1)+startColumn]);
+                range1.Value2 = contents;
+                mySheet1.SaveAs(fileName, missing, missing, missing, missing, missing, missing, missing, missing, missing);
+                myWorkBooks.Close();
+                excelApp.Quit();
+                excelApp = null;
+            }
+            catch (Exception ee)
+            {
+                
+                throw ee;
+            }
+           
+        }
+
         /// <summary>
         /// 创建excel文件并写入内容
         /// <param name="contents">内容</param>
