@@ -190,7 +190,8 @@ namespace DSJL.Modules
                 return;
             }
             string fileName;
-            if (FileDialog.openSaveFileDialog(out fileName,FileDialog.excelFilter,FileDialog.excelExt,"受试者信息")) {
+            string excelName = testManager.SelectedItem.TestName + "的受试者信息";
+            if (FileDialog.openSaveFileDialog(out fileName,FileDialog.excelFilter,FileDialog.excelExt,excelName)) {
                 string tempFileName = AppDomain.CurrentDomain.BaseDirectory + "\\AppTemplate\\listofnames.xls";
                 string[,] contents=new string[selectedAthleteList.Count,15];
                 for (int i = 0; i < selectedAthleteList.Count; i++)

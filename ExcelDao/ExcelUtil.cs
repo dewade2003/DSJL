@@ -53,7 +53,7 @@ namespace DSJL.ExcelDao
                 mySheet1.Activate();
 
                 //写入测试信息
-                Range range1 = mySheet1.get_Range(mySheet1.Cells[startRow, startColumn], mySheet1.Cells[contents.GetLength(0)+startRow,contents.GetLength(1)+startColumn]);
+                Range range1 = mySheet1.get_Range(mySheet1.Cells[startRow, startColumn], mySheet1.Cells[contents.GetLength(0)+startRow-1,contents.GetLength(1)+startColumn-1]);
                 range1.Value2 = contents;
                 mySheet1.SaveAs(fileName, missing, missing, missing, missing, missing, missing, missing, missing, missing);
                 myWorkBooks.Close();

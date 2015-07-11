@@ -555,132 +555,6 @@
     <Resource Include="Assets\Images\file.png" />
     <Resource Include="Assets\Images\folder_opened.png" />
     <Resource Include="Assets\Images\folder.png" />
-    <Content Include="bin\Debug\AppData\DSJLDB.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="bin\Debug\AppTemplate\avgreport.xml" />
-    <Resource Include="bin\Debug\AppTemplate\CompareResportTempalte.xml" />
-    <Resource Include="bin\Debug\AppTemplate\report.xml" />
-    <Content Include="bin\Debug\Converters.dll" />
-    <Content Include="bin\Debug\Converters.pdb" />
-    <Content Include="bin\Debug\CYLibrary.dll" />
-    <Content Include="bin\Debug\DBUtility.dll" />
-    <Content Include="bin\Debug\DBUtility.pdb" />
-    <Content Include="bin\Debug\dog_net_windows.dll" />
-    <Content Include="bin\Debug\DSJL.BLL.dll" />
-    <Content Include="bin\Debug\DSJL.BLL.pdb" />
-    <Content Include="bin\Debug\DSJL.DAL.dll" />
-    <Content Include="bin\Debug\DSJL.DAL.pdb" />
-    <Content Include="bin\Debug\DSJL.exe" />
-    <Content Include="bin\Debug\DSJL.Model.dll" />
-    <Content Include="bin\Debug\DSJL.Model.pdb" />
-    <Content Include="bin\Debug\DSJL.pdb" />
-    <Content Include="bin\Debug\DSJL.vshost.exe" />
-    <Content Include="bin\Debug\ExcelDao.dll" />
-    <Content Include="bin\Debug\ExcelDao.pdb" />
-    <Content Include="bin\Debug\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="bin\Debug\iTextAsian.dll" />
-    <Content Include="bin\Debug\iTextAsianCmaps.dll" />
-    <Content Include="bin\Debug\itextsharp.dll" />
-    <Content Include="bin\Debug\Microsoft.Office.Interop.Excel.dll" />
-    <Resource Include="bin\Debug\Microsoft.Office.Interop.Excel.xml" />
-    <Content Include="bin\Debug\Microsoft.Vbe.Interop.dll" />
-    <Resource Include="bin\Debug\MonitorSetting\MonitorSettings.xml" />
-    <Content Include="bin\Debug\NPinyin.dll" />
-    <Content Include="bin\Debug\office.dll" />
-    <Resource Include="bin\Debug\office.xml" />
-    <Content Include="bin\Debug\Security.dll" />
-    <Content Include="bin\Debug\Security.pdb" />
-    <Content Include="bin\Debug\WPFHelper.dll" />
-    <Content Include="bin\Debug\WPFVisifire.Charts.dll" />
-    <Content Include="bin\Debug\Xceed.Wpf.AvalonDock.dll" />
-    <Content Include="bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
-    <Content Include="bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
-    <Content Include="bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
-    <Content Include="bin\Debug\Xceed.Wpf.DataGrid.dll" />
-    <Content Include="bin\Debug\Xceed.Wpf.Toolkit.dll" />
-    <Content Include="bin\Release\api_dsp_windows.dll" />
-    <Content Include="bin\Release\api_dsp_windows_x64.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\AppData\DSJLDB.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\AppTemplate\avgreport.xml" />
-    <Resource Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\AppTemplate\CompareResportTempalte.xml" />
-    <Resource Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\AppTemplate\report.xml" />
-    <Resource Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Assets\Icons\dsjl.ico" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Converters.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\CYLibrary.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\DBUtility.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\dog_net_windows.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\DSJL.BLL.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\DSJL.DAL.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\DSJL.exe" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\DSJL.Model.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\ExcelDao.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\iTextAsian.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\iTextAsianCmaps.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\itextsharp.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Microsoft.Office.Interop.Excel.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Microsoft.Vbe.Interop.dll" />
-    <Resource Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\MonitorSetting\MonitorSettings.xml" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\NPinyin.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\office.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Security.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\WPFHelper.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\WPFVisifire.Charts.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Xceed.Wpf.AvalonDock.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Xceed.Wpf.DataGrid.dll" />
-    <Content Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\Xceed.Wpf.Toolkit.dll" />
-    <Content Include="bin\Release\app.publish\setup.exe" />
-    <Content Include="bin\Release\AppData\DSJLDB.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="bin\Release\AppTemplate\avgreport.xml" />
-    <Resource Include="bin\Release\AppTemplate\CompareResportTempalte.xml" />
-    <Resource Include="bin\Release\AppTemplate\report.xml" />
-    <Content Include="bin\Release\Converters.dll" />
-    <Content Include="bin\Release\Converters.pdb" />
-    <Content Include="bin\Release\CYLibrary.dll" />
-    <Content Include="bin\Release\DBUtility.dll" />
-    <Content Include="bin\Release\DBUtility.pdb" />
-    <Content Include="bin\Release\dogdnert.dll" />
-    <Content Include="bin\Release\dog_net_windows.dll" />
-    <Content Include="bin\Release\dog_windows_3147245.dll" />
-    <Content Include="bin\Release\dog_windows_x64_3147245.dll" />
-    <Content Include="bin\Release\DSJL.BLL.dll" />
-    <Content Include="bin\Release\DSJL.DAL.dll" />
-    <Content Include="bin\Release\DSJL.exe" />
-    <Content Include="bin\Release\DSJL.Model.dll" />
-    <Content Include="bin\Release\DSJL.pdb" />
-    <Content Include="bin\Release\DSJL.vshost.exe" />
-    <Content Include="bin\Release\ExcelDao.dll" />
-    <Content Include="bin\Release\ExcelDao.pdb" />
-    <Content Include="bin\Release\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="bin\Release\iTextAsian.dll" />
-    <Content Include="bin\Release\iTextAsianCmaps.dll" />
-    <Content Include="bin\Release\itextsharp.dll" />
-    <Content Include="bin\Release\Microsoft.Office.Interop.Excel.dll" />
-    <Resource Include="bin\Release\Microsoft.Office.Interop.Excel.xml" />
-    <Content Include="bin\Release\Microsoft.Vbe.Interop.dll" />
-    <Resource Include="bin\Release\MonitorSetting\MonitorSettings.xml" />
-    <Content Include="bin\Release\NPinyin.dll" />
-    <Content Include="bin\Release\office.dll" />
-    <Resource Include="bin\Release\office.xml" />
-    <Content Include="bin\Release\Security.dll" />
-    <Content Include="bin\Release\Security.pdb" />
-    <Resource Include="bin\Release\test.xml" />
-    <Content Include="bin\Release\WPFHelper.dll" />
-    <Content Include="bin\Release\WPFVisifire.Charts.dll" />
-    <Content Include="bin\Release\Xceed.Wpf.AvalonDock.dll" />
-    <Content Include="bin\Release\Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
-    <Content Include="bin\Release\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
-    <Content Include="bin\Release\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
-    <Content Include="bin\Release\Xceed.Wpf.DataGrid.dll" />
-    <Content Include="bin\Release\Xceed.Wpf.Toolkit.dll" />
     <Content Include="MonitorSetting\MonitorSettings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -701,31 +575,6 @@
     <Content Include="AppTemplate\exportdata.xls">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="bin\Debug\AppTemplate\exportdata.xls" />
-    <None Include="bin\Debug\AppTemplate\listofnames.xls" />
-    <None Include="bin\Debug\DSJL.application" />
-    <None Include="bin\Debug\DSJL.exe.config" />
-    <None Include="bin\Debug\DSJL.exe.manifest" />
-    <None Include="bin\Debug\DSJL.vshost.application" />
-    <None Include="bin\Debug\DSJL.vshost.exe.config" />
-    <None Include="bin\Debug\DSJL.vshost.exe.manifest" />
-    <None Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\AppTemplate\exportdata.xls" />
-    <None Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\AppTemplate\listofnames.xls" />
-    <None Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\DSJL.exe.config" />
-    <None Include="bin\Release\app.publish\Application Files\DSJL_2_0_0_3\DSJL.exe.manifest" />
-    <None Include="bin\Release\app.publish\DSJL.application" />
-    <None Include="bin\Release\AppTemplate\exportdata.xls" />
-    <None Include="bin\Release\AppTemplate\listofnames.xls" />
-    <None Include="bin\Release\AppTemplate\Thumbs.db" />
-    <None Include="bin\Release\AppTemplate\~%24report.doc" />
-    <None Include="bin\Release\DSJL.application" />
-    <None Include="bin\Release\DSJL.exe.config" />
-    <None Include="bin\Release\DSJL.exe.manifest" />
-    <None Include="bin\Release\DSJL.vshost.application" />
-    <None Include="bin\Release\DSJL.vshost.exe.config" />
-    <None Include="bin\Release\DSJL.vshost.exe.manifest" />
-    <None Include="bin\Release\help.pdf" />
-    <None Include="bin\Release\test.xlsx" />
     <None Include="DSJL_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
@@ -814,19 +663,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Release\AppData\Backup\" />
-    <Folder Include="bin\Release\de\" />
-    <Folder Include="bin\Release\es\" />
-    <Folder Include="bin\Release\fr\" />
-    <Folder Include="bin\Release\hu\" />
-    <Folder Include="bin\Release\it\" />
-    <Folder Include="bin\Release\pt-BR\" />
-    <Folder Include="bin\Release\ro\" />
-    <Folder Include="bin\Release\ru\" />
-    <Folder Include="bin\Release\sv\" />
-    <Folder Include="bin\Release\zh-Hans\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
