@@ -117,6 +117,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgeUtil.cs" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -124,9 +125,11 @@
     <Compile Include="TB_AdminInfo.cs" />
     <Compile Include="TB_AthleteInfo.cs" />
     <Compile Include="TB_BackupInfo.cs" />
+    <Compile Include="TB_DBVersion.cs" />
     <Compile Include="TB_Dict.cs" />
     <Compile Include="TB_Setting.cs" />
     <Compile Include="TB_StandardInfo.cs" />
+    <Compile Include="TB_StandardParams.cs" />
     <Compile Include="TB_StandTestRefe.cs" />
     <Compile Include="TB_TestInfo.cs" />
     <Compile Include="TB_TestManager.cs" />

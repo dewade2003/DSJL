@@ -150,6 +150,7 @@ namespace DSJL.Modules
                     extractWindow.ShowDialog();
                    
                     ReloadData();
+                    DSJL.Utils.DBUpgrade.Upgrade();
                     MessageBox.Show("还原成功！");
                 }
             }

@@ -55,7 +55,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Y9JLaM9C1+WVp5RuPNbFe7mkhkA=</dsig:DigestValue>
+        <dsig:DigestValue>7n/iHXUWIC4o0wNIWVDFdBM2zKE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -79,7 +79,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>oO8YtdI5m/MqkaL99n7UwXEU/vI=</dsig:DigestValue>
+        <dsig:DigestValue>NRRMcDvTQ46FCa//HtOk0XIy+ME=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -96,14 +96,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DSJL.exe" size="634880">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DSJL.exe" size="635904">
       <assemblyIdentity name="DSJL" version="2.0.0.2" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>WowKTr4vgF/Yd2VmFCMn+spfqtI=</dsig:DigestValue>
+        <dsig:DigestValue>dcsBkZTefCjizrnu00F4kiie3Pg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -115,7 +115,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Xh3KD2YsKpFf7ySxaf+GM2vq+x4=</dsig:DigestValue>
+        <dsig:DigestValue>PL6jWM9T9dQhGUUUk3LKkn1+Q0o=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -127,7 +127,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>wYfD48L0vLBih03MzGP0Hwv8ZcA=</dsig:DigestValue>
+        <dsig:DigestValue>520zKhk3uZpufkfmEXmReiUCxqM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -139,7 +139,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Vr7NFl7qY2YOTjcVDMuGZdkfz80=</dsig:DigestValue>
+        <dsig:DigestValue>YqkQ6vn0FCSkJlpQ/SIxfdSdoRc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -151,7 +151,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>nMN3gWEqqyyDmNWolZCFjzFdPt0=</dsig:DigestValue>
+        <dsig:DigestValue>ai+3+tFR+sbUeLRgjHbwjnIn1Zw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -259,7 +259,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>fjCH/NnqBrBwRJnU5cGaT7iio8s=</dsig:DigestValue>
+        <dsig:DigestValue>NHzUJgxhMsBpBCMsX9JYQxBcT28=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

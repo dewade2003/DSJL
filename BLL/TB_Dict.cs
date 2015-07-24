@@ -90,6 +90,15 @@ namespace DSJL.BLL
 			DataSet ds = dal.GetList(strWhere);
 			return DataTableToList(ds.Tables[0]);
 		}
+
+        /// <summary>
+        /// 获得数据列表
+        /// </summary>
+        public List<DSJL.Model.TB_Dict> GetModelListByGroupID(int groupid)
+        {
+            DataSet ds = dal.GetList("dict_groupid="+groupid);
+            return DataTableToList(ds.Tables[0]);
+        }
 		/// <summary>
 		/// 获得数据列表
 		/// </summary>

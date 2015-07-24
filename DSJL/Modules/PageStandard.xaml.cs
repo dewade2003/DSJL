@@ -55,7 +55,8 @@ namespace DSJL.Modules
         {
             if (standManager.SelectedItem != null)
             {
-                if (standManager.SelectedItem.Stand_Level == 2) {
+                if (standManager.SelectedItem.Stand_Level == 2)
+                {
                     testInfoModelList.Clear();
                     testInfoModelList = refeBLL.GetStandTestInfoModelList(standManager.SelectedItem.ID);
                     Binding b = new Binding() { Source = testInfoModelList };
@@ -63,7 +64,7 @@ namespace DSJL.Modules
 
                     pageAvgCurve.ModelList = testInfoModelList;
                 }
-                
+
             }
         }
 
@@ -94,8 +95,21 @@ namespace DSJL.Modules
 
         private void standManager_ItemSelectionChangedEvent(Model.TB_StandardInfo selectedItem)
         {
-
             ReferenshList();
+            if (standManager.SelectedItem != null)
+            {
+                if (standManager.SelectedItem.Stand_Level == 2)
+                {
+                    btnAddData.IsEnabled = true;
+                }
+                else
+                {
+                    btnAddData.IsEnabled = false;
+                }
+            }
+            else {
+                btnAddData.IsEnabled = false;
+            }
         }
 
         private void dgTestInfo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -177,7 +191,8 @@ namespace DSJL.Modules
                     pdfFileName = "等速肌力互相对比报告(" + DateTime.Now.ToString("yyyyMMddHHmmss") + ")";
                     reportTitle = "等速肌力互相对比报告";
                 }
-                else if (rbMode2.IsChecked == true) {
+                else if (rbMode2.IsChecked == true)
+                {
                     exportMode = DSJL.Export.ExportModeEnum.Mode2;
                     pdfFileName = "等速肌力个人与平均曲线报告(" + DateTime.Now.ToString("yyyyMMddHHmmss") + ")";
                     reportTitle = "等速肌力个人与平均曲线报告";
@@ -271,25 +286,37 @@ namespace DSJL.Modules
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "请选择保存文件的路径";
             sfd.DefaultExt = "xls";
-            sfd.FileName =standName+ "测试参考值数据导出(" + DateTime.Now.ToString("yyyy-MM-dd") + ")";
+            sfd.FileName = standName + "测试参考值数据导出(" + DateTime.Now.ToString("yyyy-MM-dd") + ")";
             sfd.OverwritePrompt = true;
             sfd.AddExtension = true;
             sfd.Filter = "Excel文件(*.xls)|*.xls";
             if (sfd.ShowDialog() == true)
             {
                 string savePath = sfd.FileName;
-                
+
                 List<List<XElement>> dataList = DSJL.Export.GenerateCompareResportXml.ComputeAvg(testInfoModelList);
                 ExportData exportData = new ExportData();
                 try
                 {
                     exportData.Export(dataList, savePath);
-                    MessageBox.Show("导出成功！","系统信息");
+                    MessageBox.Show("导出成功！", "系统信息");
                 }
-                catch (Exception ee) {
-                    MessageBox.Show("导出数据异常！\r\n" + ee.Message,"系统错误");
+                catch (Exception ee)
+                {
+                    MessageBox.Show("导出数据异常！\r\n" + ee.Message, "系统错误");
                 }
-              
+
+            }
+        }
+
+        private void btnAddData_Click(object sender, RoutedEventArgs e)
+        {
+            AddDataWindow adddataWindow = new AddDataWindow();
+            adddataWindow.StandInfo = standManager.SelectedItem;
+            bool? result= adddataWindow.ShowDialog();
+            if (result==true)
+            {
+                ReferenshList();
             }
         }
     }

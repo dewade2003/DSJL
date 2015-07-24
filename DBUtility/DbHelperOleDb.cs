@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Data.OleDb;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace DSJL.DBUtility
 {
@@ -12,7 +13,7 @@ namespace DSJL.DBUtility
     /// 数据访问基础类(基于OleDb)
     /// 可以用户可以修改满足自己项目的需要。
     /// </summary>
-    public abstract class DbHelperOleDb
+    public class DbHelperOleDb
     {
         //数据库连接字符串(web.config来配置)，可以动态更改connectionString支持多数据库.	
         private static string conPwd = "CISS";
@@ -44,6 +45,65 @@ namespace DSJL.DBUtility
         }
 
         #region 公用方法
+
+        /// <summary>
+        /// 取所有表名
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetTableNameList()
+        {
+            List<string> list = new List<string>();
+            OleDbConnection Conn = new OleDbConnection(connectionString);
+            try
+            {
+                if (Conn.State == ConnectionState.Closed)
+                    Conn.Open();
+                DataTable dt = Conn.GetSchema("Tables");
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (row[3].ToString() == "TABLE")
+                        list.Add(row[2].ToString());
+                }
+                return list;
+            }
+            catch (Exception e)
+            { throw e; }
+            finally { if (Conn.State == ConnectionState.Open) Conn.Close(); Conn.Dispose(); }
+        }
+
+        /// <summary>
+        /// 取指定表所有字段名称
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetTableFieldNameList(string TableName)
+        {
+            List<string> list = new List<string>();
+            OleDbConnection Conn = new OleDbConnection(connectionString);
+            try
+            {
+                if (Conn.State == ConnectionState.Closed)
+                    Conn.Open();
+                using (OleDbCommand cmd = new OleDbCommand())
+                {
+                    cmd.CommandText = "SELECT TOP 1 * FROM [" + TableName + "]";
+                    cmd.Connection = Conn;
+                    OleDbDataReader dr = cmd.ExecuteReader();
+                    for (int i = 0; i < dr.FieldCount; i++)
+                    {
+                        list.Add(dr.GetName(i));
+                    }
+                }
+                return list;
+            }
+            catch (Exception e)
+            { throw e; }
+            finally
+            {
+                if (Conn.State == ConnectionState.Open)
+                    Conn.Close();
+                Conn.Dispose();
+            }
+        }
 
         /// <summary>
         /// 获取某个字段的最大值，如果没有返回-1
@@ -88,6 +148,12 @@ namespace DSJL.DBUtility
 
         public static bool Exists(string tableName, string fieldName, string fieldValue) {
             string sql = "select count(1) from " + tableName + " where " + fieldName + "='" + fieldValue + "'";
+            return Exists(sql);
+        }
+
+        public static bool ExistsTable(string tableName)
+        {
+            string sql = "select name from sysobjects where xtype='u' and name='"+tableName+"'";
             return Exists(sql);
         }
 
@@ -486,8 +552,6 @@ namespace DSJL.DBUtility
         }
 
         #endregion
-
-
 
     }
 }

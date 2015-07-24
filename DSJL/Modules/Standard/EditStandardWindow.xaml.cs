@@ -32,6 +32,19 @@ namespace DSJL.Modules.Standard
         BLL.TB_StandardInfo standardInfoBLL;
         private Model.TB_StandardInfo standardInfo;
 
+        BLL.TB_StandardParams standardParamsBLL;
+        Model.TB_StandardParams standardParam;
+
+        BLL.TB_AthleteInfo athInfoBLL;
+
+        BLL.TB_Dict dictBLL = new BLL.TB_Dict();
+        List<Model.TB_Dict> jointDictList;//测试关节字典列表
+        List<Model.TB_Dict> jointsideDictList;//测试侧字典列表
+        List<Model.TB_Dict> testmodeDictList;//测试模式字典列表
+        List<Model.TB_Dict> planeDictList;//运动方式字典列表
+        List<String> athProjectList;//运动项目数据列表
+        List<String> athMainProjectList;//主项数据列表
+
         public Model.TB_StandardInfo StandardInfo {
             set {
                 standardInfo = value;
@@ -51,17 +64,67 @@ namespace DSJL.Modules.Standard
         {
             InitializeComponent();
             standardInfoBLL = new BLL.TB_StandardInfo();
+            standardParamsBLL = new BLL.TB_StandardParams();
+            athInfoBLL = new BLL.TB_AthleteInfo();
+
+            Model.TB_Dict allDict = new Model.TB_Dict()
+            {
+                Dict_Key = "-1",
+                Dict_Value = "不限"
+            };
+            jointDictList = dictBLL.GetModelListByGroupID(2);
+            jointDictList.Insert(0, allDict);
+            jointsideDictList = dictBLL.GetModelListByGroupID(3);
+            jointsideDictList.Insert(0, allDict);
+            testmodeDictList = dictBLL.GetModelListByGroupID(1);
+            testmodeDictList.Insert(0, allDict);
+
+            athProjectList = athInfoBLL.GetColumnDistinctList("Ath_Project");
+            athProjectList.Insert(0, "不限");
+
+            athMainProjectList = athInfoBLL.GetColumnDistinctList("Ath_MainProject");
+            athMainProjectList.Insert(0, "不限");
+
+        }
+
+        private void refrenshPlaneDictList() {
+
+            planeDictList = new List<Model.TB_Dict>();
+            Model.TB_Dict selectJoint = (Model.TB_Dict)cbJoint.SelectedItem;
+            if (!selectJoint.Dict_Key.Equals("-1"))
+            {
+                planeDictList = dictBLL.GetModelList("dict_groupid=" + jointDictList[1].ID + " and dict_groupid2='1,2,3,4,5,7,8,9'");
+            }
+          
+            Model.TB_Dict allDict = new Model.TB_Dict()
+            {
+                Dict_Key = "-1",
+                Dict_Value = "不限"
+            };
+            planeDictList.Insert(0, allDict);
+            cbPlane.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = planeDictList });
+            cbPlane.SelectedIndex = 0;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+            Binding dictBind = new Binding() { Source = jointDictList };
+            cbJoint.SetBinding(ComboBox.ItemsSourceProperty, dictBind);
+            cbJointSide.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = jointsideDictList });
+            cbTestMode.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = testmodeDictList });
+            cbPlane.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = planeDictList });
+            cbProject.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = athProjectList });
+            cbMainProject.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = athMainProjectList });
             if (!isAdd)
             {
                 tbTitle.Text = "编辑" + standardInfo.Stand_Name;
+                standardParam = standardParamsBLL.GetModelByStandID(standardInfo.ID);
                 txtName.Text = standardInfo.Stand_Name;
             }
             else
             {
+                standardParam = new Model.TB_StandardParams();
                 if (standardInfo.Stand_Level == -1)
                 {
                     tbTitle.Text = "添加测试参考值类别";
@@ -70,6 +133,10 @@ namespace DSJL.Modules.Standard
                     tbTitle.Text = "为" + standardInfo.Stand_Name + "添加子参考值";
                 }
             }
+
+            Binding standParamBind = new Binding() { Source=standardParam};
+            grid.SetBinding(Grid.DataContextProperty,standParamBind);
+
             txtName.Focus();
         }
 
@@ -91,6 +158,7 @@ namespace DSJL.Modules.Standard
             {
                 standardInfo.Stand_Name = txtName.Text;
                 result = standardInfoBLL.Update(standardInfo);
+                standardParamsBLL.Update(standardParam);
             }
             else {
                 Model.TB_StandardInfo info = new Model.TB_StandardInfo();
@@ -106,6 +174,9 @@ namespace DSJL.Modules.Standard
                 }
               
                 result = standardInfoBLL.Add(info);
+                int maxStandInfoId=  standardInfoBLL.GetMaxId();
+                standardParam.StandID = maxStandInfoId;
+                standardParamsBLL.Add(standardParam);
             }
             if (!result)
             {
@@ -125,8 +196,8 @@ namespace DSJL.Modules.Standard
                     }
                     if (MessageBox.Show(desc, "系统信息", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        txtName.Text = "";
-                        txtName.Focus();
+                        standardInfo = new Model.TB_StandardInfo();
+                        standardParam = new Model.TB_StandardParams();
                     }
                     else
                     {
@@ -155,6 +226,18 @@ namespace DSJL.Modules.Standard
                 }
             }
             catch { }
+        }
+
+        private void cbJoint_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            refrenshPlaneDictList();
+
+            //Model.TB_Dict selectedJoint = (Model.TB_Dict)cbJoint.SelectedItem;
+            //planeDictList.RemoveAll(x => x.Dict_Key != "-1");
+            //if (selectedJoint.Dict_Key == "-1")
+            //{
+            //    planeDictList.AddRange(dictBLL.GetModelList("dict_groupid=" + jointDictList[1].ID));
+            //}
         }
     }
 }

@@ -315,7 +315,7 @@ namespace DSJL.BLL
 			//return dal.GetList(PageSize,PageIndex,strWhere);
 		//}
 
-        public List<string> GetColumnDistinctList(string columnName) {
+        public List<String> GetColumnDistinctList(string columnName) {
             List<string> list=new List<string>();
             DataTable dt=dal.GetColumnDistinctList(columnName).Tables[0];
             int rowCount = dt.Rows.Count;

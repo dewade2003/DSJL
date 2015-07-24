@@ -40,6 +40,8 @@ namespace DSJL.Model
 		private int _ath_testid;
         private string hidden = "0";
 
+        private int age = -1;
+
         public int Index
         {
             get;
@@ -102,7 +104,14 @@ namespace DSJL.Model
 		/// </summary>
 		public DateTime? Ath_Birthday
 		{
-			set{ _ath_birthday=value;}
+            set
+            {
+                _ath_birthday = value;
+                if (_ath_birthday != null)
+                {
+                    age = AgeUtil.GetAge((DateTime)_ath_birthday, DateTime.Now);
+                }
+            }
 			get{return _ath_birthday;}
 		}
 		/// <summary>
@@ -218,6 +227,9 @@ namespace DSJL.Model
         }
 		#endregion Model
 
+        public int Age {
+            get { return age; }
+        }
 	}
 }
 

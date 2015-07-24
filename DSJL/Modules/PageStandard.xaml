@@ -32,7 +32,9 @@
                     <RadioButton Name="rbMode1" VerticalAlignment="Center"  GroupName="exportmode" Content="互相对比"/>
                     <RadioButton Name="rbMode2" Margin="5,0" VerticalAlignment="Center" GroupName="exportmode" Content="个人与平均曲线对比"/>
                     <RadioButton Name="rbMode3" Margin="5,0" IsChecked="True" VerticalAlignment="Center" GroupName="exportmode" Content="个人与参考值对比"/>
-                    <Button Name="btnExport"  Content="导出报告" Click="btnExport_Click"/>
+
+                    <Button Name="btnAddData"  Content="添加数据" IsEnabled="False" Click="btnAddData_Click"/>
+                    <Button Name="btnExport" Margin="10,0" Content="导出报告" Click="btnExport_Click"/>
                     <Button Name="btnExportData" Margin="10,0" Content="导出测试数据" Click="btnExportData_Click"/>
                     <Button Name="btnDelete" Content="移除" Margin="10,0" Click="btnDelete_Click" />
                 </StackPanel>

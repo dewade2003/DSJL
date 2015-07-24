@@ -19,7 +19,6 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="100"/>
-                
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
