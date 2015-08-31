@@ -25,7 +25,7 @@ namespace DSJL.Modules.Standard
 
         Dictionary<int, List<Model.TB_AthleteInfo>> athInfoListDict = new Dictionary<int, List<Model.TB_AthleteInfo>>();
         List<Model.TB_AthleteInfo> athleteList = new List<Model.TB_AthleteInfo>();
-        Model.TB_StandardParams standParam;
+        Model.TB_StandardParams standParam,parentStandParam;
         public Model.TB_StandardInfo StandInfo
         {
             get;
@@ -43,6 +43,7 @@ namespace DSJL.Modules.Standard
             athleteBLL = new BLL.TB_AthleteInfo();
             standPramsBLL = new BLL.TB_StandardParams();
             standParam = standPramsBLL.GetModelByStandID(StandInfo.ID);
+            parentStandParam = standPramsBLL.GetModelByStandID((int)StandInfo.Stand_ParentID);
             tbTitle.Text +="  当前测试参考值为：" +StandInfo.Stand_Name;
         }
 
@@ -57,36 +58,38 @@ namespace DSJL.Modules.Standard
                 else {
                     StringBuilder searchCaseBuilder = new StringBuilder();
                     searchCaseBuilder.Append("ath_testid=" + testManager.SelectedItem.ID);
-                    if (standParam!=null)
+                    if (parentStandParam!=null)
                     {
-                        if (!standParam.Ath_Sex.Equals("不限"))
+                        if (!parentStandParam.Ath_Sex.Equals("不限"))
                         {
                             searchCaseBuilder.Append(" and ath_sex='" + standParam.Ath_Sex + "'");
                         }
-                        if (!standParam.Ath_MainProject.Equals("不限"))
+                        if (!parentStandParam.Ath_MainProject.Equals("不限"))
                         {
                             searchCaseBuilder.Append(" and ath_mainproject='" + standParam.Ath_MainProject + "'");
                         }
-                        if (!standParam.Ath_Project.Equals("不限"))
+                        if (!parentStandParam.Ath_Project.Equals("不限"))
                         {
                             searchCaseBuilder.Append(" and ath_project='" + standParam.Ath_Project + "'");
                         }
                     }
                     athleteList = new List<Model.TB_AthleteInfo>();
                     List<Model.TB_AthleteInfo> athList = athleteBLL.GetModelList(searchCaseBuilder.ToString());
-                    if (standParam.Ath_AgeMinLimit != -1 && standParam.Ath_AgeMaxLimit != -1)
+                    if (parentStandParam.Ath_AgeMinLimit != -1 && parentStandParam.Ath_AgeMaxLimit != -1)
                     {
                         foreach (var item in athList)
                         {
-                            if (item.Age>=standParam.Ath_AgeMinLimit&&item.Age<=standParam.Ath_AgeMaxLimit)
+                            if (item.Age >= parentStandParam.Ath_AgeMinLimit && item.Age <= parentStandParam.Ath_AgeMaxLimit)
                             {
                                 athleteList.Add(item);
                             }
                         }
-                        
                     }
-              
-                    athInfoListDict.Add(testManager.SelectedItem.ID, athList);
+                    else {
+                        athleteList = athList;
+                    }
+
+                    athInfoListDict.Add(testManager.SelectedItem.ID, athleteList);
                 }
                 dgAthlete.SetBinding(DataGrid.ItemsSourceProperty, new Binding() { Source = athleteList });
             }

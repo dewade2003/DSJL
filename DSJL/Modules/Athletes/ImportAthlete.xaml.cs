@@ -114,11 +114,13 @@ namespace DSJL.Modules.Athletes
 
             List<Model.TB_AthleteInfo> existsAthNameList = new List<Model.TB_AthleteInfo>();
             int errorCount = 0;
+            int successCount = 0;
+            bool cancleImport = false;
             for (int i = 0; i < excelContentList.Count; i++) {
                  List<string> columnList = excelContentList[i];
                 
                     tbProgress.Text = (i + 1) + "/" + excelContentList.Count;
-                  
+
                     try
                     {
                         Model.TB_AthleteInfo newAthInfo = new Model.TB_AthleteInfo();
@@ -140,18 +142,28 @@ namespace DSJL.Modules.Athletes
                         newAthInfo.Ath_Remark = columnList[14];
                         newAthInfo.Ath_TestID = testList[cbTestItems.SelectedIndex].ID;
                         string existID = "";
-                        int result = athInfoBLL.Add(newAthInfo,out existID);
+                        int result = athInfoBLL.Add(newAthInfo, out existID);
                         if (result == BLL.TB_AthleteInfo.RepeatAdd)
                         {
                             existsAthNameList.Add(newAthInfo);
+                        }
+                        else {
+                            successCount++;
                         }
                     }
                     catch
                     {
                         errorCount++;
-                        MessageBox.Show("第" + (i + 2) + "行 " + columnList[0] + "的信息导入错误，请检查！", "系统信息");
+                        if (MessageBox.Show("第" + (i + 2) + "行 " + columnList[0] + "的信息导入错误，请检查！\r\n是否继续导入？", "系统信息", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                        {
+                            value = 0;
+                            Dispatcher.Invoke(updatePbDelegate,
+                     System.Windows.Threading.DispatcherPriority.Background,
+                     new object[] { ProgressBar.ValueProperty, value });
+                            cancleImport = true;
+                            break;
+                        }
                     }
-
                     value += 1;
                     Dispatcher.Invoke(updatePbDelegate,
                         System.Windows.Threading.DispatcherPriority.Background,
@@ -165,9 +177,13 @@ namespace DSJL.Modules.Athletes
 
             dgAthlete.ItemsSource = existsAthNameList;
             tbAllCount.Text = "总共" + excelContentList.Count + "条信息";
-            tbSuccessCount.Text = "成功导入" + (excelContentList.Count - existsAthNameList.Count-errorCount) + "条信息";
+            tbSuccessCount.Text = "成功导入" + successCount + "条信息";
             tbFaildCount.Text = "未导入" + (existsAthNameList.Count + errorCount) + "条信息";
-            MessageBox.Show("导入完成！", "系统信息");
+            if (!cancleImport)
+            {
+                MessageBox.Show("导入完成！", "系统信息");
+            }
+         
             tbFilePath.Text = "";
         }
 

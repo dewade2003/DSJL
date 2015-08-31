@@ -31,7 +31,7 @@ namespace DSJL
 
         protected override void OnStartup(StartupEventArgs e)
         {
-  
+
             //string errStr = "";
             //if (!Dog.Dog.CheckDog(out errStr))
             //{
@@ -40,20 +40,19 @@ namespace DSJL
             //}
             base.OnStartup(e);
 
-            if (DSJL.Utils.DBUpgrade.Upgrade())
+            if (DSJL.Tools.DBUpgrade.Upgrade())
             {
-                LoginWindow login = new LoginWindow();
-                Application.Current.MainWindow = login;
-                login.Show();
+                //LoginWindow login = new LoginWindow();
+                //Application.Current.MainWindow = login;
+                //login.Show();
+
+                MainWindow mainWindow = new MainWindow();
+                Application.Current.MainWindow = mainWindow;
+                mainWindow.Show();
             }
             else {
                 Application.Current.Shutdown();
             }
-         
-
-            //MainWindow mainWindow = new MainWindow();
-            //Application.Current.MainWindow = mainWindow;
-            //mainWindow.Show();
         }
 
         public bool SignalExternalCommandLineArgs(IList<string> args)

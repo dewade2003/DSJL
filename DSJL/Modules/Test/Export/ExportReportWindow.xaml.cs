@@ -12,6 +12,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using DSJL.Modules.Test;
+using DSJL.Tools;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DSJL.Modules.Test.Export
 {
@@ -20,8 +23,10 @@ namespace DSJL.Modules.Test.Export
     /// </summary>
     public partial class ExportReportWindow : Window
     {
-        private delegate void UpdateProgressBarDelegate(System.Windows.DependencyProperty dp, Object value);
+        //private delegate void UpdateProgressBarDelegate(System.Windows.DependencyProperty dp, Object value);
         private static string choosePath = "";
+
+        Boolean isExportReportCancled = false;
 
         public ExportReportWindow()
         {
@@ -33,6 +38,10 @@ namespace DSJL.Modules.Test.Export
             exportProgress.Minimum = 0;
             exportProgress.Maximum = TestInfoList.Count;
             exportProgress.Value = 0;
+
+            tbProgress.Text = "0/" + TestInfoList.Count.ToString();
+
+            btnChoosePath_Click(btnChoosePath, new RoutedEventArgs());
         }
 
         /// <summary>
@@ -65,51 +74,84 @@ namespace DSJL.Modules.Test.Export
 
         //选择路径
         private void btnChoosePath_Click(object sender, RoutedEventArgs e)
-        { 
-            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
-            dialog.Description = "请选择保存文件的位置";
-            dialog.ShowNewFolderButton = true;
-            if (choosePath != "") {
-                dialog.SelectedPath = choosePath;
-            }
-            System.Windows.Forms.DialogResult resultPath = dialog.ShowDialog();
-            if (resultPath == System.Windows.Forms.DialogResult.OK)
+        {
+            if (ShowFileDialog.ShowSaveFileDialog(out choosePath, ShowFileDialog.pdfFilter, ShowFileDialog.pdfExt, "测试报告"))
             {
-                choosePath = txtPath.Text = dialog.SelectedPath;
+                choosePath = choosePath.Substring(0, choosePath.LastIndexOf("\\"));
                 btnExport.IsEnabled = true;
+                txtPath.Text = "导出报告位置：" + choosePath;
             }
         }
 
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
+            btnCancle.IsEnabled = true;
+            btnExport.IsEnabled = false;
             double screenWidth = SystemParameters.PrimaryScreenWidth;
-            double value = 0;
-            UpdateProgressBarDelegate updatePbDelegate = new UpdateProgressBarDelegate(exportProgress.SetValue);
-            List<ShowChartWindow> windowList = new List<ShowChartWindow>();
-            for (int i = 0; i < TestInfoList.Count; i++) {
-                tbCurrent.Text = "正在导出:" + TestInfoList[i].Ath_Name;
+            //double value = 0;
+            //UpdateProgressBarDelegate updatePbDelegate = new UpdateProgressBarDelegate(exportProgress.SetValue);
+            //List<ShowChartWindow> windowList = new List<ShowChartWindow>();
 
-                ShowChartWindow window = new ShowChartWindow();
-                window.DataModel = TestInfoList[i];
-                window.Left = screenWidth;
-                window.Visibility = Visibility.Hidden;
-                window.IsExport = true;
-                window.Show();
-                window.ExportReport(choosePath);
-                window.Close();
-                window = null;
+            Task exportReportTask = new Task(() =>
+            {
+                for (int i = 0; i < TestInfoList.Count; i++)
+                {
+                    //quxiao 
+                    if (isExportReportCancled)
+                    {
+                        isExportReportCancled = false;
+                        this.Dispatcher.Invoke(
+                                new Action(() =>
+                                        {
+                                            btnExport.IsEnabled = true;
+                                            btnCancle.IsEnabled = false;
+                                        } )
+                          );
+                        break;
+                    }
 
-                tbProgress.Text = (i + 1) + "/" + TestInfoList.Count;
-                value += 1;
-                Dispatcher.Invoke(updatePbDelegate,
-                    System.Windows.Threading.DispatcherPriority.Background,
-                    new object[] { ProgressBar.ValueProperty, value });
-            }
-            System.GC.Collect();
-            MessageBox.Show("导出完成！","系统信息");
-            this.Close();
+                    //gengxin jindu 
+                    this.Dispatcher.Invoke(
+                                        new Action(() =>
+                                                {
+                                                    tbCurrent.Text = "正在导出:" + TestInfoList[i].Ath_Name;
+                                                    tbProgress.Text = (i + 1) + "/" + TestInfoList.Count;
+                                                    exportProgress.Value += 1;
+
+                                                    //diaoyong daochu
+                                                    ShowChartWindow window = new ShowChartWindow();
+                                                    window.DataModel = TestInfoList[i];
+                                                    window.Left = screenWidth;
+                                                    window.Visibility = Visibility.Hidden;
+                                                    window.IsExport = true;
+                                                    window.Show();
+                                                    window.ExportReport(choosePath);
+                                                    window.Close();
+                                                    window = null;
+                                                }
+                                            )
+                      );
+            
+
+                }//for end
+                this.Dispatcher.Invoke
+                  (
+                      new Action(() =>
+                              {
+                                  MessageBox.Show("导出完成！", "系统信息");
+                                  this.Close();
+                              }
+                        )
+                   );
+            });
+            exportReportTask.Start();
         }
-       
+
+        private void btnCancle_Click(object sender, RoutedEventArgs e)
+        {
+            isExportReportCancled = true;
+        }
+
 
     }
 }

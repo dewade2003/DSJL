@@ -512,13 +512,28 @@ namespace DSJL.DataUtil
         { 
             xdoc = XDocument.Load(xmlFileName);
             XElement datasEle = xdoc.Descendants("datas").ElementAt(0);
+            List<XElement> dataEles =datasEle.Elements().ToList<XElement>();
+            
             int count = int.Parse(datasEle.Attribute("testcount").Value);//总测试次数
             int startIndex = int.Parse(datasEle.Attribute("startindex").Value);//起点
+            int endIndex = 0;
+            if (datasEle.Attribute("endindex")!=null)
+            {
+                endIndex = int.Parse(datasEle.Attribute("endindex").Value);
+            }
+            else
+            {
+                endIndex = dataEles.Count() - 1;
+            }
+
+            dataEles.RemoveRange(endIndex + 1, dataEles.Count()-1 - endIndex);
+            dataEles.RemoveRange(0, startIndex);
+
             string oddTestNum=xdoc.Descendants("action1").ElementAt(0).Attribute("index").Value;//奇数测试次数
             string evenTestNum = xdoc.Descendants("action2").ElementAt(0).Attribute("index").Value;//偶数测试次数
             string[] oddTestNumArr = oddTestNum.Split(',');
             string[] evenTestNumArr = evenTestNum.Split(',');
-            IEnumerable<XElement> dataEles = xdoc.Descendants("data");//所有数据
+         
 
             List<List<XElement>> oddDict = new List<List<XElement>>();//奇数
             List<List<XElement>> evenDict = new List<List<XElement>>();//偶数
@@ -528,7 +543,7 @@ namespace DSJL.DataUtil
 
             if (oddTestNumArr.Contains("1")) {
                 List<XElement> firstEles = (from x in dataEles where x.Attribute("c5").Value == "1" select x).ToList<XElement>();
-                firstEles.RemoveRange(0, startIndex);
+                //firstEles.RemoveRange(0, startIndex);
                 oddDict.Add(firstEles);
                 var maxEle = firstEles.OrderByDescending(x => Math.Abs(int.Parse(x.Attribute(momentColumn).Value))).ElementAt(0);
                 oddMaxMomentList.Add(maxEle);

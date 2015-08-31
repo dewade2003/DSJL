@@ -10,6 +10,7 @@ using System.Data;
 using DSJL.Modules.Test;
 using DSJL.Modules.Standard;
 using DSJL.Modules.Test.Export;
+using DSJL.Caches;
 
 namespace DSJL.Modules
 {
@@ -26,6 +27,7 @@ namespace DSJL.Modules
         List<Model.TestInfoModel> testInfoModelList=new List<Model.TestInfoModel>();
         BLL.TB_AthleteInfo athleteInfoBLL = new BLL.TB_AthleteInfo();
 
+        Dictionary<int, List<Model.TestInfoModel>> testInfoModelListDict = new Dictionary<int, List<Model.TestInfoModel>>();
 
         ContextMenu menu;//列表右键菜单
 
@@ -55,8 +57,13 @@ namespace DSJL.Modules
             itdWindow.Owner = Application.Current.MainWindow;
             itdWindow.SelectedTestItem = testManager.SelectedItem;
             if (itdWindow.ShowDialog() == true) {
-                testManager.RefrenshList();
-                //RefrenshDataGridSource();
+                //if (testInfoModelListDict.ContainsKey(testManager.SelectedItem.ID))
+                //{
+                //    testInfoModelListDict.Remove(testManager.SelectedItem.ID);
+                //}
+                //testManager.RefrenshList();
+                TestInfoModelCache.Refrensh(testManager.SelectedItem.ID);
+                RefrenshDataGridSource();
             }
         }
 
@@ -89,138 +96,53 @@ namespace DSJL.Modules
             MenuItem miShowChart = new MenuItem();
             miShowChart.Header = "查看图表";
             menu.Items.Add(miShowChart);
-            miShowChart.Click += new RoutedEventHandler(miShowChart_Click);
+            miShowChart.Click += new RoutedEventHandler(btnShowChart_Click);
 
             menu.Items.Add(new Separator());
 
             MenuItem miAddInStandard = new MenuItem();
             miAddInStandard.Header = "加入测试参考值";
             menu.Items.Add(miAddInStandard);
-            miAddInStandard.Click += new RoutedEventHandler(miAddInStandard_Click);
+            miAddInStandard.Click += new RoutedEventHandler(btnAddStandard_Click);
 
             MenuItem miCompare = new MenuItem();
-            miCompare.Header = "平均曲线对比";
+            miCompare.Header = "数据对比";
             menu.Items.Add(miCompare);
-            miCompare.Click += new RoutedEventHandler(miCompare_Click);
+            miCompare.Click += new RoutedEventHandler(btnShowCompareChart_Click);
 
             menu.Items.Add(new Separator());
             MenuItem miDelete = new MenuItem();
             miDelete.Header = "删除";
             menu.Items.Add(miDelete);
-            miDelete.Click += new RoutedEventHandler(miDelete_Click);
+            miDelete.Click += new RoutedEventHandler(btnDelete_Click);
         }
-        
-        #region 右键菜单功能
-
-        void miCompare_Click(object sender, RoutedEventArgs e)
-        {
-            Model.TestInfoModel model = dgTestInfo.SelectedValue as Model.TestInfoModel;
-            AvgCurveCompareWindow chartWindow = new AvgCurveCompareWindow();
-            chartWindow.TestInfoModelList = new List<Model.TestInfoModel>() { model};
-            chartWindow.Owner = Application.Current.MainWindow;
-            chartWindow.ShowInTaskbar = false;
-            chartWindow.Owner = Application.Current.MainWindow;
-            chartWindow.ShowDialog();
-        }
-
-        void miAddInStandard_Click(object sender, RoutedEventArgs e)
-        {
-            Model.TestInfoModel model = dgTestInfo.SelectedValue as Model.TestInfoModel;
-            AddToStandardWindow addWindow = new AddToStandardWindow();
-            addWindow.Owner = Application.Current.MainWindow;
-            addWindow.TestInfoModelList = new List<Model.TestInfoModel>() { model };
-            addWindow.Owner = Application.Current.MainWindow;
-            addWindow.ShowDialog();
-        }
-
-        void miDelete_Click(object sender, RoutedEventArgs e)
-        {
-            Model.TestInfoModel model = dgTestInfo.SelectedValue as Model.TestInfoModel;
-            if (MessageBox.Show("删除这些测试数据的同时也将删除测试参考值中的这些测试数据并且不能恢复。\r\n请确认要删除选择的测试数据吗？", "删除测试数据确认", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                if (testInfoBLL.Delete(model.TestID))
-                {
-                    string fileName = AppDomain.CurrentDomain.BaseDirectory + "\\AppData\\XmlData\\" + model.DataFileName;
-                    if (File.Exists(fileName))
-                    {
-                        File.Delete(fileName);
-                    }
-                    RefrenshDataGridSource();
-                }
-                else {
-                    MessageBox.Show("删除记录时出错！","系统错误");
-                }
-            }
-           
-        }
-
-        void miShowChart_Click(object sender, RoutedEventArgs e)
-        {
-            Model.TestInfoModel model = dgTestInfo.SelectedValue as Model.TestInfoModel;
-            ShowChartWindow chartWindow = new ShowChartWindow();
-            chartWindow.DataModel = model;
-            chartWindow.Owner = Application.Current.MainWindow;
-            chartWindow.ShowInTaskbar = false;
-            chartWindow.IsOne = true;
-            chartWindow.ShowDialog();
-        }
-
-        #endregion
 
         //刷新数据表
         private void RefrenshDataGridSource() {
             if (testManager.SelectedItem != null)
             {
-                testInfoModelList = new List<Model.TestInfoModel>();
-                string sql = "select ath.*,test.*,"
-                    + "(select dict_value from tb_dict where dict_groupid=3 and dict_key=test.joint_side) as djointside,"
-                    + "(select dict_value from tb_dict where dict_groupid=1 and dict_key=test.test_mode) as dtestmode,"
-                    + "(select dict_value from tb_dict where dict_groupid=2 and dict_key=test.joint) as djoint,"
-                    + "(select dict_value from tb_dict where dict_groupid=(select id from tb_dict where dict_groupid=2 and dict_key=test.joint) and dict_key=test.plane and instr(dict_groupid2,test.test_mode)>0) as dplane,"
-                    + "(select dict_value from tb_dict where dict_groupid=4 and dict_key=test.InsuredSide) as dInsuredSide,"
-                    + "(select dict_value from tb_dict where dict_groupid=5 and dict_key=test.Gravitycomp) as dGravitycomp "
-                    + "from tb_athleteinfo as ath inner join tb_testinfo as test on ath.id=test.ath_id where 0=0 ";
+                TestInfoModelParams param = new TestInfoModelParams();
                 if (txtKeyWord.Text.Trim() != "")
                 {
-                    sql += "and ath.ath_name like '%" + txtKeyWord.Text.Trim() + "%'";//姓名关键字搜索
-                }
-                if (testManager.SelectedItem != null)
-                {
-                    sql += " and ath.ath_testid=" + testManager.SelectedItem.ID;//测试项目搜索
+                    param.athName = txtKeyWord.Text.Trim();
                 }
                 if (cbJoint.SelectedIndex > 0)
                 {
-                    sql += " and test.joint='" + jointDictList[cbJoint.SelectedIndex].Dict_Key + "'";//关节搜索
+                    param.testJoint = jointDictList[cbJoint.SelectedIndex].Dict_Key;
                 }
                 if (cbTestMode.SelectedIndex > 0)
                 {
-                    sql += " and test.test_mode='" + testmodeDictList[cbTestMode.SelectedIndex].Dict_Key + "'";//测试模式搜索
+                    param.testMode = testmodeDictList[cbTestMode.SelectedIndex].Dict_Key;
                 }
                 if (cbJointSide.SelectedIndex > 0)
                 {
-                    sql += " and test.joint_side='" + jointsideDictList[cbJointSide.SelectedIndex].Dict_Key + "'";//测试侧搜索
+                    param.testJointSide = jointsideDictList[cbJointSide.SelectedIndex].Dict_Key;
                 }
                 if (AthleteInfo != null)
                 {
-                    sql += " and ath.Ath_Code='" + AthleteInfo.Ath_Code + "'";//按人员编号搜索
+                    param.athCode = AthleteInfo.Ath_Code;
                 }
-                sql += " order by test.id asc";
-                DataSet ds = DbHelperOleDb.Query(sql);
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                {
-                    DataRow dr = ds.Tables[0].Rows[i];
-                    Model.TestInfoModel testInfoModel = new Model.TestInfoModel();
-                    testInfoModel.Index = i + 1;
-                    testInfoModel.DGravitycomp = dr["dGravitycomp"].ToString();
-                    testInfoModel.DInsuredSide = dr["dInsuredSide"].ToString();
-                    testInfoModel.DJoint = dr["djoint"].ToString();
-                    testInfoModel.DJointSide = dr["djointside"].ToString();
-                    testInfoModel.DPlane = dr["dplane"].ToString();
-                    testInfoModel.DTestMode = dr["dtestmode"].ToString();
-                    testInfoBLL.GetModelFromDataRow(dr, testInfoModel);
-                    athleteInfoBLL.GetAthleteInfoFromDataRow(dr, testInfoModel);
-                    testInfoModelList.Add(testInfoModel);
-                }
+                testInfoModelList = TestInfoModelCache.GetTestInfoModelListByTestID(testManager.SelectedItem.ID,param);
                 if (AthleteInfo != null)
                 {
                     List<Model.TestInfoModel> currentDateTestInfoList = testInfoModelList.FindAll(x => x.TestDate.ToString("yyyyMMdd") == AthleteInfo.Ath_TestDate.ToString("yyyyMMdd"));
@@ -312,6 +234,7 @@ namespace DSJL.Modules
                         File.Delete(fileName);
                     }
                 }
+                TestInfoModelCache.Refrensh(testManager.SelectedItem.ID);
                 RefrenshDataGridSource();
             }
         }
@@ -382,7 +305,8 @@ namespace DSJL.Modules
         {
             if (testInfoModelList!=null&&testInfoModelList.Count>0)
             {
-                List<Model.TestInfoModel> selectedTestInfoList = testInfoModelList.FindAll(x => x.IsChecked == true);
+                List<Model.TestInfoModel> selectedTestInfoList = TestInfoModelCache.GetCheckedModelList();
+                //List<Model.TestInfoModel> selectedTestInfoList = testInfoModelList.FindAll(x => x.IsChecked == true);
                 if (selectedTestInfoList.Count == 0)
                 {
                     MessageBox.Show("请至少选择一条信息！", "系统信息");
@@ -409,6 +333,7 @@ namespace DSJL.Modules
             List<Model.TestInfoModel> checkedModelList = testInfoModelList.FindAll(x => x.IsChecked == true);
             if (checkedModelList.Count > 0)
             {
+                ExportProgressPage.FileNamePreExt = "";
                 ExportProgressPage.TestInfoList = checkedModelList;
                 ExportDataWindow exportWindow = new ExportDataWindow();
                 exportWindow.Owner = Application.Current.MainWindow;
@@ -423,16 +348,16 @@ namespace DSJL.Modules
         //列表行加载时添加右键功能
         private void dgTestInfo_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            e.Row.ToolTip = "右键查看图表";
-            e.Row.MouseRightButtonDown += (s, a) =>
-            {
-                a.Handled = true;
-                DataGridRow dgr = s as DataGridRow;
-                (sender as DataGrid).SelectedIndex = dgr.GetIndex();
-                dgr.Focus();
-                menu.PlacementTarget = dgr;
-                menu.IsOpen = true;
-            };
+            //e.Row.ToolTip = "右键查看图表";
+            //e.Row.MouseRightButtonDown += (s, a) =>
+            //{
+            //    a.Handled = true;
+            //    DataGridRow dgr = s as DataGridRow;
+            //    (sender as DataGrid).SelectedIndex = dgr.GetIndex();
+            //    dgr.Focus();
+            //    menu.PlacementTarget = dgr;
+            //    menu.IsOpen = true;
+            //};
         }
 
         //导出多个报告
@@ -457,8 +382,32 @@ namespace DSJL.Modules
             qitw.Owner = Application.Current.MainWindow;
             if (qitw.ShowDialog() == true) {
                 testManager.RefrenshList();
-                RefrenshDataGridSource();
+              
+                //RefrenshDataGridSource();
             }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            TestInfoModelCache.SetUncheck();
+        }
+
+        private void dgTestInfo_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            List<Model.TestInfoModel> checkedModelList = testInfoModelList.FindAll(x=>x.IsChecked==true);
+            if (checkedModelList.Count>0)
+            {
+                menu.IsOpen = true;
+            }
+        
+        }
+
+        private void StackPanel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            StackPanel target=(StackPanel)sender;
+            int index=(int)target.Tag;
+            Model.TestInfoModel selectedModel = testInfoModelList.Find(x => x.Index == index);
+            selectedModel.IsChecked =! selectedModel.IsChecked;
         }
     }
 }

@@ -50,6 +50,12 @@ namespace DSJL.Modules.Test.Export
             set;
         }
 
+        public static string FileNamePreExt
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 参数list
         /// </summary>
@@ -279,7 +285,7 @@ namespace DSJL.Modules.Test.Export
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "请选择保存文件的路径";
             sfd.DefaultExt = "xls";
-            sfd.FileName = "测试数据导出(" + DateTime.Now.ToString("yyyy-MM-dd") + ")";
+            sfd.FileName =FileNamePreExt+ "测试数据导出(" + DateTime.Now.ToString("yyyy-MM-dd") + ")";
             sfd.OverwritePrompt = true;
             sfd.AddExtension = true;
             sfd.Filter = "Excel文件(*.xls)|*.xls";

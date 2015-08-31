@@ -18,6 +18,7 @@ using DSJL.Modules.Test.Export;
 using Microsoft.Win32;
 using DSJL.Modules.Standard;
 using System.Xml.Linq;
+using DSJL.Tools;
 
 namespace DSJL.Modules
 {
@@ -53,19 +54,18 @@ namespace DSJL.Modules
 
         private void ReferenshList()
         {
+            testInfoModelList = new List<Model.TestInfoModel>();
             if (standManager.SelectedItem != null)
             {
                 if (standManager.SelectedItem.Stand_Level == 2)
                 {
-                    testInfoModelList.Clear();
                     testInfoModelList = refeBLL.GetStandTestInfoModelList(standManager.SelectedItem.ID);
-                    Binding b = new Binding() { Source = testInfoModelList };
-                    dgTestInfo.SetBinding(DataGrid.ItemsSourceProperty, b);
-
-                    pageAvgCurve.ModelList = testInfoModelList;
                 }
-
             }
+            Binding b = new Binding() { Source = testInfoModelList };
+            dgTestInfo.SetBinding(DataGrid.ItemsSourceProperty, b);
+
+            pageAvgCurve.ModelList = testInfoModelList;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -101,6 +101,7 @@ namespace DSJL.Modules
                 if (standManager.SelectedItem.Stand_Level == 2)
                 {
                     btnAddData.IsEnabled = true;
+                
                 }
                 else
                 {
@@ -161,6 +162,7 @@ namespace DSJL.Modules
             }
         }
 
+        //导出报告
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
             if (testInfoModelList.Count == 0)
@@ -217,6 +219,14 @@ namespace DSJL.Modules
                     pdfFileName = "等速肌力个人与参考值对比报告(" + DateTime.Now.ToString("yyyyMMddHHmmss") + ")";
                     reportTitle = "等速肌力个人与参考值对比报告";
                 }
+
+                string selectedPath = "";
+                if(!ShowFileDialog.ShowSaveFileDialog(out selectedPath,ShowFileDialog.pdfFilter,ShowFileDialog.pdfExt,"测验报告")){
+                    return;
+                }else{
+                    selectedPath=selectedPath.Substring(0,selectedPath.LastIndexOf("\\"));
+                }
+
                 //生成数据xml对象，供导出报告使用
                 DSJL.Export.GenerateCompareResportXml garxml = new DSJL.Export.GenerateCompareResportXml(exportMode);
                 garxml.CurrentTitle = reportTitle;
@@ -225,21 +235,16 @@ namespace DSJL.Modules
                 garxml.StandName = standName;
                 System.Xml.Linq.XDocument xdoc = garxml.GenerateXDoc();
 
-                System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
-                fbd.Description = "选择保存报告的位置";
-                fbd.ShowNewFolderButton = true;
-                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    //生成平均曲线图片
-                    DSJL.Export.SaveUIElementToImage.SaveToImage(pageAvgCurve, AppDomain.CurrentDomain.BaseDirectory + "avg.jpg");
-                    //开始导出
-                    DSJL.Export.ExportCompareReport exportReport = new DSJL.Export.ExportCompareReport(xdoc);
-                    exportReport.Export(fbd.SelectedPath + "\\" + pdfFileName + ".pdf");
+                //生成平均曲线图片
+                DSJL.Export.SaveUIElementToImage.SaveToImage(pageAvgCurve, AppDomain.CurrentDomain.BaseDirectory + "avg.jpg");
+                //开始导出
+                DSJL.Export.ExportCompareReport exportReport = new DSJL.Export.ExportCompareReport(xdoc);
+                exportReport.Export(selectedPath + "\\" + pdfFileName + ".pdf");
 
-                    //删除平均曲线图片
-                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "avg.jpg");
-                    MessageBox.Show("导出成功！", "系统信息");
-                }
+                //删除平均曲线图片
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "avg.jpg");
+                MessageBox.Show("导出成功！", "系统信息");
+                
 
             }
             catch (Exception ee)
@@ -265,6 +270,7 @@ namespace DSJL.Modules
             return models;
         }
 
+        //导出数据
         private void btnExportData_Click(object sender, RoutedEventArgs e)
         {
             string standName = "";
@@ -283,36 +289,52 @@ namespace DSJL.Modules
                 return;
             }
 
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Title = "请选择保存文件的路径";
-            sfd.DefaultExt = "xls";
-            sfd.FileName = standName + "测试参考值数据导出(" + DateTime.Now.ToString("yyyy-MM-dd") + ")";
-            sfd.OverwritePrompt = true;
-            sfd.AddExtension = true;
-            sfd.Filter = "Excel文件(*.xls)|*.xls";
-            if (sfd.ShowDialog() == true)
+            List<Model.TestInfoModel> checkedModelList = testInfoModelList.FindAll(x => x.IsChecked == true);
+            if (checkedModelList.Count > 0)
             {
-                string savePath = sfd.FileName;
-
-                List<List<XElement>> dataList = DSJL.Export.GenerateCompareResportXml.ComputeAvg(testInfoModelList);
-                ExportData exportData = new ExportData();
-                try
-                {
-                    exportData.Export(dataList, savePath);
-                    MessageBox.Show("导出成功！", "系统信息");
-                }
-                catch (Exception ee)
-                {
-                    MessageBox.Show("导出数据异常！\r\n" + ee.Message, "系统错误");
-                }
-
+                ExportProgressPage.FileNamePreExt = standName;
+                ExportProgressPage.TestInfoList = checkedModelList;
+                ExportDataWindow exportWindow = new ExportDataWindow();
+                exportWindow.Owner = Application.Current.MainWindow;
+                exportWindow.ShowDialog();
             }
+            else
+            {
+                MessageBox.Show("请至少选择一条数据！", "系统信息");
+            }
+
+            //SaveFileDialog sfd = new SaveFileDialog();
+            //sfd.Title = "请选择保存文件的路径";
+            //sfd.DefaultExt = "xls";
+            //sfd.FileName = standName + "测试参考值数据导出(" + DateTime.Now.ToString("yyyy-MM-dd") + ")";
+            //sfd.OverwritePrompt = true;
+            //sfd.AddExtension = true;
+            //sfd.Filter = "Excel文件(*.xls)|*.xls";
+            //if (sfd.ShowDialog() == true)
+            //{
+            //    string savePath = sfd.FileName;
+
+            //    List<List<XElement>> dataList = DSJL.Export.GenerateCompareResportXml.ComputeAvg(testInfoModelList);
+            //    ExportData exportData = new ExportData();
+            //    try
+            //    {
+            //        exportData.Export(dataList, savePath);
+            //        MessageBox.Show("导出成功！", "系统信息");
+            //    }
+            //    catch (Exception ee)
+            //    {
+            //        MessageBox.Show("导出数据异常！\r\n" + ee.Message, "系统错误");
+            //    }
+
+            //}
         }
 
+        //添加数据
         private void btnAddData_Click(object sender, RoutedEventArgs e)
         {
             AddDataWindow adddataWindow = new AddDataWindow();
             adddataWindow.StandInfo = standManager.SelectedItem;
+            adddataWindow.Owner = Application.Current.MainWindow;
             bool? result= adddataWindow.ShowDialog();
             if (result==true)
             {

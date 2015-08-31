@@ -52,14 +52,14 @@
   </table>
   <table remark="统计信息">
     <row>
-      <cell label=""/>
+      <cell label="参数" rowspan="2"/>
       <cell label="动作1" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
       <cell label="动作2" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
     </row>
     <row>
-      <cell label="参数" rowspan="2"/>
+      <!--<cell label=""/>-->
       <cell label="极值"/>
       <cell label="平均值"/>
       <cell label="极值"/>
@@ -68,9 +68,9 @@
     <row>
       <cell label="数据计算选用次数" />
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
     </row>
     <row>
       <cell label="峰力矩（N•m）" />
@@ -145,9 +145,9 @@
     <row>
       <cell label="50-100ms力矩斜率(N*m/ms)" />
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
     </row>
     <row>
       <cell label="达到最大力矩20%所用时间（ms）" />
@@ -166,23 +166,23 @@
     <row>
       <cell label="20-70%最大力矩的斜率(N*m/ms)" />
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
     </row>
     <row>
       <cell label="疲劳下降率1" />
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
     </row>
     <row>
       <cell label="疲劳下降率2" />
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
       <cell label="" colspan="2"/>
-      <cell label=""/>
+      <!--<cell label=""/>-->
     </row>
     <row>
       <cell label="峰值力矩比值" />

@@ -153,7 +153,15 @@ namespace DSJL.Export
                 List<PdfPCell> cellList = new List<iTextSharp.text.pdf.PdfPCell>();
                 foreach (XElement cellEle in rowEle.Elements()) {
                     string label = cellEle.Attribute("label").Value;
-                    string value = cellEle.Attribute("value").Value;
+                    if (label.Trim().Equals(""))
+                    {
+                        label = "/";
+                    }
+                    string value = cellEle.Attribute("value").Value.Trim();
+                    if (value.Trim().Equals(""))
+                    {
+                        value = "/";
+                    }
 
                     iTextSharp.text.pdf.PdfPCell cellLabel = new iTextSharp.text.pdf.PdfPCell(new Phrase(label, fontLabel));
                     cellLabel.FixedHeight = 26;
@@ -203,29 +211,34 @@ namespace DSJL.Export
             pdfDoc.Add(parTableRemark);
 
             PdfPTable table = new iTextSharp.text.pdf.PdfPTable(new float[] { 350, 100, 100, 100, 100 });
-            List<PdfPRow> rowList = new List<iTextSharp.text.pdf.PdfPRow>();
+            //List<PdfPRow> rowList = new List<iTextSharp.text.pdf.PdfPRow>();
             for (int i = 0; i < tableEle.Elements().Count(); i++) {
                 XElement rowEle = tableEle.Elements().ElementAt(i);
-                List<PdfPCell> cellList = new List<iTextSharp.text.pdf.PdfPCell>();
+                //List<PdfPCell> cellList = new List<iTextSharp.text.pdf.PdfPCell>();
                 foreach (XElement cellEle in rowEle.Elements())
                 {
                     string label = cellEle.Attribute("label").Value;
+                    if (label.Trim().Equals(""))
+                    {
+                        label = "/";
+                    }
 
                     iTextSharp.text.pdf.PdfPCell cellLabel = null;
                     if (i < 2)
                     {
-                        cellLabel = new iTextSharp.text.pdf.PdfPCell(new Phrase(label, fontLabel));
-                        cellLabel.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+                        cellLabel = new iTextSharp.text.pdf.PdfPCell(new Paragraph(label, fontLabel));
+                        cellLabel.HorizontalAlignment = Element.ALIGN_CENTER;
                     }
                     else
                     {
-                        cellLabel = new iTextSharp.text.pdf.PdfPCell(new Phrase(label, fontContent));
-                        cellLabel.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                        cellLabel = new iTextSharp.text.pdf.PdfPCell(new Paragraph(label, fontContent));
+                        cellLabel.HorizontalAlignment = Element.ALIGN_LEFT;
                     }
                     cellLabel.FixedHeight = 26;
-                    cellLabel.Padding = 6;
-                  
-                    cellLabel.VerticalAlignment = PdfPCell.ALIGN_CENTER;
+                    cellLabel.Padding = 0;
+                    cellLabel.PaddingLeft = cellLabel.PaddingRight = 6;
+
+                    cellLabel.VerticalAlignment = Element.ALIGN_MIDDLE;
 
                     XAttribute colSpanAtt = cellEle.Attribute("colspan");
                     if (colSpanAtt != null)
@@ -245,14 +258,15 @@ namespace DSJL.Export
                             cellLabel.Rowspan = int.Parse(rowspan);
                         }
                     }
-                 
 
-                    cellList.Add(cellLabel);
+                    table.AddCell(cellLabel);
+                    //cellList.Add(cellLabel);
                 }
-                PdfPRow row = new iTextSharp.text.pdf.PdfPRow(cellList.ToArray<PdfPCell>());
-                rowList.Add(row);
+                //PdfPRow row = new iTextSharp.text.pdf.PdfPRow(cellList.ToArray<PdfPCell>());
+                //rowList.Add(row);
             }
-            table.Rows.AddRange(rowList);
+            
+            //table.Rows.AddRange(rowList);
             table.KeepTogether = true;
             table.SpacingBefore = 10;
             table.TotalWidth = 750;

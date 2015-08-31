@@ -395,6 +395,8 @@ namespace DSJL.Export
                 cellEles.ElementAt(2).Attribute("label").Value = ac1avg;
                 cellEles.ElementAt(3).Attribute("label").Value = ac2max;
                 cellEles.ElementAt(4).Attribute("label").Value = ac2avg;
+
+            
             }
 
             rootEle.Add(paramsTableEle);//添加平均参数信息
@@ -404,6 +406,9 @@ namespace DSJL.Export
 
         public static List<List<XElement>> ComputeAvg(List<Model.TestInfoModel> modelList)
         {
+            var groupedModelList = modelList.GroupBy(x=>x.Ath_ID);
+
+
             List<XElement> oddEleList = new List<XElement>();//每个测试信息的动作1 的参数节点
             List<XElement> evenEleList = new List<XElement>();//每个测试信息的动作2 的参数节点
             for (int i = 0; i < modelList.Count; i++)

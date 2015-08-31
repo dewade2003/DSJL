@@ -39,7 +39,7 @@
             </Border>
 
             <DataGrid Name="dgAthlete" Grid.Row="1" HorizontalGridLinesBrush="#FF898989" VerticalGridLinesBrush="#FF898989" 
-                      SelectionChanged="dgAthlete_SelectionChanged" LoadingRow="dgAthlete_LoadingRow">
+                      SelectionChanged="dgAthlete_SelectionChanged" LoadingRow="dgAthlete_LoadingRow" PreviewMouseRightButtonDown="dgAthlete_PreviewMouseRightButtonDown">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="序号" IsReadOnly="True" MinWidth="50">
                         <DataGridTemplateColumn.HeaderTemplate>

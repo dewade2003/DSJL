@@ -116,17 +116,21 @@ namespace DSJL.Export
                 {
                     string label = cellEle.Attribute("label").Value;
                     string value = cellEle.Attribute("value").Value;
+                    if (value.Trim().Equals(""))
+                    {
+                        value = "/";
+                    }
 
                     iTextSharp.text.pdf.PdfPCell cellLabel = new iTextSharp.text.pdf.PdfPCell(new Phrase(label, fontLabel));
                     cellLabel.FixedHeight = 24;
                     cellLabel.Padding = 4;
                     cellLabel.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
-                    cellLabel.VerticalAlignment = PdfPCell.ALIGN_CENTER;
+                    cellLabel.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
 
                     PdfPCell cellContent = new iTextSharp.text.pdf.PdfPCell(new Phrase(value, fontContent));
                     cellContent.FixedHeight = 24;
                     cellContent.PaddingTop = 4;
-                    cellContent.VerticalAlignment = PdfPCell.ALIGN_CENTER;
+                    cellContent.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
                     XAttribute colSpanAtt = cellEle.Attribute("colspan");
                     if (colSpanAtt != null)
                     {
@@ -174,6 +178,10 @@ namespace DSJL.Export
                 foreach (XElement cellEle in rowEle.Elements())
                 {
                     string label = cellEle.Attribute("label").Value;
+                    if (label.Trim().Equals(""))
+                    {
+                        label = "/";
+                    }
 
                     iTextSharp.text.pdf.PdfPCell cellLabel = null;
                     if (i < 2)
@@ -189,7 +197,7 @@ namespace DSJL.Export
                     cellLabel.FixedHeight = 24;
                     cellLabel.Padding = 4;
 
-                    cellLabel.VerticalAlignment = PdfPCell.ALIGN_CENTER;
+                    cellLabel.VerticalAlignment = PdfPCell.ALIGN_MIDDLE; ;
 
                     XAttribute colSpanAtt = cellEle.Attribute("colspan");
                     if (colSpanAtt != null)
@@ -249,6 +257,14 @@ namespace DSJL.Export
                 foreach (XElement cellEle in rowEle.Elements())
                 {
                     string label = cellEle.Attribute("label").Value;
+                    if (label.Trim().Equals(""))
+                    {
+                        label = "/";
+                    }
+                    if (label.Trim().Equals("-"))
+                    {
+                        label = "";
+                    }
 
                     iTextSharp.text.pdf.PdfPCell cellLabel = null;
                     if (i < 1)
@@ -264,7 +280,7 @@ namespace DSJL.Export
                     cellLabel.FixedHeight = 24;
                     cellLabel.Padding = 4;
 
-                    cellLabel.VerticalAlignment = PdfPCell.ALIGN_CENTER;
+                    cellLabel.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
 
                     XAttribute colSpanAtt = cellEle.Attribute("colspan");
                     if (colSpanAtt != null)

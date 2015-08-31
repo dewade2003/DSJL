@@ -25,12 +25,15 @@
             </Border>
             <Grid Grid.Row="1">
                 <TextBlock Name="txtPath" Margin="20,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <ProgressBar Name="exportProgress" Margin="20,0,80,0" Height="30" VerticalAlignment="Center" />
-                <TextBlock Name="tbProgress" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0"/>
-                <TextBlock Name="tbCurrent" Margin="20,104,0,48" VerticalAlignment="Center"/>
+                <ProgressBar Name="exportProgress" Margin="20,0,60,0" Height="30" VerticalAlignment="Center" />
+                <TextBlock Name="tbProgress" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0" Text="0/0"/>
+                <TextBlock Name="tbCurrent" Margin="20,104,0,48" VerticalAlignment="Center" />
             </Grid>
             <Border Grid.Row="2" Style="{DynamicResource ResourceKey=controlBarStyle}">
-                <Button Name="btnExport" IsEnabled="False" Content="开始导出" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnExport_Click"/>
+                <Grid>
+                    <Button Name="btnExport" IsEnabled="False" Content="开始导出" HorizontalAlignment="Right" Margin="0,0,130,0" Click="btnExport_Click"/>
+                    <Button Name="btnCancle" Content="取消(未开放)" IsEnabled="False" Click="btnCancle_Click"  HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

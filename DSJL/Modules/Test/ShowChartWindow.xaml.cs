@@ -22,6 +22,9 @@ using DSJL.DBUtility;
 using WPFHelper.Window;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using DSJL.Tools;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DSJL.Modules.Test
 {
@@ -178,6 +181,15 @@ namespace DSJL.Modules.Test
             string oddTestCountStr = oddActionEle.Attribute("index").Value;
             string evenTestCountStr = evenActionEle.Attribute("index").Value;
             int startIndex = int.Parse(datasEle.Attribute("startindex").Value);
+            int endIndex = 0;
+            if (datasEle.Attribute("endindex")!=null)
+            {
+                endIndex = int.Parse(datasEle.Attribute("endindex").Value);
+            }
+            else
+            {
+                endIndex = dataEles.Count - 1;
+            }
             int testCount = int.Parse(datasEle.Attribute("testcount").Value) / 2;
 
             for (int i = 1; i <= testCount; i++)
@@ -207,7 +219,7 @@ namespace DSJL.Modules.Test
             DataSeries ds = new DataSeries();
             bool isAddOddLegend = false;
             bool isAddEvenLegend = false;
-            for (int i = startIndex; i < dataEles.Count; i++)
+            for (int i = startIndex; i < endIndex; i++)
             {
                 XElement xe = dataEles.ElementAt(i);
                 DataPoint dp = new DataPoint() { YValue = Math.Abs(double.Parse(xe.Attribute(momentColumn).Value)) * 0.1, XValue = double.Parse(xe.Attribute("c0").Value) };
@@ -437,13 +449,11 @@ namespace DSJL.Modules.Test
         //导出报告
         private void btnExportReport_Click(object sender, RoutedEventArgs e)
         {
-            //string fileName = "";
-
-            System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
-            fbd.Description = "选择保存报告的位置";
-            fbd.ShowNewFolderButton = true;
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                ExportReport(fbd.SelectedPath);
+            string selectedPath = "";
+            if (ShowFileDialog.ShowSaveFileDialog(out selectedPath, ShowFileDialog.pdfFilter, ShowFileDialog.pdfExt, "测验报告"))
+            {
+                selectedPath = selectedPath.Substring(0, selectedPath.LastIndexOf("\\"));
+                ExportReport(selectedPath);
                 MessageBox.Show("导出成功!", "系统信息");
             }
         }
@@ -458,6 +468,7 @@ namespace DSJL.Modules.Test
             tab.UpdateLayout();
             tab.SelectedIndex = 0;
             tab.UpdateLayout();
+         
             try
             {
                 XDocument reportDoc = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "\\AppTemplate\\report.xml");
@@ -503,7 +514,7 @@ namespace DSJL.Modules.Test
                 //填充动作1和动作2的名称
                 XElement actionNameRowEle = rowEles.ElementAt(0);
                 actionNameRowEle.Elements().ElementAt(1).Attribute("label").Value = actionModel.actionone;
-                actionNameRowEle.Elements().ElementAt(3).Attribute("label").Value = actionModel.actiontwo;
+                actionNameRowEle.Elements().ElementAt(2).Attribute("label").Value = actionModel.actiontwo;
                 //填充测试次数
                 XElement choosedTestCountRowEle = rowEles.ElementAt(2);
 
@@ -511,7 +522,7 @@ namespace DSJL.Modules.Test
                 XElement action2Ele = dataDoc.Descendants("action2").ElementAt(0);
 
                 choosedTestCountRowEle.Elements().ElementAt(1).Attribute("label").Value = action1Ele.Attribute("index").Value;
-                choosedTestCountRowEle.Elements().ElementAt(3).Attribute("label").Value = action2Ele.Attribute("index").Value;
+                choosedTestCountRowEle.Elements().ElementAt(2).Attribute("label").Value = action2Ele.Attribute("index").Value;
 
                 IEnumerable<XElement> oddValues = action1Ele.Elements();
                 IEnumerable<XElement> evenValue = action2Ele.Elements();
@@ -521,10 +532,28 @@ namespace DSJL.Modules.Test
 
                     XElement oddValueEle = oddValues.ElementAt(i - 3);
                     XElement evenValueEle = evenValue.ElementAt(i - 3);
-                    cellEles.ElementAt(1).Attribute("label").Value = oddValueEle.Attribute("max").Value;
-                    cellEles.ElementAt(2).Attribute("label").Value = oddValueEle.Attribute("avg").Value;
-                    cellEles.ElementAt(3).Attribute("label").Value = evenValueEle.Attribute("max").Value;
-                    cellEles.ElementAt(4).Attribute("label").Value = evenValueEle.Attribute("avg").Value;
+
+                    if (cellEles.ElementAt(1).Attribute("colspan")!=null)
+                    {
+                        string oddMaxValue = oddValueEle.Attribute("max").Value;
+                        cellEles.ElementAt(1).Attribute("label").Value = oddMaxValue;
+
+                        string evenMaxValue = evenValueEle.Attribute("max").Value;
+                        cellEles.ElementAt(2).Attribute("label").Value = evenMaxValue.Trim();
+                    }
+                    else
+                    {
+                        string oddMaxValue = oddValueEle.Attribute("max").Value;
+                        cellEles.ElementAt(1).Attribute("label").Value = oddMaxValue;
+                        string oddAvgValue = oddValueEle.Attribute("avg").Value;
+                        cellEles.ElementAt(2).Attribute("label").Value = oddAvgValue.Trim();
+                        string evenMaxValue = evenValueEle.Attribute("max").Value;
+                        cellEles.ElementAt(3).Attribute("label").Value = evenMaxValue.Trim();
+                        string evenAvgValue = evenValueEle.Attribute("avg").Value;
+                        cellEles.ElementAt(4).Attribute("label").Value = evenAvgValue.Trim();
+                    }
+                 
+              
                 }
 
                 SaveToImage(chartGrid, AppDomain.CurrentDomain.BaseDirectory + "progress.jpg");
@@ -532,23 +561,8 @@ namespace DSJL.Modules.Test
                 SaveToImage(maxMomentLineGrid, AppDomain.CurrentDomain.BaseDirectory + "maxline.jpg");
                 SaveToImage(avgPanel, AppDomain.CurrentDomain.BaseDirectory + "avg.jpg");
 
-                //ChartWindow chartWindow = new ChartWindow();
-                //chartWindow.ProgressDS = progressChart.Series;
-                //chartWindow.MaxColumnDS = maxMomentChart.Series;
-                //chartWindow.MaxLineDS = maxMomentLineChart.Series;
-                //chartWindow.OddAvgDS = oddAvgCurveChart.Series;
-                //chartWindow.EvenAvgDS = evenAvgCurveChart.Series;
-                //if (chartWindow.ShowDialog() == true) {
-
-                //}
-
                 exportReport = new ExportReport(reportDoc);
                 exportReport.Export(fileName);
-                //progressChart.Series = chartWindow.ProgressDS;
-                //maxMomentChart.Series = chartWindow.MaxColumnDS;
-                //maxMomentLineChart.Series = chartWindow.MaxLineDS;
-                //oddAvgCurveChart.Series = chartWindow.OddAvgDS;
-                //evenAvgCurveChart.Series = chartWindow.EvenAvgDS;
 
                 File.Delete(AppDomain.CurrentDomain.BaseDirectory + "progress.jpg");
                 File.Delete(AppDomain.CurrentDomain.BaseDirectory + "maxcolumn.jpg");

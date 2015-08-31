@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="DSJL.exe" version="2.0.0.4" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
+  <asmv1:assemblyIdentity name="DSJL.exe" version="3.0.0.8" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
   <description asmv2:iconFile="Assets\Icons\dsjl.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -55,7 +55,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>7n/iHXUWIC4o0wNIWVDFdBM2zKE=</dsig:DigestValue>
+        <dsig:DigestValue>tgN9r5tte9dls5D0RRCh7fQS+DI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -72,14 +72,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBUtility.dll" size="9216">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DBUtility.dll" size="10752">
       <assemblyIdentity name="DBUtility" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>NRRMcDvTQ46FCa//HtOk0XIy+ME=</dsig:DigestValue>
+        <dsig:DigestValue>58GNApsTitFlz0mfKWB6nk2ZO0g=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -96,14 +96,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DSJL.exe" size="635904">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DSJL.exe" size="656384">
       <assemblyIdentity name="DSJL" version="2.0.0.2" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>dcsBkZTefCjizrnu00F4kiie3Pg=</dsig:DigestValue>
+        <dsig:DigestValue>QdpodpqKqIPvsfYqLK8CjCBWbEw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -115,43 +115,43 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>PL6jWM9T9dQhGUUUk3LKkn1+Q0o=</dsig:DigestValue>
+        <dsig:DigestValue>M/t9q9T07SPQM5gynNMWGWSmTgo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DSJL.DAL.dll" size="57344">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DSJL.DAL.dll" size="65536">
       <assemblyIdentity name="DSJL.DAL" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>520zKhk3uZpufkfmEXmReiUCxqM=</dsig:DigestValue>
+        <dsig:DigestValue>G7ADNEx+OevBgli1A23PFpCcy+U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DSJL.Model.dll" size="32768">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DSJL.Model.dll" size="36864">
       <assemblyIdentity name="DSJL.Model" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>YqkQ6vn0FCSkJlpQ/SIxfdSdoRc=</dsig:DigestValue>
+        <dsig:DigestValue>Ru43Rkds7MLVlRjzxAXDSOTTdvI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExcelDao.dll" size="5120">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExcelDao.dll" size="6144">
       <assemblyIdentity name="ExcelDao" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>ai+3+tFR+sbUeLRgjHbwjnIn1Zw=</dsig:DigestValue>
+        <dsig:DigestValue>B44lbrZOQAFGHCzpmD4s3Qh4nzk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -359,15 +359,6 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="AppData\DSJLDB.mdb" size="999424" writeableType="applicationData">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>nD4PaBzlll0Zca5ilAkNgT/e3So=</dsig:DigestValue>
-    </hash>
-  </file>
   <file name="AppTemplate\avgreport.xml" size="4810" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
@@ -377,13 +368,13 @@
       <dsig:DigestValue>9KzvPrwOjMBbCzyUw17BrdC5B7M=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="AppTemplate\CompareResportTempalte.xml" size="10671" writeableType="applicationData">
+  <file name="AppTemplate\CompareResportTempalte.xml" size="10651" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>GiRbClc3GURogBagy0pzrGJcEy0=</dsig:DigestValue>
+      <dsig:DigestValue>pGyCFwhXGgQ2dzFg3A6vk2U1xDk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="AppTemplate\exportdata.xls" size="20480">
@@ -401,16 +392,16 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>w0k29K1/R/zAfnXJlZGlxCCL+k4=</dsig:DigestValue>
+      <dsig:DigestValue>6wWmyQozi7fwF1j5UDxgVwGcb2E=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="AppTemplate\report.xml" size="5448" writeableType="applicationData">
+  <file name="AppTemplate\report.xml" size="5539" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>SAM00EY903T9ed+kfKOZiPDvUQ0=</dsig:DigestValue>
+      <dsig:DigestValue>P4lUjxxcSaZ+O58mKaaFWJAR+XA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Assets\Icons\dsjl.ico" size="67646">

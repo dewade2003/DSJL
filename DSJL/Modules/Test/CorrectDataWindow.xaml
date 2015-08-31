@@ -28,7 +28,8 @@
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Margin="5,0">
 
                     <Button Name="btnSetStart" IsEnabled="False" Content="设为测试起点" Margin="10,0" Click="btnSetStart_Click"/>
-                    
+                    <Button Name="btnSetEnd" IsEnabled="False" Content="设为测试终点" Margin="10,0" Click="btnSetEnd_Click"/>
+
                     <Button Name="btnSetPreEnd" IsEnabled="False" Content="设为上一次终点" Margin="20,0,10,0" Click="btnSetPreEnd_Click"/>
                     <Button Name="btnSetNextStart" IsEnabled="False" Content="设为下一次起点" Margin="10,0" Click="btnSetNextStart_Click"/>
 

@@ -29,7 +29,7 @@
   </table>
   <table remark="动作1对比信息">
     <row>
-      <cell label=""/>
+      <cell label="-"/>
       <cell label="受试者1" colspan="2"/>
       <cell label=""/>
       <cell label="受试者2" colspan="2"/>
@@ -38,7 +38,7 @@
       <cell label=""/>
     </row>
     <row>
-      <cell label=""/>
+      <cell label="-"/>
       <cell label="动作1" colspan="2"/>
       <cell label=""/>
       <cell label="动作1" colspan="2"/>
@@ -47,7 +47,7 @@
       <cell label=""/>
     </row>
     <row>
-      <cell label="参数" rowspan="2"/>
+      <cell label="参数"/>
       <cell label="极值"/>
       <cell label="平均值"/>
       <cell label="极值"/>
@@ -227,7 +227,7 @@
       <cell label=""/>
     </row>
     <row>
-      <cell label=""/>
+      <cell label="-"/>
       <cell label="动作2" colspan="2"/>
       <cell label=""/>
       <cell label="动作2" colspan="2"/>
@@ -236,7 +236,7 @@
       <cell label=""/>
     </row>
     <row>
-      <cell label="参数" rowspan="2"/>
+      <cell label="参数" />
       <cell label="极值"/>
       <cell label="平均值"/>
       <cell label="极值"/>

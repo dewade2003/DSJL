@@ -8,7 +8,7 @@
        xmlns:dsjl="clr-namespace:DSJL"
       mc:Ignorable="d" 
        d:DesignHeight="600" d:DesignWidth="1004"
-	Title="PageTestInfo" Loaded="Page_Loaded">
+	Title="PageTestInfo" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
     <Page.Resources>
         <Converter:DateTimeConverter x:Key="dtConv"/>
         <Converter:TimeConverter x:Key="timeConv"/>
@@ -32,7 +32,7 @@
                     <Button Name="btnQuickImport" Margin="5,0" Content="快速导入数据" Click="btnQuickImport_Click"/>
                     <Button Name="btnShowChart" Margin="20,0,5,0" Width="80" Content="查看图表" Click="btnShowChart_Click"/>
                     <Button Name="btnAddStandard" Margin="5,0" Content="加入测试参考值" Click="btnAddStandard_Click"/>
-                    <Button Name="btnShowCompareChart" Margin="5,0" Content="平均曲线对比" Click="btnShowCompareChart_Click"/>
+                    <Button Name="btnShowCompareChart" Margin="5,0" Content="数据对比" Click="btnShowCompareChart_Click"/>
                     <Button Name="btnExportReport" Margin="20,0,5,0" Content="导出测试报告" Click="btnExportReport_Click"/>
                     <Button Name="btnExport" Margin="5,0" Content="导出测试数据" Click="btnExport_Click"/>
                     <Button Name="btnDelete" Margin="20,0,10,0" Width="60" Content="删除" Click="btnDelete_Click"/>
@@ -52,17 +52,17 @@
                     <TextBox Name="txtKeyWord" Width="100" Height="26" VerticalAlignment="Center" TextChanged="txtKeyWord_TextChanged"/>
                     <TextBlock Text="测试关节：" TextAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     <ComboBox Name="cbJoint" Width="150" Height="26" VerticalAlignment="Center" ItemTemplate="{StaticResource ResourceKey=dictDT}" 
-                              SelectionChanged="cbJoint_SelectionChanged"/>
+                              SelectionChanged="cbJoint_SelectionChanged" SelectedIndex="0"/>
                     <TextBlock Text="测试模式：" TextAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     <ComboBox Name="cbTestMode" Width="150" Height="26" VerticalAlignment="Center" ItemTemplate="{StaticResource ResourceKey=dictDT}" 
-                              SelectionChanged="cbJoint_SelectionChanged"/>
+                              SelectionChanged="cbJoint_SelectionChanged" SelectedIndex="0"/>
                     <TextBlock Text="测试侧：" TextAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     <ComboBox Name="cbJointSide" Width="150" Height="26" VerticalAlignment="Center" ItemTemplate="{StaticResource ResourceKey=dictDT}" 
-                              SelectionChanged="cbJoint_SelectionChanged"/>
+                              SelectionChanged="cbJoint_SelectionChanged" SelectedIndex="0"/>
                 </StackPanel>
             </Border>
 
-            <DataGrid Name="dgTestInfo" Grid.Row="2" SelectionChanged="dgTestInfo_SelectionChanged" LoadingRow="dgTestInfo_LoadingRow" MouseDoubleClick="dgTestInfo_MouseDoubleClick">
+            <DataGrid Name="dgTestInfo" Grid.Row="2" SelectionChanged="dgTestInfo_SelectionChanged" LoadingRow="dgTestInfo_LoadingRow" MouseDoubleClick="dgTestInfo_MouseDoubleClick" ToolTip="右键查看图表" PreviewMouseRightButtonDown="dgTestInfo_PreviewMouseRightButtonDown">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="序号" MinWidth="50">
                         <DataGridTemplateColumn.HeaderTemplate>
@@ -74,8 +74,8 @@
                         </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Margin="5,0" Width="16" Height="16" VerticalAlignment="Center" Source="{Binding IsChecked, Converter={StaticResource ResourceKey=checkConv}}"/>
+                                <StackPanel Orientation="Horizontal" Tag="{Binding Index}" MouseDown="StackPanel_MouseDown">
+                                    <Image Margin="5,0" Width="16" Height="16" VerticalAlignment="Center" Source="{Binding IsChecked, Converter={StaticResource ResourceKey=checkConv}}" />
                                     <TextBlock VerticalAlignment="Center" Text="{Binding Index}"/>
                                 </StackPanel>
                             </DataTemplate>

@@ -28,10 +28,10 @@ namespace DSJL.Modules.Test
         private string tempFileName;
         private XDocument xdoc;
 
-        private SolidColorBrush startPointBrush = new SolidColorBrush(Color.FromRgb(27, 91, 20));//起点颜色
+        private SolidColorBrush startEndPointBrush = new SolidColorBrush(Color.FromRgb(27, 91, 20));//起点终点颜色
         private SolidColorBrush blackBrush = new SolidColorBrush(Color.FromRgb(0, 0, 0));//黑色点
-        private SolidColorBrush oddPointBrush = new SolidColorBrush(Color.FromRgb(131, 169, 254));//动作1的点的点颜色，淡蓝色
-        private SolidColorBrush evenPointBrush = new SolidColorBrush(Color.FromRgb(254, 116, 116));//动作2的点点颜色，淡红色
+        private SolidColorBrush oddPointBrush = new SolidColorBrush(Color.FromRgb(44, 90, 222));//动作1的点的点颜色，蓝色
+        private SolidColorBrush evenPointBrush = new SolidColorBrush(Color.FromRgb(178, 44, 222));//动作2的点点颜色，紫色
         private SolidColorBrush dataseriesBrush = new SolidColorBrush(Color.FromRgb(198, 198, 198));//线条的颜色，灰色
         private SolidColorBrush prePressedPointBrush = null;//上次点击的点的点颜色
 
@@ -39,11 +39,12 @@ namespace DSJL.Modules.Test
 
         List<XElement> dataList;
 
-        DataPoint startDataPoint, checkStartDataPoint, checkEndDataPoint, tempDataPoint;
+        DataPoint startDataPoint, endDataPoint,checkStartDataPoint, checkEndDataPoint, tempDataPoint;
 
         XElement datasElement;
 
         MenuItem miSetStart = new MenuItem();
+        MenuItem miSetEnd = new MenuItem();
         MenuItem miNextStart;//设为下一次起点菜单
         MenuItem miPreEnd;//设为上一次终点菜单
         MenuItem miCheckStart = new MenuItem();
@@ -52,6 +53,7 @@ namespace DSJL.Modules.Test
         int testCount = 0;//测试总次数
 
         private TrendLine tlStart = new TrendLine();
+        TrendLine tlEnd = new TrendLine();
         private TrendLine tlSelectedPoint = new TrendLine();
 
         public CorrectDataWindow()
@@ -60,15 +62,17 @@ namespace DSJL.Modules.Test
             chart = new Chart();
             chart.BorderThickness = new Thickness(0, 0, 1, 0);
 
-            tlSelectedPoint.LineThickness= tlStart.LineThickness = 1;
-            tlStart.LineColor = tlStart.LabelFontColor = new SolidColorBrush(Colors.Green);
+            tlEnd.LineThickness= tlStart.LineThickness = 1.5;
+            tlSelectedPoint.LineThickness = 0.5;
+            tlEnd.LineColor=tlEnd.LabelFontColor= tlStart.LineColor = tlStart.LabelFontColor = new SolidColorBrush(Colors.Green);
             tlSelectedPoint.LineColor = tlSelectedPoint.LabelFontColor = new SolidColorBrush(Colors.Black);
-            tlStart.Background = null;
-            tlSelectedPoint.Orientation = tlStart.Orientation = Orientation.Vertical;
+            tlEnd.Background= tlStart.Background = null;
+            tlEnd.Orientation= tlSelectedPoint.Orientation = tlStart.Orientation = Orientation.Vertical;
             tlStart.LabelText = "起点";
+            tlEnd.LabelText = "终点";
 
             MenuItem miGroup1 = new MenuItem();
-            miGroup1.Header = "测试起点判定";
+            miGroup1.Header = "测试起终点判定";
 
             MenuItem miGroup2 = new MenuItem();
             miGroup2.Header = "数据平滑处理";
@@ -77,11 +81,12 @@ namespace DSJL.Modules.Test
             miGroup3.Header = "单次起终点校准";
 
             miSetStart.Header = "设为测试起点";
+            miSetEnd.Header = "设为测试终点";
             miGroup1.Items.Add(miSetStart);
+            miGroup1.Items.Add(miSetEnd);
 
            
             miCheckStart.Header = "设为平滑处理起点";
-        
             miCheckEnd.Header = "设为平滑处理终点";
             miGroup2.Items.Add(miCheckStart);
             miGroup2.Items.Add(miCheckEnd);
@@ -90,7 +95,6 @@ namespace DSJL.Modules.Test
             miNextStart.Header = "设为下一次起点";
             miPreEnd = new MenuItem();
             miPreEnd.Header = "设为上一次终点";
-
             miGroup3.Items.Add(miNextStart);
             miGroup3.Items.Add(miPreEnd);
          
@@ -104,6 +108,7 @@ namespace DSJL.Modules.Test
             dpMenu.Items.Add(miGroup3);
 
             miSetStart.Click += new RoutedEventHandler(miSetStart_Click);
+            miSetEnd.Click += btnSetEnd_Click;
             miCheckStart.Click += new RoutedEventHandler(checkStart_Click);
             miCheckEnd.Click += new RoutedEventHandler(checkEnd_Click);
 
@@ -156,6 +161,8 @@ namespace DSJL.Modules.Test
 
             grid.Children.Add(chart);
 
+            //grid.MouseRightButtonUp += new MouseButtonEventHandler(dp_MouseRightButtonUp);//右键功能已取消
+
             RefrenshChart();
         }
 
@@ -177,7 +184,7 @@ namespace DSJL.Modules.Test
             foreach (XElement xe in dataList)
             {
                 DataPoint dp = new DataPoint() { YValue = Math.Abs(int.Parse(xe.Attribute(momentColumn).Value))*0.1, XValue = double.Parse(xe.Attribute("c0").Value) };
-                //dp.MouseRightButtonUp += new MouseButtonEventHandler(dp_MouseRightButtonUp);
+
                 dp.MouseLeftButtonUp += new MouseButtonEventHandler(dp_MouseLeftButtonUp);
                 dp.Tag = xe;
                 
@@ -196,16 +203,24 @@ namespace DSJL.Modules.Test
             }
             datasElement = xdoc.Descendants("datas").ElementAt(0);
             int startIndex = int.Parse(datasElement.Attribute("startindex").Value);
+            int endIndex = dataList.Count() - 1;
+            if (datasElement.Attribute("endindex")!=null)
+            {
+                endIndex = int.Parse(datasElement.Attribute("endindex").Value);
+            }
             startDataPoint = (DataPoint)ds.DataPoints[startIndex];
-            ds.DataPoints[startIndex].Color = startPointBrush;
+            endDataPoint = (DataPoint)ds.DataPoints[endIndex];
+            ds.DataPoints[startIndex].Color = startEndPointBrush;
 
             tlStart.Value = startDataPoint.XValue;
+            tlEnd.Value = endDataPoint.XValue;
 
             chart.Series.Clear();
             chart.Series.Add(ds);
 
             chart.TrendLines.Clear();
             chart.TrendLines.Add(tlStart);
+            chart.TrendLines.Add(tlEnd);
 
             tempDataPoint = checkStartDataPoint = checkEndDataPoint = null;
             prePressedPointBrush = null;
@@ -282,18 +297,27 @@ namespace DSJL.Modules.Test
                     miNextStart.IsEnabled = false;
 
                     btnSetNextStart.IsEnabled = false;
+
+                    miSetEnd.IsEnabled= btnSetEnd.IsEnabled = true;
+
                 }
                 else
                 {
                     miNextStart.IsEnabled = true;
 
                     btnSetNextStart.IsEnabled = true;
+
+                    miSetEnd.IsEnabled = btnSetEnd.IsEnabled = false ;
                 }
             }
         }
         //右键数据点------------取消
         void dp_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (tempDataPoint==null)
+            {
+                return;
+            }
             //目标  
             this.dpMenu.PlacementTarget = chart;
             //显示菜单  
@@ -352,6 +376,29 @@ namespace DSJL.Modules.Test
         private void btnSetStart_Click(object sender, RoutedEventArgs e)
         {
             ResetPointAsStartPoint();
+        }
+
+        private void btnSetEnd_Click(object sender, RoutedEventArgs e)
+        {
+            endDataPoint = tempDataPoint;
+            //tempDataPoint.Color = new SolidColorBrush(Color.FromRgb(175, 220, 35));
+
+            int endIndex = chart.Series[0].DataPoints.IndexOf(endDataPoint);
+            if (datasElement.Attribute("endindex")==null)
+            {
+             
+                datasElement.SetAttributeValue("endindex", endIndex);
+            }
+            else
+            {
+                datasElement.Attribute("endindex").Value = endIndex.ToString();
+            }
+        
+   
+
+            xdoc.Save(tempFileName);
+
+            RefrenshChart();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -542,6 +589,8 @@ namespace DSJL.Modules.Test
             xdoc.Save(tempFileName);
             RefrenshChart();
         }
+
+      
 
     }
 }

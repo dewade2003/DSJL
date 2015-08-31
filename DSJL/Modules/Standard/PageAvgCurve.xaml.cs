@@ -77,6 +77,35 @@ namespace DSJL.Modules.Standard
             chart2.Series.Clear();
             List<List<XElement>> oddList = new List<List<XElement>>();
             List<List<XElement>> evenList = new List<List<XElement>>();
+            //var groupdModelList = modelList.GroupBy(x => x.Ath_Code);
+            //foreach (var item in groupdModelList)
+            //{
+            //    foreach (Model.TestInfoModel model in item)
+            //    {
+            //        string xmlFileName = Model.AppPath.RootPath + "\\AppData\\XmlData\\" + model.DataFileName;
+            //        xdoc = XDocument.Load(xmlFileName);
+            //        XElement oddAvgEle = xdoc.Descendants("oddavg").ElementAt(0);
+            //        XElement evenAvgEle = xdoc.Descendants("evenavg").ElementAt(0);
+
+            //        List<XElement> list1 = new List<XElement>();//动作1平均曲线节点
+            //        List<XElement> list2 = new List<XElement>();//动作2平均曲线节点
+
+            //        foreach (XElement xe in oddAvgEle.Elements())
+            //        {
+            //            list1.Add(xe);
+            //        }
+            //        oddList.Add(list1);
+
+            //        if (model.Test_Mode != "6")
+            //        {//如果为等长测试就不加载
+            //            foreach (XElement xe in evenAvgEle.Elements())
+            //            {
+            //                list2.Add(xe);
+            //            }
+            //            evenList.Add(list2);
+            //        }
+            //    }
+            //}
             foreach (Model.TestInfoModel model in modelList)
             {
                 string xmlFileName = Model.AppPath.RootPath + "\\AppData\\XmlData\\" + model.DataFileName;

@@ -27,8 +27,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
-    <ApplicationRevision>7</ApplicationRevision>
-    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>3.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -154,31 +154,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caches\TestInfoModelCache.cs" />
+    <Compile Include="Caches\TestInfoModelParams.cs" />
     <Compile Include="Converters\StringUnknowConverter.cs" />
     <Compile Include="Converters\IntUnknowConverter.cs" />
+    <Compile Include="Modules\StandardManager\AddOrUpdateLevel2.xaml.cs">
+      <DependentUpon>AddOrUpdateLevel2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Standard\AddDataWindow.xaml.cs">
       <DependentUpon>AddDataWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\DBUpgrade.cs" />
-    <Compile Include="Utils\FileDialog.cs" />
+    <Compile Include="Tools\DBUpgrade.cs" />
+    <Compile Include="Tools\ShowFileDialog.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="BaseDataAnalysis.xaml.cs">
+    <Compile Include="TestCode\BaseDataAnalysis.xaml.cs">
       <DependentUpon>BaseDataAnalysis.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\CheckConverter.cs" />
-    <Compile Include="Compoments\AddHiddenPwdWindow.xaml.cs">
+    <Compile Include="Modules\HiddenManager\AddHiddenPwdWindow.xaml.cs">
       <DependentUpon>AddHiddenPwdWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Compoments\CheckHiddenPwdWindow.xaml.cs">
+    <Compile Include="Modules\HiddenManager\CheckHiddenPwdWindow.xaml.cs">
       <DependentUpon>CheckHiddenPwdWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Compoments\HiddenManagerWindow.xaml.cs">
+    <Compile Include="Modules\HiddenManager\HiddenManagerWindow.xaml.cs">
       <DependentUpon>HiddenManagerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Compoments\TestStandardManager.xaml.cs">
+    <Compile Include="Modules\StandardManager\TestStandardManager.xaml.cs">
       <DependentUpon>TestStandardManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\TestItemConverter.cs" />
@@ -223,8 +228,8 @@
     <Compile Include="Modules\Setup\MonitorSetupPage.xaml.cs">
       <DependentUpon>MonitorSetupPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Standard\EditStandardWindow.xaml.cs">
-      <DependentUpon>EditStandardWindow.xaml</DependentUpon>
+    <Compile Include="Modules\StandardManager\AddOrUpdateLevel1.xaml.cs">
+      <DependentUpon>AddOrUpdateLevel1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Standard\ExportData.cs" />
     <Compile Include="Modules\Standard\PageAvgCurve.xaml.cs">
@@ -276,10 +281,14 @@
     <Compile Include="MonitorSetting\MonitorSettingUtil.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SingleInstance.cs" />
-    <Compile Include="TestAvgCurveWindow.xaml.cs">
+    <Compile Include="TestCode\TestAvgCurveWindow.xaml.cs">
       <DependentUpon>TestAvgCurveWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddTestItemWindow.xaml">
+    <Page Include="Modules\StandardManager\AddOrUpdateLevel2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\TestManager\AddTestItemWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -295,39 +304,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="BaseDataAnalysis.xaml">
+    <Page Include="TestCode\BaseDataAnalysis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Compoments\AddHiddenPwdWindow.xaml">
+    <Page Include="Modules\HiddenManager\AddHiddenPwdWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Compoments\AddOrUpdateStandInfoWindow.xaml">
+    <Page Include="Modules\HiddenManager\CheckHiddenPwdWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Compoments\CheckHiddenPwdWindow.xaml">
+    <Page Include="Modules\HiddenManager\HiddenManagerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Compoments\HiddenManagerWindow.xaml">
+    <Page Include="Modules\TestManager\TestManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Compoments\StandardManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Compoments\TestManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Compoments\TestStandardManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ControlWindow.xaml">
+    <Page Include="Modules\StandardManager\TestStandardManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -343,24 +340,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AddTestItemWindow.xaml.cs">
+    <Compile Include="Modules\TestManager\AddTestItemWindow.xaml.cs">
       <DependentUpon>AddTestItemWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Compoments\AddOrUpdateStandInfoWindow.xaml.cs">
-      <DependentUpon>AddOrUpdateStandInfoWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Compoments\StandardManager.xaml.cs">
-      <DependentUpon>StandardManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Compoments\TestManager.xaml.cs">
+    <Compile Include="Modules\TestManager\TestManager.xaml.cs">
       <DependentUpon>TestManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ControlWindow.xaml.cs">
-      <DependentUpon>ControlWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Export\ExportReport.cs" />
     <Compile Include="Export\PDFHelper.cs" />
@@ -435,7 +423,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Modules\Standard\EditStandardWindow.xaml">
+    <Page Include="Modules\StandardManager\AddOrUpdateLevel1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -507,7 +495,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestAvgCurveWindow.xaml">
+    <Page Include="TestCode\TestAvgCurveWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -595,9 +583,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AppData\DSJLDB.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="AppTemplate\report.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

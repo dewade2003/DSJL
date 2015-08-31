@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using DSJL.Modules.Athletes;
 using DSJL.Compoments;
 using System.IO;
-using DSJL.Utils;
+using DSJL.Tools;
 
 namespace DSJL.Modules
 {
@@ -28,24 +28,22 @@ namespace DSJL.Modules
         BLL.TB_TestInfo testInfoBLL;
 
         ContextMenu menu;//列表右键菜单
+        MenuItem miEdit = new MenuItem();
+        MenuItem miShowTestInfo = new MenuItem();
 
         public PageAthleteManager()
         {
             InitializeComponent();
             athleteBLL = new BLL.TB_AthleteInfo();
             testInfoBLL = new BLL.TB_TestInfo();
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
 
             menu = new ContextMenu();
-            MenuItem miEdit = new MenuItem();
+
             miEdit.Header = "编辑信息";
             miEdit.Click += new RoutedEventHandler(miEdit_Click);
             menu.Items.Add(miEdit);
 
-            MenuItem miShowTestInfo = new MenuItem();
+
             miShowTestInfo.Header = "查看测试信息";
             miShowTestInfo.Click += new RoutedEventHandler(miShowTestInfo_Click);
             menu.Items.Add(miShowTestInfo);
@@ -56,13 +54,16 @@ namespace DSJL.Modules
             MenuItem miHidden = new MenuItem();
             miHidden.Header = "设为隐藏";
             menu.Items.Add(miHidden);
-            miHidden.Click += new RoutedEventHandler(miHidden_Click);
+            miHidden.Click += new RoutedEventHandler(btnHidden_Click);
 
             MenuItem miDelete = new MenuItem();
             miDelete.Header = "删除";
             menu.Items.Add(miDelete);
-            miDelete.Click += new RoutedEventHandler(miDelete_Click);
+            miDelete.Click += new RoutedEventHandler(btnDelete_Click);
+        }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
             //RefrenshAthleteList();
         }
 
@@ -191,7 +192,7 @@ namespace DSJL.Modules
             }
             string fileName;
             string excelName = testManager.SelectedItem.TestName + "的受试者信息";
-            if (FileDialog.openSaveFileDialog(out fileName,FileDialog.excelFilter,FileDialog.excelExt,excelName)) {
+            if (ShowFileDialog.ShowSaveFileDialog(out fileName,ShowFileDialog.excelFilter,ShowFileDialog.excelExt,excelName)) {
                 string tempFileName = AppDomain.CurrentDomain.BaseDirectory + "\\AppTemplate\\listofnames.xls";
                 string[,] contents=new string[selectedAthleteList.Count,15];
                 for (int i = 0; i < selectedAthleteList.Count; i++)
@@ -412,16 +413,16 @@ namespace DSJL.Modules
         //添加右键菜单
         private void dgAthlete_LoadingRow(object sender, DataGridRowEventArgs e)
         {
-            e.Row.ToolTip = "右键编辑";
-            e.Row.MouseRightButtonDown += (s, a) =>
-            {
-                a.Handled = true;
-                DataGridRow dgr = s as DataGridRow;
-                (sender as DataGrid).SelectedIndex = dgr.GetIndex();
-                dgr.Focus();
-                menu.PlacementTarget = dgr;
-                menu.IsOpen = true;
-            };
+            //e.Row.ToolTip = "右键编辑";
+            //e.Row.MouseRightButtonDown += (s, a) =>
+            //{
+            //    a.Handled = true;
+            //    DataGridRow dgr = s as DataGridRow;
+            //    (sender as DataGrid).SelectedIndex = dgr.GetIndex();
+            //    dgr.Focus();
+            //    menu.PlacementTarget = dgr;
+            //    menu.IsOpen = true;
+            //};
         }
 
         //删除信息时同时删除数据文件
@@ -432,6 +433,26 @@ namespace DSJL.Modules
                     File.Delete(dataFileName);
                 }
             }
+        }
+
+        private void dgAthlete_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            List<Model.TB_AthleteInfo> checkedAthList = athleteList.FindAll(x => x.IsChecked == true);
+            if (checkedAthList.Count!=0)
+            {
+                if (checkedAthList.Count>1)
+                {
+                    miEdit.IsEnabled = false;
+                    miShowTestInfo.IsEnabled = false;
+                }
+                else
+                {
+                    miEdit.IsEnabled = true;
+                    miShowTestInfo.IsEnabled = true;
+                }
+                menu.IsOpen = true;
+            }
+         
         }
 
         
