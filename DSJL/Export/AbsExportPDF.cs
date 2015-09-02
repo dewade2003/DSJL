@@ -291,15 +291,15 @@ namespace DSJL.Export
                             cellLabel.Colspan = int.Parse(colspan);
                         }
                     }
-                    XAttribute rowSpanAtt = cellEle.Attribute("rowspan");
-                    if (rowSpanAtt != null)
-                    {
-                        string rowspan = rowSpanAtt.Value;
-                        if (rowspan != "")
-                        {
-                            cellLabel.Rowspan = int.Parse(rowspan);
-                        }
-                    }
+                    //XAttribute rowSpanAtt = cellEle.Attribute("rowspan");
+                    //if (rowSpanAtt != null)
+                    //{
+                    //    string rowspan = rowSpanAtt.Value;
+                    //    if (rowspan != "")
+                    //    {
+                    //        cellLabel.Rowspan = int.Parse(rowspan);
+                    //    }
+                    //}
 
 
                     cellList.Add(cellLabel);

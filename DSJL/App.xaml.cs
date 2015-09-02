@@ -31,24 +31,23 @@ namespace DSJL
 
         protected override void OnStartup(StartupEventArgs e)
         {
-
-            //string errStr = "";
-            //if (!Dog.Dog.CheckDog(out errStr))
-            //{
-            //    MessageBox.Show("与加密狗通讯出错！\r\n错误信息：" + errStr, "系统信息");
-            //    Application.Current.Shutdown();
-            //}
             base.OnStartup(e);
+            string errStr = "";
+            if (!Dog.Dog.CheckDog(out errStr))
+            {
+                MessageBox.Show("与加密狗通讯出错！\r\n错误信息：" + errStr, "系统信息");
+                Application.Current.Shutdown();
+            }
 
             if (DSJL.Tools.DBUpgrade.Upgrade())
             {
-                //LoginWindow login = new LoginWindow();
-                //Application.Current.MainWindow = login;
-                //login.Show();
+                LoginWindow login = new LoginWindow();
+                Application.Current.MainWindow = login;
+                login.Show();
 
-                MainWindow mainWindow = new MainWindow();
-                Application.Current.MainWindow = mainWindow;
-                mainWindow.Show();
+                //MainWindow mainWindow = new MainWindow();
+                //Application.Current.MainWindow = mainWindow;
+                //mainWindow.Show();
             }
             else {
                 Application.Current.Shutdown();

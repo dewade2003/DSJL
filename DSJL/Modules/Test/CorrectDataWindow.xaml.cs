@@ -225,7 +225,7 @@ namespace DSJL.Modules.Test
             tempDataPoint = checkStartDataPoint = checkEndDataPoint = null;
             prePressedPointBrush = null;
 
-            btnSetStart.IsEnabled = btnSetSmoothStart.IsEnabled = btnSetSmoothEnd.IsEnabled = btnSetPreEnd.IsEnabled = btnSetNextStart.IsEnabled = false;
+            btnSetEnd.IsEnabled= btnSetStart.IsEnabled = btnSetSmoothStart.IsEnabled = btnSetSmoothEnd.IsEnabled = btnSetPreEnd.IsEnabled = btnSetNextStart.IsEnabled = false;
         }
         //单击数据点时
         void dp_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -352,7 +352,6 @@ namespace DSJL.Modules.Test
         }
         #endregion
 
-
         private void btnSetPreEnd_Click(object sender, RoutedEventArgs e)
         {
             SetPointAsPreTestIndexEnd();
@@ -393,9 +392,6 @@ namespace DSJL.Modules.Test
             {
                 datasElement.Attribute("endindex").Value = endIndex.ToString();
             }
-        
-   
-
             xdoc.Save(tempFileName);
 
             RefrenshChart();
