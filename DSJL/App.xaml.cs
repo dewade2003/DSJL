@@ -32,12 +32,12 @@ namespace DSJL
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            string errStr = "";
-            if (!Dog.Dog.CheckDog(out errStr))
-            {
-                MessageBox.Show("与加密狗通讯出错！\r\n错误信息：" + errStr, "系统信息");
-                Application.Current.Shutdown();
-            }
+            //string errStr = "";
+            //if (!Dog.Dog.CheckDog(out errStr))
+            //{
+            //    MessageBox.Show("与加密狗通讯出错！\r\n错误信息：" + errStr, "系统信息");
+            //    Application.Current.Shutdown();
+            //}
 
             if (DSJL.Tools.DBUpgrade.Upgrade())
             {

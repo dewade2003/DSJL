@@ -49,6 +49,7 @@ namespace DSJL.Modules.Standard
 
         private void RefrenshAthleteList()
         {
+            athleteList = new List<Model.TB_AthleteInfo>();
             if (testManager.SelectedItem != null)
             {
                 if (athInfoListDict.ContainsKey(testManager.SelectedItem.ID))
@@ -73,9 +74,9 @@ namespace DSJL.Modules.Standard
                             searchCaseBuilder.Append(" and ath_project='" + standParam.Ath_Project + "'");
                         }
                     }
-                    athleteList = new List<Model.TB_AthleteInfo>();
+              
                     List<Model.TB_AthleteInfo> athList = athleteBLL.GetModelList(searchCaseBuilder.ToString());
-                    if (parentStandParam.Ath_AgeMinLimit != -1 && parentStandParam.Ath_AgeMaxLimit != -1)
+                    if (parentStandParam!=null &&parentStandParam.Ath_AgeMinLimit != null && parentStandParam.Ath_AgeMaxLimit != null)
                     {
                         foreach (var item in athList)
                         {
@@ -88,11 +89,10 @@ namespace DSJL.Modules.Standard
                     else {
                         athleteList = athList;
                     }
-
                     athInfoListDict.Add(testManager.SelectedItem.ID, athleteList);
                 }
-                dgAthlete.SetBinding(DataGrid.ItemsSourceProperty, new Binding() { Source = athleteList });
             }
+            dgAthlete.SetBinding(DataGrid.ItemsSourceProperty, new Binding() { Source = athleteList });
         }
 
         //测试事项选择改变事件
