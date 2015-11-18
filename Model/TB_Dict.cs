@@ -12,7 +12,8 @@ namespace DSJL.Model
 		#region Model
 		private int _id;
 		private int _dict_groupid;
-		private string _dict_value;
+        private string _dict_groupid2;
+        private string _dict_value;
 		private string _dict_key;
 		private string _actionone;
 		private string _actiontwo;
@@ -32,10 +33,19 @@ namespace DSJL.Model
 			set{ _dict_groupid=value;}
 			get{return _dict_groupid;}
 		}
-		/// <summary>
-		/// 
-		/// </summary>
-		public string Dict_Value
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Dict_GroupID2
+        {
+            set { _dict_groupid2 = value; }
+            get { return _dict_groupid2; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Dict_Value
 		{
 			set{ _dict_value=value;}
 			get{return _dict_value;}

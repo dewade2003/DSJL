@@ -36,6 +36,9 @@
                     <Button Name="btnAddData"  Content="添加数据" IsEnabled="False" Click="btnAddData_Click"/>
                     <Button Name="btnExport" Margin="10,0" Content="导出报告" Click="btnExport_Click"/>
                     <Button Name="btnExportData" Margin="10,0" Content="导出测试数据" Click="btnExportData_Click"/>
+
+                    <Button Name="btnExportStand" Margin="10,0" Content="导出参考值" Click="btnExportStand_Click"/>
+                    <Button Name="btnImportStand" Margin="10,0" Content="导入参考值" Click="btnImportStand_Click"/>
                     <Button Name="btnDelete" Content="移除" Margin="10,0" Click="btnDelete_Click" />
                 </StackPanel>
             </Border>

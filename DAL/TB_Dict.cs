@@ -151,7 +151,7 @@ namespace DSJL.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,Dict_GroupID,Dict_Value,Dict_Key,actionone,actiontwo from TB_Dict ");
+			strSql.Append("select ID,Dict_GroupID,Dict_GroupID2,Dict_Value,Dict_Key,actionone,actiontwo from TB_Dict ");
 			strSql.Append(" where ID=OLEDBID");
 			OleDbParameter[] parameters = {
 					new OleDbParameter("OLEDBID", OleDbType.Integer,4)
@@ -170,7 +170,8 @@ namespace DSJL.DAL
 				{
 					model.Dict_GroupID=int.Parse(ds.Tables[0].Rows[0]["Dict_GroupID"].ToString());
 				}
-				model.Dict_Value=ds.Tables[0].Rows[0]["Dict_Value"].ToString();
+                model.Dict_GroupID2 = ds.Tables[0].Rows[0]["Dict_GroupID2"].ToString();
+                model.Dict_Value=ds.Tables[0].Rows[0]["Dict_Value"].ToString();
 				model.Dict_Key=ds.Tables[0].Rows[0]["Dict_Key"].ToString();
 				model.actionone=ds.Tables[0].Rows[0]["actionone"].ToString();
 				model.actiontwo=ds.Tables[0].Rows[0]["actiontwo"].ToString();
@@ -188,7 +189,7 @@ namespace DSJL.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,Dict_GroupID,Dict_Value,Dict_Key,actionone,actiontwo ");
+			strSql.Append("select ID,Dict_GroupID,Dict_GroupID2,Dict_Value,Dict_Key,actionone,actiontwo ");
 			strSql.Append(" FROM TB_Dict ");
 			if(strWhere.Trim()!="")
 			{

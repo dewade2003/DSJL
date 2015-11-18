@@ -75,7 +75,7 @@ namespace DSJL.Modules.Test.Export
         //选择路径
         private void btnChoosePath_Click(object sender, RoutedEventArgs e)
         {
-            if (ShowFileDialog.ShowSaveFileDialog(out choosePath, ShowFileDialog.pdfFilter, ShowFileDialog.pdfExt, "测试报告"))
+            if (ShowFileDialogTool.ShowSaveFileDialog(out choosePath, ShowFileDialogTool.pdfFilter, ShowFileDialogTool.pdfExt, "测试报告"))
             {
                 choosePath = choosePath.Substring(0, choosePath.LastIndexOf("\\"));
                 btnExport.IsEnabled = true;

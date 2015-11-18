@@ -30,7 +30,6 @@ namespace DSJL.Modules.Standard
         }
 
         BLL.TB_StandardInfo standardInfoBLL;
-        private Model.TB_StandardInfo standardInfo;
 
         BLL.TB_StandardParams standardParamsBLL;
         Model.TB_StandardParams standardParam;
@@ -44,12 +43,8 @@ namespace DSJL.Modules.Standard
         List<Model.TB_Dict> planeDictList;//运动方式字典列表
 
         public Model.TB_StandardInfo StandardInfo {
-            set {
-                standardInfo = value;
-            }
-            get {
-                return standardInfo;
-            }
+            set;
+            get;
         }
 
         public bool isAdd
@@ -80,7 +75,10 @@ namespace DSJL.Modules.Standard
         }
 
         private void refrenshPlaneDictList() {
-
+            if (cbJoint.SelectedItem==null)
+            {
+                return;
+            }
             planeDictList = new List<Model.TB_Dict>();
             Model.TB_Dict selectJoint = (Model.TB_Dict)cbJoint.SelectedItem;
             if (!selectJoint.Dict_Key.Equals("-1"))
@@ -112,21 +110,28 @@ namespace DSJL.Modules.Standard
             cbPlane.SetBinding(ComboBox.ItemsSourceProperty, new Binding() { Source = planeDictList });
             if (!isAdd)
             {
-                tbTitle.Text = "编辑" + standardInfo.Stand_Name;
-                standardParam = standardParamsBLL.GetModelByStandID(standardInfo.ID);
-                txtName.Text = standardInfo.Stand_Name;
+                tbTitle.Text = "编辑" + StandardInfo.Stand_Name;
+                standardParam = standardParamsBLL.GetModelByStandID(StandardInfo.ID);
+                if (standardParam==null)
+                {
+                    standardParam = new Model.TB_StandardParams();
+                    standardParam.StandID = StandardInfo.ID;
+                }
+                txtName.Text = StandardInfo.Stand_Name;
             }
             else
             {
                 standardParam = new Model.TB_StandardParams();
-                if (standardInfo.Stand_Level == -1)
+                if (StandardInfo.Stand_Level == -1)
                 {
                     tbTitle.Text = "添加测试参考值类别";
                 }
                 else
                 {
-                    tbTitle.Text = "为" + standardInfo.Stand_Name + "添加子参考值";
+                    tbTitle.Text = "为" + StandardInfo.Stand_Name + "添加子参考值";
                 }
+                txtName.Text = "";
+                
             }
 
             Binding standParamBind = new Binding() { Source = standardParam };
@@ -147,25 +152,25 @@ namespace DSJL.Modules.Standard
                 MessageBox.Show("名称不能为空！","系统信息");
                 return;
             }
-          
+            Model.TB_StandardInfo info = new Model.TB_StandardInfo();
             bool result;
             if (!isAdd)
             {
-                standardInfo.Stand_Name = txtName.Text;
-                result = standardInfoBLL.Update(standardInfo);
+                StandardInfo.Stand_Name = txtName.Text;
+                result = standardInfoBLL.Update(StandardInfo);
                 standardParamsBLL.Update(standardParam);
             }
             else {
-                Model.TB_StandardInfo info = new Model.TB_StandardInfo();
+            
                 info.Stand_Name = txtName.Text;
-                if (standardInfo.Stand_Level == -1)
+                if (StandardInfo.Stand_Level == -1)
                 {
                     info.Stand_Level = 1;
                     info.Stand_ParentID = 0;
                 }
                 else {
                     info.Stand_Level = 2;
-                    info.Stand_ParentID = standardInfo.ID;
+                    info.Stand_ParentID = StandardInfo.ID;
                 }
               
                 result = standardInfoBLL.Add(info);
@@ -182,16 +187,15 @@ namespace DSJL.Modules.Standard
                 {
                     RaiseEvent(new RoutedEventArgs(AddOrUpdateLevel2.AddSuccessRoutedEvent, this));
                     string desc = "添加成功！\r\n";
-                    if (standardInfo.Stand_Level == -1)
+                    if (StandardInfo.Stand_Level == -1)
                     {
                         desc += "是否继续添加参考值类别？";
                     }
                     else {
-                        desc += "是否继续为" + standardInfo.Stand_Name + "添加子参考值？";
+                        desc += "是否继续为" + StandardInfo.Stand_Name + "添加子参考值？";
                     }
                     if (MessageBox.Show(desc, "系统信息", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        standardInfo = new Model.TB_StandardInfo();
                         standardParam = new Model.TB_StandardParams();
                         txtName.Text = "";
                         init();

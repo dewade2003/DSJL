@@ -228,6 +228,7 @@ namespace DSJL.DAL
 			{
 				strSql.Append(" where "+strWhere);
 			}
+            strSql.Append(" order by id asc");
 			return DbHelperOleDb.Query(strSql.ToString());
 		}
 

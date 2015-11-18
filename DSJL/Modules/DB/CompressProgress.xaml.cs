@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DSJL.Model;
 using System.Threading;
 using ICSharpCode.SharpZipLib.Zip;
+using DSJL.Tools;
 
 namespace DSJL.Modules.DB
 {
@@ -19,6 +20,8 @@ namespace DSJL.Modules.DB
 
         private List<string> fileNames = new List<string>();
 
+        bool cancled = false;
+
         public CompressProgress()
         {
             InitializeComponent();
@@ -30,6 +33,7 @@ namespace DSJL.Modules.DB
             tbState.Text = fileName;
             pbCompression.Value = index;
             if (index == pbCompression.Maximum) {
+                this.DialogResult = true;
                 this.Close();
             }
         }
@@ -43,21 +47,41 @@ namespace DSJL.Modules.DB
             set;
         }
 
+        public string DataFilePath {
+            get;set;
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-           
-            if (Directory.Exists(Model.AppPath.XmlDataDirPath))
+            if (DataFilePath?.Equals("")==true)//没有设置数据目录，则压缩默认数据目录的数据文件
             {
-                fileNames.AddRange(Directory.GetFiles(Model.AppPath.XmlDataDirPath));
+                if (Directory.Exists(Model.AppPath.XmlDataDirPath))
+                {
+                    fileNames.AddRange(Directory.GetFiles(Model.AppPath.XmlDataDirPath));
+                }
+                fileNames.Add(Model.AppPath.RootPath + "\\AppData\\DSJLDB.mdb");
+             
             }
-            fileNames.Add(Model.AppPath.RootPath + "\\AppData\\DSJLDB.mdb");
+            else
+            {
+                if (!Directory.Exists(DataFilePath))
+                {
+                    MessageBoxTool.ShowConfirmMsgBox("未找到数据文件目录！");
+                    this.Close();
+                }
+                else
+                {
+                    fileNames.AddRange(Directory.GetFiles(DataFilePath));
+
+                }
+            }
             pbCompression.Maximum = fileNames.Count;
-            
-            Thread t = new Thread(new ThreadStart(Compression));
+
+            Thread t = new Thread(new ThreadStart(CompressionThread));
             t.Start();
         }
 
-        private void Compression() {
+        private void CompressionThread() {
             string outputPath = OutputPath;
             using (ZipOutputStream zopStream = new ZipOutputStream(File.Create(outputPath)))
             {
@@ -66,6 +90,10 @@ namespace DSJL.Modules.DB
                 byte[] buffer = new byte[4096];
 
                 for (int i = 0; i < fileNames.Count; i++) {
+                    if (cancled)
+                    {
+                        break;
+                    }
                     string fileName = fileNames[i];
               
                     ZipEntry entry = new ZipEntry(System.IO.Path.GetFileName(fileName));
@@ -86,6 +114,13 @@ namespace DSJL.Modules.DB
                 zopStream.Finish();
                 zopStream.Close();
 
+                if (cancled)
+                {
+                    this.Dispatcher.Invoke(new Action(() =>
+                    {
+                        this.Close();
+                    }));
+                }
             }
         }
 
@@ -102,6 +137,14 @@ namespace DSJL.Modules.DB
                 }
             }
             catch { }
+        }
+
+        private void btnCancle_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBoxTool.ShowAskMsgBox("确定取消吗？")==MessageBoxResult.Yes)
+            {
+                cancled = true;
+            }
         }
     }
 }

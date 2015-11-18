@@ -5,7 +5,7 @@ namespace DSJL.Model
 	/// TB_TestManager:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
 	[Serializable]
-	public partial class TB_TestManager
+	public class TB_TestManager:BaseModel
 	{
 		public TB_TestManager()
 		{}

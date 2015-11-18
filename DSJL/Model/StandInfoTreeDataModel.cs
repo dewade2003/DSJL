@@ -31,7 +31,9 @@ namespace DSJL.Model
         public string Icon
         {
             get { return icon; }
-            set { icon = value; NotifyPropertyChanged("Icon"); }
+            set { icon = value;
+                //NotifyPropertyChanged("Icon");
+            }
         }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace DSJL.Model
                 else {
                     Icon = defaultIcon;
                 }
-                NotifyPropertyChanged("IsExpended");
+                //NotifyPropertyChanged("IsExpended");
             }
         }
 
@@ -64,6 +66,9 @@ namespace DSJL.Model
         public StandInfoTreeDataModel ParentModel
         {
             get { return parentModel; }
+            set { parentModel = value;
+                //NotifyPropertyChanged("ParentModel");
+            }
         }
         
 
@@ -74,13 +79,19 @@ namespace DSJL.Model
         public Model.TB_StandardInfo StandInfo
         {
             get { return standInfo; }
-            set { standInfo = value; NotifyPropertyChanged("StandInfo"); }
+            set { standInfo = value;
+                //NotifyPropertyChanged("StandInfo");
+            }
         }
 
         public ObservableCollection<StandInfoTreeDataModel> Children {
             get {
-                RefrenshChildren();
+                //RefrenshChildren();
                 return children;
+            }
+            set {
+                children = value;
+                NotifyPropertyChanged("Children");
             }
         }
 

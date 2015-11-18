@@ -1,30 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Visifire.Charts;
 using System.Xml.Linq;
-using System.Xml;
 using System.IO;
 using DSJL.Export;
 using DSJL.DataUtil;
-using Microsoft.Win32;
 using System.Data;
-using DSJL.DBUtility;
 using WPFHelper.Window;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using DSJL.Tools;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace DSJL.Modules.Test
 {
@@ -450,7 +439,7 @@ namespace DSJL.Modules.Test
         private void btnExportReport_Click(object sender, RoutedEventArgs e)
         {
             string selectedPath = "";
-            if (ShowFileDialog.ShowSaveFileDialog(out selectedPath, ShowFileDialog.pdfFilter, ShowFileDialog.pdfExt, "测验报告"))
+            if (Tools.ShowFileDialogTool.ShowSaveFileDialog(out selectedPath, Tools.ShowFileDialogTool.pdfFilter, Tools.ShowFileDialogTool.pdfExt, "测验报告"))
             {
                 selectedPath = selectedPath.Substring(0, selectedPath.LastIndexOf("\\"));
                 ExportReport(selectedPath);

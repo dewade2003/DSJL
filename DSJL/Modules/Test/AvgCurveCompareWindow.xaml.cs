@@ -119,7 +119,7 @@ namespace DSJL.Modules.Test
             if (stand.SelectedItem != null)
             {
                 standTestInfoModelList.Clear();
-                standTestInfoModelList = refeBLL.GetStandTestInfoModelList(stand.SelectedItem.ID);
+                standTestInfoModelList = Caches.Util.AthTestInfoModelUtil.AthTestUtil(refeBLL.GetStandTestInfoModelList(stand.SelectedItem.ID));
                 RefrenshChart();
             }
 

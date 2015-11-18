@@ -128,8 +128,10 @@ namespace DSJL.BLL
 					model.Break=dt.Rows[n]["Break"].ToString();
 					model.NOOfSets=dt.Rows[n]["NOOfSets"].ToString();
 					model.NOOfRepetitions=dt.Rows[n]["NOOfRepetitions"].ToString();
-					model.InsuredSide=dt.Rows[n]["InsuredSide"].ToString();
-					model.Gravitycomp=dt.Rows[n]["Gravitycomp"].ToString();
+                    string insuredSide= dt.Rows[n]["InsuredSide"].ToString();
+                    model.InsuredSide = insuredSide.Equals("") ? "2" : insuredSide;
+                    string gracomp= dt.Rows[n]["Gravitycomp"].ToString();
+                    model.Gravitycomp = gracomp.Equals("") ? "0" : gracomp;
 					model.Therapist=dt.Rows[n]["Therapist"].ToString();
 					model.BaseFileName=dt.Rows[n]["BaseFileName"].ToString();
 					model.DataFileName=dt.Rows[n]["DataFileName"].ToString();
@@ -171,8 +173,10 @@ namespace DSJL.BLL
             model.Break = dr["Break"].ToString();
             model.NOOfSets = dr["NOOfSets"].ToString();
             model.NOOfRepetitions = dr["NOOfRepetitions"].ToString();
-            model.InsuredSide = dr["InsuredSide"].ToString();
-            model.Gravitycomp = dr["Gravitycomp"].ToString();
+            string insuredSide = dr["InsuredSide"].ToString();
+            model.InsuredSide = insuredSide.Equals("") ? "2" : insuredSide;
+            string gracomp = dr["Gravitycomp"].ToString();
+            model.Gravitycomp = gracomp.Equals("") ? "0" : gracomp;
             model.Therapist = dr["Therapist"].ToString();
             model.BaseFileName = dr["BaseFileName"].ToString();
             model.DataFileName = dr["DataFileName"].ToString();

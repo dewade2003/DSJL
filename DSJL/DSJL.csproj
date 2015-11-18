@@ -27,7 +27,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
-    <ApplicationRevision>9</ApplicationRevision>
+    <ApplicationRevision>17</ApplicationRevision>
     <ApplicationVersion>3.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -107,6 +107,11 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <HintPath>bin\Release\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.1-beta1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NPinyin, Version=0.2.4588.20158, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Release\NPinyin.dll</HintPath>
@@ -154,18 +159,45 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caches\AthleteInfoCache.cs" />
+    <Compile Include="Caches\ChartCache\StandardChartCache.cs" />
+    <Compile Include="Caches\DataTransferCenter.cs" />
+    <Compile Include="Caches\Dict\DictCache.cs" />
+    <Compile Include="Caches\TestData\TestDataCenter.cs" />
     <Compile Include="Caches\TestInfoModelCache.cs" />
     <Compile Include="Caches\TestInfoModelParams.cs" />
+    <Compile Include="Caches\Util\AthTestInfoModelUtil.cs" />
+    <Compile Include="Control\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\StringUnknowConverter.cs" />
     <Compile Include="Converters\IntUnknowConverter.cs" />
+    <Compile Include="Model\ExportStandModel.cs" />
+    <Compile Include="Model\TestData\TestData.cs" />
+    <Compile Include="Modules\DB\BackupProjectWindow.xaml.cs">
+      <DependentUpon>BackupProjectWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\StandardManager\AddOrUpdateLevel2.xaml.cs">
       <DependentUpon>AddOrUpdateLevel2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Standard\AddDataWindow.xaml.cs">
       <DependentUpon>AddDataWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Standard\ExportStandardWindow.xaml.cs">
+      <DependentUpon>ExportStandardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MutilChart\Common\DataTemplateSelector.cs" />
+    <Compile Include="MutilChart\Common\ViewModelBase.cs" />
+    <Compile Include="MutilChart\Control\MultiChart.cs" />
+    <Compile Include="MutilChart\Model\TestData.cs" />
+    <Compile Include="MutilChart\Model\TestDataPerformences.cs" />
+    <Compile Include="Stand\StandConfig.cs" />
+    <Compile Include="Tools\DataSeriseUtil.cs" />
     <Compile Include="Tools\DBUpgrade.cs" />
-    <Compile Include="Tools\ShowFileDialog.cs" />
+    <Compile Include="Tools\DES.cs" />
+    <Compile Include="Tools\Math.cs" />
+    <Compile Include="Tools\MessageBoxTool.cs" />
+    <Compile Include="Tools\ShowFileDialogTool.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -284,9 +316,21 @@
     <Compile Include="TestCode\TestAvgCurveWindow.xaml.cs">
       <DependentUpon>TestAvgCurveWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Control\ProgressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\DB\BackupProjectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\StandardManager\AddOrUpdateLevel2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Standard\ExportStandardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Modules\TestManager\AddTestItemWindow.xaml">
       <SubType>Designer</SubType>
@@ -553,6 +597,9 @@
     <Resource Include="Assets\Images\file.png" />
     <Resource Include="Assets\Images\folder_opened.png" />
     <Resource Include="Assets\Images\folder.png" />
+    <Resource Include="Assets\Images\add_unenable.png" />
+    <Resource Include="Assets\Images\delete_unenable.png" />
+    <Resource Include="Assets\Images\edit_unenable.png" />
     <Content Include="MonitorSetting\MonitorSettings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -658,7 +705,14 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <FileAssociation Include=".dsf">
+      <Visible>False</Visible>
+      <Description>等速肌力测试参考值文件</Description>
+      <Progid>1</Progid>
+      <DefaultIcon>Assets\Icons\dsjl.ico</DefaultIcon>
+    </FileAssociation>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

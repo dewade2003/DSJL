@@ -146,25 +146,11 @@ namespace DSJL.BLL
 
 		#endregion  Method
 
-        public List<Model.TestInfoModel> GetStandTestInfoModelList(int standID) {
+        public DataSet GetStandTestInfoModelList(int standID) {
             List<Model.TestInfoModel> modelList = new List<TestInfoModel>();
             DataSet ds = dal.GetStandTestInfo(standID);
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-            {
-                DataRow dr = ds.Tables[0].Rows[i];
-                Model.TestInfoModel testInfoModel = new Model.TestInfoModel();
-                testInfoModel.Index = i + 1;
-                testInfoModel.DGravitycomp = dr["dGravitycomp"].ToString();
-                testInfoModel.DInsuredSide = dr["dInsuredSide"].ToString();
-                testInfoModel.DJoint = dr["djoint"].ToString();
-                testInfoModel.DJointSide = dr["djointside"].ToString();
-                testInfoModel.DPlane = dr["dplane"].ToString();
-                testInfoModel.DTestMode = dr["dtestmode"].ToString();
-                testInfoBLL.GetModelFromDataRow(dr, testInfoModel);
-                athleteInfoBLL.GetAthleteInfoFromDataRow(dr, testInfoModel);
-                modelList.Add(testInfoModel);
-            }
-            return modelList;
+           
+            return ds;
         }
 	}
 }

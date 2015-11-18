@@ -15,17 +15,18 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!--#region  toolbar-->
         <Border Grid.Row="0" Style="{DynamicResource ResourceKey=toolBarStyle}"/>
         <StackPanel Grid.Row="0" Margin="10,0,0,0" Orientation="Horizontal" >
-            <TextBlock  Text="新备份名称：" Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <TextBlock  Text="备份名称：" Margin="0,0,5,0" VerticalAlignment="Center"/>
             <TextBox Name="txtBackupName" Width="180" Height="26" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <Button Name="btnBackup" Content="开始备份" Click="btnBackup_Click" Margin="5,0,10,0"/>
-
+            <Button Name="btnBackup" Content="数据备份" Click="btnBackup_Click" Margin="5,0,10,0"/>
+            <Button Name="btnBackupProject" Content="部分备份" Visibility="Hidden" Click="btnBackupProject_Click" Margin="5,0,10,0"/>
             <Button Name="btnRestore" Content="数据还原" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0" Click="btnRestore_Click"/>
             <Button Name="btnMerge" Content="数据合并" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0" Click="btnMerge_Click"/>
             <Button Name="btnDelete" Content="删除备份记录" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0" Click="btnDelete_Click"/>
         </StackPanel>
-       
+       <!--#endregion-->
 
         <DataGrid Name="dgBackupInfo" Margin="0" Grid.Row="1" SelectionChanged="dgBackupInfo_SelectionChanged">
             <DataGrid.Columns>

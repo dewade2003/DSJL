@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using DSJL.Modules.Standard;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using DSJL.Model;
 
 namespace DSJL.Compoments
 {
@@ -23,9 +18,8 @@ namespace DSJL.Compoments
     {
         private Model.StandInfoTreeDataModel selectedTreeItem;
         private BLL.TB_StandardInfo standardBLL;
-        private List<Model.TB_StandardInfo> standInfoList;
 
-        private ObservableCollection<Model.StandInfoTreeDataModel> treeModelCollection;
+        private ObservableCollection<Model.StandInfoTreeDataModel> treeModelCollection=new ObservableCollection<StandInfoTreeDataModel>();
 
         public delegate void ItemSelectionChangedDelegate(Model.TB_StandardInfo selectedItem);
         /// <summary>
@@ -46,33 +40,124 @@ namespace DSJL.Compoments
         public TestStandardManager()
         {
             InitializeComponent();
-            standardBLL = new BLL.TB_StandardInfo();
+          
         }
-
+        Model.StandInfoTreeDataModel rootModel = new Model.StandInfoTreeDataModel();
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            treeModelCollection = new ObservableCollection<Model.StandInfoTreeDataModel>();
-            Model.StandInfoTreeDataModel rootModel = new Model.StandInfoTreeDataModel();
-            rootModel.IsExpanded = true;
-            rootModel.DefaultIcon = "/DSJL;component/Assets/Images/folder.png";
-            rootModel.OpenedIcon = "/DSJL;component/Assets/Images/folder_opened.png";
-            rootModel.StandInfo = new Model.TB_StandardInfo() { Stand_Name = "参考值类别", Stand_Level = -1 };
-            rootModel.IsChecked = true;
-            treeModelCollection.Add(rootModel);
-
-            tree.SetBinding(TreeView.ItemsSourceProperty, new Binding() { Source = treeModelCollection });
-
+            standardBLL = new BLL.TB_StandardInfo();
+            if (treeModelCollection.Count==0)
+            {
+                rootModel.IsExpanded = true;
+                rootModel.DefaultIcon = "/DSJL;component/Assets/Images/folder.png";
+                rootModel.OpenedIcon = "/DSJL;component/Assets/Images/folder_opened.png";
+                rootModel.StandInfo = new Model.TB_StandardInfo() { Stand_Name = "参考值类别", Stand_Level = -1 };
+                rootModel.IsChecked = true;
+                LoadStandInfo();
+            }
             tree.Focus();
 
             selectedItem = null;
             ItemSelectionChangedEvent(selectedItem);
         }
 
+        public void LoadStandInfo() {
+            rootModel.Children.Clear();
+            treeModelCollection.Clear();
+
+            List<Model.TB_StandardInfo> standInfoList = standardBLL.GetModelList("");
+
+            Task task = new Task(() =>
+            {
+                //加载导入的测试参考值
+                List<Model.TB_StandardInfo> importedlevel1List = Stand.StandConfig.GetParentStandList();
+                if (importedlevel1List!=null)
+                {
+                    foreach (var item in importedlevel1List)
+                    {
+                        StandInfoTreeDataModel treeModel = new StandInfoTreeDataModel();
+                        treeModel.ParentModel = rootModel;
+                        treeModel.StandInfo = item;
+                        treeModel.DefaultIcon = "/DSJL;component/Assets/Images/folder.png";
+                        treeModel.OpenedIcon = "/DSJL;component/Assets/Images/folder_opened.png";
+
+                        List<Model.TB_StandardInfo> importedChildList = Stand.StandConfig.GetChildStandInfo(item.Stand_Name);
+                        foreach (var item2 in importedChildList)
+                        {
+                            StandInfoTreeDataModel childTreeModel = new StandInfoTreeDataModel();
+                            childTreeModel.ParentModel = treeModel;
+                            childTreeModel.StandInfo = item2;
+                            childTreeModel.DefaultIcon = "/DSJL;component/Assets/Images/file.png";
+                            childTreeModel.OpenedIcon = "/DSJL;component/Assets/Images/file.png";
+
+                            treeModel.Children.Add(childTreeModel);
+                        }
+                        item.Stand_Name += "(导入)";
+                        rootModel.Children.Add(treeModel);
+                    }
+                }
+
+                var level1List = from items in standInfoList where items.Stand_Level ==1 orderby items.ID select items;
+                var level2List= from items in standInfoList where items.Stand_Level == 2 orderby items.ID select items;
+                foreach (var item in level1List)
+                {
+                    StandInfoTreeDataModel treeModel = new StandInfoTreeDataModel();
+                    treeModel.ParentModel = rootModel;
+                    treeModel.StandInfo = item;
+                    treeModel.DefaultIcon = "/DSJL;component/Assets/Images/folder.png";
+                    treeModel.OpenedIcon = "/DSJL;component/Assets/Images/folder_opened.png";
+
+                    var childList = from standItem in level2List where standItem.Stand_ParentID == item.ID select standItem;
+               
+                    foreach (var item2 in childList)
+                    {
+                        StandInfoTreeDataModel childTreeModel= new StandInfoTreeDataModel();
+                        childTreeModel.ParentModel = treeModel;
+                        childTreeModel.StandInfo = item2;
+                        childTreeModel.DefaultIcon = "/DSJL;component/Assets/Images/file.png";
+                        childTreeModel.OpenedIcon = "/DSJL;component/Assets/Images/file.png";
+
+                        treeModel.Children.Add(childTreeModel);
+                    }
+                    rootModel.Children.Add(treeModel);
+                     
+                }
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    treeModelCollection.Add(rootModel);
+                    tree.ItemsSource = treeModelCollection;
+                }));
+            });
+            task.Start();
+        }
+
         private void imgDelete_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Model.StandInfoTreeDataModel selectedModel = tree.SelectedItem as Model.StandInfoTreeDataModel;
+            
+            
             if (selectedModel != null)
             {
+                if (selectedTreeItem?.StandInfo.Tag == -1)//import stand
+                {
+                    if (DSJL.Tools.MessageBoxTool.ShowAskMsgBox("确定删除导入的参考值吗？") == MessageBoxResult.Yes)
+                    {
+                        try
+                        {
+                            DSJL.Stand.StandConfig.DeleteStand(selectedModel.StandInfo);
+                            selectedModel.ParentModel.Children.Remove(selectedModel);
+                            selectedModel = null;
+                        }
+                        catch (Exception ee)
+                        {
+
+                            DSJL.Tools.MessageBoxTool.ShowConfirmMsgBox("删除参考值出错！\r\n"+ee.Message);
+                        }
+                       
+                    }
+                    return;
+                }
+
                 Model.TB_StandardInfo info = selectedModel.StandInfo;
                 if (info.Stand_Level != -1)
                 { //不是选择的全部
@@ -80,9 +165,9 @@ namespace DSJL.Compoments
                     {
                         if (standardBLL.Delete(info.ID))
                         {
-                            if (selectedModel.ParentModel != null) {
-                                selectedModel.ParentModel.RefrenshChildren();
-                            }
+                            selectedModel.ParentModel.Children.Remove(selectedModel);
+                            selectedModel = null;
+                       
                         }
                         else
                         {
@@ -95,6 +180,11 @@ namespace DSJL.Compoments
 
         private void imgEdit_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (SelectedItemIsImported())
+            {
+                return;
+            }
+
             Model.StandInfoTreeDataModel selectedModel = tree.SelectedItem as Model.StandInfoTreeDataModel;
             if (selectedModel != null)
             {
@@ -107,10 +197,6 @@ namespace DSJL.Compoments
                         editWindow1.isAdd = false;
                         editWindow1.StandardInfo = info;
                         editWindow1.ShowDialog();
-                        if (editWindow1.DialogResult == true)
-                        {
-                            selectedModel.RefrenshChildren();
-                        }
                         break;
                     case 2:
                         AddOrUpdateLevel2 editWindow2 = new AddOrUpdateLevel2();
@@ -118,10 +204,6 @@ namespace DSJL.Compoments
                         editWindow2.isAdd = false;
                         editWindow2.StandardInfo = info;
                         editWindow2.ShowDialog();
-                        if (editWindow2.DialogResult == true)
-                        {
-                            selectedModel.RefrenshChildren();
-                        }
                         break;
                 }
             }
@@ -130,6 +212,11 @@ namespace DSJL.Compoments
 
         private void imgAdd_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (SelectedItemIsImported())
+            {
+                return;
+            }
+
             Model.StandInfoTreeDataModel selectedModel = tree.SelectedItem as Model.StandInfoTreeDataModel;
             if (selectedModel != null)
             {
@@ -158,10 +245,37 @@ namespace DSJL.Compoments
             }
         }
 
+        private bool SelectedItemIsImported() {
+            bool result = false;
+            if (selectedTreeItem?.StandInfo.Tag==-1)
+            {
+                Tools.MessageBoxTool.ShowConfirmMsgBox("导入的测试参考值不可添加子参考值，编辑或删除！");
+                result = true;
+            }
+            return result;
+        }
+
         void editWindow_AddSuccessEvent(object sender, RoutedEventArgs e)
         {
-            selectedTreeItem.RefrenshChildren();
-            selectedTreeItem.IsExpanded = true;
+            List<Model.TB_StandardInfo> standInfoList = standardBLL.GetModelList(string.Format("stand_parentid={0}", selectedItem.Stand_Level == -1 ? 0 : selectedItem.ID));
+            if (standInfoList?.Count>0)
+            {
+                StandInfoTreeDataModel treeModel = new StandInfoTreeDataModel();
+                treeModel.ParentModel = selectedTreeItem;
+                treeModel.StandInfo = standInfoList.Last();
+                if (selectedItem.Stand_Level == -1)
+                {
+                    treeModel.DefaultIcon = "/DSJL;component/Assets/Images/folder.png";
+                    treeModel.OpenedIcon = "/DSJL;component/Assets/Images/folder_opened.png";
+                }
+                else if (selectedItem.Stand_Level == 1)
+                {
+                    treeModel.DefaultIcon = "/DSJL;component/Assets/Images/file.png";
+                    treeModel.OpenedIcon = "/DSJL;component/Assets/Images/file.png";
+                }
+                selectedTreeItem.Children.Add(treeModel);
+                selectedTreeItem.IsExpanded = true;
+            }
         }
 
         private void tree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

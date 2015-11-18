@@ -109,6 +109,7 @@ namespace DSJL.BLL
 				for (int n = 0; n < rowsCount; n++)
 				{
 					model = new DSJL.Model.TB_TestManager();
+                    model.Index = n + 1;
 					if(dt.Rows[n]["ID"].ToString()!="")
 					{
 						model.ID=int.Parse(dt.Rows[n]["ID"].ToString());

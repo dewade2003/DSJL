@@ -25,7 +25,7 @@ namespace DSJL.Modules
     /// <summary>
     /// PageStandard.xaml 的交互逻辑
     /// </summary>
-    public partial class PageStandard : Page
+    public partial class PageStandard : Page 
     {
         List<Model.TestInfoModel> testInfoModelList = new List<Model.TestInfoModel>();
         BLL.TB_TestInfo testInfoBLL = new BLL.TB_TestInfo();
@@ -41,14 +41,15 @@ namespace DSJL.Modules
             InitializeComponent();
             testInfoModelList = new List<Model.TestInfoModel>();
             refeBLL = new BLL.TB_StandTestRefe();
-        }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
             pageAvgCurve.Width = 800;
             pageAvgCurve.Height = 300;
             pageAvgCurve.HorizontalAlignment = HorizontalAlignment.Left;
             frame.Navigate(pageAvgCurve);
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
             ReferenshList();
         }
 
@@ -57,15 +58,29 @@ namespace DSJL.Modules
             testInfoModelList = new List<Model.TestInfoModel>();
             if (standManager.SelectedItem != null)
             {
-                if (standManager.SelectedItem.Stand_Level == 2)
+                if (standManager.SelectedItem.Tag==-1)
                 {
-                    testInfoModelList = refeBLL.GetStandTestInfoModelList(standManager.SelectedItem.ID);
+                    Model.TestInfoModel testInfoModel = Stand.StandConfig.GetTestInfoModel(standManager.SelectedItem.StandFileName);
+                    if (testInfoModel!=null)
+                    {
+                        testInfoModelList.Add(testInfoModel);
+                    }
+                    
                 }
+                else
+                {
+                    if (standManager.SelectedItem.Stand_Level == 2)
+                    {
+                        testInfoModelList = Caches.Util.AthTestInfoModelUtil.AthTestUtil(refeBLL.GetStandTestInfoModelList(standManager.SelectedItem.ID));
+                    }
+                }
+             
             }
-            Binding b = new Binding() { Source = testInfoModelList };
-            dgTestInfo.SetBinding(DataGrid.ItemsSourceProperty, b);
+            dgTestInfo.ItemsSource = testInfoModelList;
 
             pageAvgCurve.ModelList = testInfoModelList;
+            pageAvgCurve.CurrentStandardInfo = standManager.SelectedItem;
+            pageAvgCurve.UpdateChart();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -98,15 +113,30 @@ namespace DSJL.Modules
             ReferenshList();
             if (standManager.SelectedItem != null)
             {
-                if (standManager.SelectedItem.Stand_Level == 2)
+                if (standManager.SelectedItem.Tag==-1)
                 {
-                    btnAddData.IsEnabled = true;
-                
+                    btnAddData.IsEnabled = false;
+                    btnDelete.IsEnabled = false;
+                    btnExport.IsEnabled = false;
+                    btnExportData.IsEnabled = false;
+                    btnExportStand.IsEnabled = false;
                 }
                 else
                 {
-                    btnAddData.IsEnabled = false;
+                    btnDelete.IsEnabled = true;
+                    btnExport.IsEnabled = true;
+                    btnExportData.IsEnabled = true;
+                    btnExportStand.IsEnabled = true;
+                    if (standManager.SelectedItem.Stand_Level == 2)
+                    {
+                        btnAddData.IsEnabled = true;
+                    }
+                    else
+                    {
+                        btnAddData.IsEnabled = false;
+                    }
                 }
+              
             }
             else {
                 btnAddData.IsEnabled = false;
@@ -135,8 +165,11 @@ namespace DSJL.Modules
                     Model.TestInfoModel testModel = dgTestInfo.SelectedItem as Model.TestInfoModel;
                     testModel.IsChecked = true;
                 }
-
-                pageAvgCurve.ModelList = testInfoModelList;
+                if (standManager.SelectedItem.Tag!=-1)
+                {
+                    pageAvgCurve.RefrenshChart();
+                }
+            
             }
         }
 
@@ -221,7 +254,7 @@ namespace DSJL.Modules
                 }
 
                 string selectedPath = "";
-                if(!ShowFileDialog.ShowSaveFileDialog(out selectedPath,ShowFileDialog.pdfFilter,ShowFileDialog.pdfExt,"测验报告")){
+                if(!ShowFileDialogTool.ShowSaveFileDialog(out selectedPath,ShowFileDialogTool.pdfFilter,ShowFileDialogTool.pdfExt,"测验报告")){
                     return;
                 }else{
                     selectedPath=selectedPath.Substring(0,selectedPath.LastIndexOf("\\"));
@@ -340,6 +373,48 @@ namespace DSJL.Modules
             {
                 ReferenshList();
             }
+        }
+
+        private void btnExportStand_Click(object sender, RoutedEventArgs e)
+        {
+            ExportStandardWindow window = new ExportStandardWindow();
+            window.Owner = Application.Current.MainWindow;
+            if (standManager.SelectedItem?.Stand_Level!=-1)
+            {
+                if (standManager.SelectedItem.Stand_Level==1)
+                {
+                    window.selectStandInfo1 = standManager.SelectedItem;
+                }
+                else if (standManager.SelectedItem.Stand_Level==2)
+                {
+                    window.selectStandInfo2 = standManager.SelectedItem;
+                }
+            }
+            window.ShowDialog();
+        }
+
+        private void btnImportStand_Click(object sender, RoutedEventArgs e)
+        {
+            //DSJL.Tools.MessageBoxTool.ShowConfirmMsgBox("功能尚未开放！");
+            string[] fileNames = null;
+            bool openFileResult = DSJL.Tools.ShowFileDialogTool.ShowOpenFileDialog(out fileNames, DSJL.Tools.ShowFileDialogTool.dsfFilter, DSJL.Tools.ShowFileDialogTool.dsfExt);
+            if (openFileResult == false)
+            {
+                return;
+            }
+            foreach (var item in fileNames)
+            {
+                try
+                {
+                    DSJL.Stand.StandConfig.ImportStand(item);
+                }
+                catch (Exception ee)
+                {
+
+                    continue;
+                }
+            }
+            standManager.LoadStandInfo();
         }
     }
 }

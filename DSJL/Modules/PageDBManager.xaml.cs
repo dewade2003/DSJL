@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using ICSharpCode.SharpZipLib.Zip;
 using DSJL.Modules.DB;
 using System.Threading;
+using DSJL.Tools;
 
 namespace DSJL.Modules
 {
@@ -39,12 +40,13 @@ namespace DSJL.Modules
         {
             ReloadData();
         }
+
         //备份
         private void btnBackup_Click(object sender, RoutedEventArgs e)
         {
             if (txtBackupName.Text.Trim() == "")
             {
-                MessageBox.Show("备份名称不能为空，请重新输入！");
+                MessageBoxTool.ShowConfirmMsgBox("备份名称不能为空，请重新输入！");
                 return;
             }
             string fileName = txtBackupName.Text.Trim() + "-" + DateTime.Now.ToString("yyyyMMdd");
@@ -55,8 +57,8 @@ namespace DSJL.Modules
             ofd.FileName = fileName;
             ofd.OverwritePrompt = true;
             ofd.AddExtension = true;
-            ofd.Filter = "压缩文件(*.zip)|*.zip";
-            if (ofd.ShowDialog() == true)
+            ofd.Filter = "等速肌力数据库备份文件(*.zip)|*.zip";
+            if (ofd.ShowDialog()== true)
             {
                 string path = ofd.FileName;
                 try
@@ -73,12 +75,14 @@ namespace DSJL.Modules
                     backInfoBLL.Add(backInfo);
                     ReloadData();
                     txtBackupName.Text = "";
-                    MessageBox.Show("备份成功！");
+                  
+                    MessageBoxTool.ShowConfirmMsgBox("备份成功！");
 
                 }
                 catch (Exception ee)
                 {
-                    MessageBox.Show("备份出错，请稍候重试！\r\n" + ee.Message);
+                    MessageBoxTool.ShowErrorMsgBox("备份出错，请稍候重试！\r\n" + ee.Message);
+                 
                 }
             }
         }
@@ -92,7 +96,7 @@ namespace DSJL.Modules
         private void checkAll_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox cb = (CheckBox)sender;
-            if (cb.IsChecked == true)
+            if (cb.IsChecked                                                                     == true)
             {
                 foreach (Model.TB_BackupInfo bi in backupInfoCollection)
                 {
@@ -137,12 +141,12 @@ namespace DSJL.Modules
         private void btnRestore_Click(object sender, RoutedEventArgs e)
         {
 
-            if (MessageBox.Show("还原数据库会把现有的数据库删除，且不可恢复，确定要还原吗？", "系统信息", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBoxTool.ShowAskMsgBox("还原数据库会把现有的数据库删除，且不可恢复，确定要还原吗？") == MessageBoxResult.Yes)
             {
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.Title = "还原数据库";
                 ofd.Filter = "压缩文件(*.zip)|*.zip";
-                if (ofd.ShowDialog() == true)
+                if (ofd.ShowDialog()                                                             == true)
                 {
                     ExtractProgressWindow extractWindow = new ExtractProgressWindow();
                     extractWindow.BackupFile = ofd.FileName;
@@ -151,17 +155,17 @@ namespace DSJL.Modules
                    
                     ReloadData();
                     DSJL.Tools.DBUpgrade.Upgrade();
-                    MessageBox.Show("还原成功！");
+                    MessageBoxTool.ShowConfirmMsgBox("还原成功！");
                 }
             }
         }
         //删除记录
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var checkedItems = backupInfoCollection.Where(item => item.IsChecked == true);
+            var checkedItems = backupInfoCollection.Where(item => item.IsChecked                 == true);
             if (checkedItems.Count() > 0)
             {
-                if (MessageBox.Show("确定删除该备份记录吗？", "系统信息", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                if (MessageBox.Show("确定删除该备份记录吗？", "系统信息", MessageBoxButton.YesNo)               == MessageBoxResult.No)
                 {
                     return;
                 }
@@ -189,18 +193,32 @@ namespace DSJL.Modules
             }
         }
 
+        //合并
         private void btnMerge_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "选择数据库备份文件";
             ofd.Filter = "压缩文件(*.zip)|*.zip";
-            if (ofd.ShowDialog() == true)
+            if (ofd.ShowDialog()                                                                 == true)
             {
                 string archiveFileName = ofd.FileName;
                 MergeDB merge = new MergeDB();
                 merge.ArchiveFile = archiveFileName;
                 merge.Show();
             }
+        }
+
+        //部分备份
+        private void btnBackupProject_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtBackupName.Text.Trim() == "")
+            {
+                MessageBoxTool.ShowConfirmMsgBox("备份名称不能为空，请重新输入！");
+                return;
+            }
+            BackupProjectWindow backupProjectWindow = new BackupProjectWindow();
+            backupProjectWindow.BackupName = txtBackupName.Text.Trim();
+            backupProjectWindow.ShowDialog();
         }
     }
 }

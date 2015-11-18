@@ -23,7 +23,7 @@ namespace DSJL.Modules
     /// </summary>
     public partial class PageAthleteManager : Page
     {
-        List<Model.TB_AthleteInfo> athleteList=new List<Model.TB_AthleteInfo>();
+        List <Model.TB_AthleteInfo> athleteList=new List<Model.TB_AthleteInfo>();
         BLL.TB_AthleteInfo athleteBLL;
         BLL.TB_TestInfo testInfoBLL;
 
@@ -64,7 +64,7 @@ namespace DSJL.Modules
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //RefrenshAthleteList();
+            RefrenshAthleteList();
         }
 
         #region 右键菜单功能
@@ -148,12 +148,11 @@ namespace DSJL.Modules
             if (testManager.SelectedItem != null)
             {
                 athleteList = athleteBLL.GetModelList("ath_testid=" + testManager.SelectedItem.ID);
-                dgAthlete.SetBinding(DataGrid.ItemsSourceProperty, new Binding() { Source = athleteList });
             }
             else {
                 athleteList = new List<Model.TB_AthleteInfo>();
-                dgAthlete.SetBinding(DataGrid.ItemsSourceProperty, new Binding() { Source = athleteList });
             }
+            dgAthlete.ItemsSource = athleteList;
         }
 
         //添加人员信息
@@ -192,7 +191,7 @@ namespace DSJL.Modules
             }
             string fileName;
             string excelName = testManager.SelectedItem.TestName + "的受试者信息";
-            if (ShowFileDialog.ShowSaveFileDialog(out fileName,ShowFileDialog.excelFilter,ShowFileDialog.excelExt,excelName)) {
+            if (ShowFileDialogTool.ShowSaveFileDialog(out fileName,ShowFileDialogTool.excelFilter,ShowFileDialogTool.excelExt,excelName)) {
                 string tempFileName = AppDomain.CurrentDomain.BaseDirectory + "\\AppTemplate\\listofnames.xls";
                 string[,] contents=new string[selectedAthleteList.Count,15];
                 for (int i = 0; i < selectedAthleteList.Count; i++)

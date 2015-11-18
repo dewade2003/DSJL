@@ -14,9 +14,11 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
             <ProgressBar Name="pbCompression" Maximum="100" Height="30" VerticalAlignment="Bottom" Margin="10,5"/>
             <TextBlock Name="tbState" Grid.Row="1" Margin="10,5" VerticalAlignment="Top" FontSize="14"/>
+            <Button x:Name="btnCancle" Grid.Row="2" Content="取消" HorizontalAlignment="Right" Margin="0,0,10,0" Click="btnCancle_Click"/>
         </Grid>
     </Grid>
 </Window>

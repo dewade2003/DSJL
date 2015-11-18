@@ -236,14 +236,15 @@ namespace DSJL.DAL
 		#endregion  Method
 
         public DataSet GetStandTestInfo(int standID) {
-            string sql = "select ath.*,test.*,"
-                    + "(select dict_value from tb_dict where dict_groupid=3 and dict_key=test.joint_side) as djointside,"
-                    + "(select dict_value from tb_dict where dict_groupid=1 and dict_key=test.test_mode) as dtestmode,"
-                    + "(select dict_value from tb_dict where dict_groupid=2 and dict_key=test.joint) as djoint,"
-                    + "(select dict_value from tb_dict where dict_groupid=(select id from tb_dict where dict_groupid=2 and dict_key=test.joint) and dict_key=test.plane and instr(dict_groupid2,test.test_mode)>0) as dplane,"
-                    + "(select dict_value from tb_dict where dict_groupid=4 and dict_key=test.InsuredSide) as dInsuredSide,"
-                    + "(select dict_value from tb_dict where dict_groupid=5 and dict_key=test.Gravitycomp) as dGravitycomp "
-                    + "from tb_athleteinfo as ath inner join tb_testinfo as test on ath.id=test.ath_id where test.id in (select testid from tb_standtestrefe as refe where refe.standid=" + standID + ") ";
+            //string sql = "select ath.*,test.*,"
+            //        + "(select dict_value from tb_dict where dict_groupid=3 and dict_key=test.joint_side) as djointside,"
+            //        + "(select dict_value from tb_dict where dict_groupid=1 and dict_key=test.test_mode) as dtestmode,"
+            //        + "(select dict_value from tb_dict where dict_groupid=2 and dict_key=test.joint) as djoint,"
+            //        + "(select dict_value from tb_dict where dict_groupid=(select id from tb_dict where dict_groupid=2 and dict_key=test.joint) and dict_key=test.plane and instr(dict_groupid2,test.test_mode)>0) as dplane,"
+            //        + "(select dict_value from tb_dict where dict_groupid=4 and dict_key=test.InsuredSide) as dInsuredSide,"
+            //        + "(select dict_value from tb_dict where dict_groupid=5 and dict_key=test.Gravitycomp) as dGravitycomp "
+            //        + "from tb_athleteinfo as ath inner join tb_testinfo as test on ath.id=test.ath_id where test.id in (select testid from tb_standtestrefe as refe where refe.standid=" + standID + ") ";
+            string sql = "select ath.*,test.* from tb_athleteinfo as ath,tb_testinfo as test,tb_standtestrefe as refe where ath.id=test.ath_id and test.id=refe.testid and refe.standid="+standID;
             return DbHelperOleDb.Query(sql);
         }
 	}

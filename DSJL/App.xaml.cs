@@ -32,12 +32,23 @@ namespace DSJL
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            //string errStr = "";
+            string errStr = "";
             //if (!Dog.Dog.CheckDog(out errStr))
             //{
             //    MessageBox.Show("与加密狗通讯出错！\r\n错误信息：" + errStr, "系统信息");
             //    Application.Current.Shutdown();
+            //    return;
             //}
+
+            //////////测试代码
+            //DateTime dt1 = DateTime.Now;
+            //DateTime dt2 = new DateTime(2015, 11, 30);
+            //int result = DateTime.Compare(dt1, dt2);
+            //Console.WriteLine("result is:{0}",result);
+            /////////测试代码结束
+
+
+            Caches.Dict.DictCache.LoadDict();
 
             if (DSJL.Tools.DBUpgrade.Upgrade())
             {

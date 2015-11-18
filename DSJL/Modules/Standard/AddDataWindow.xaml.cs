@@ -141,32 +141,35 @@ namespace DSJL.Modules.Standard
             }
             StringBuilder caseStringBuilder = new StringBuilder();
             caseStringBuilder.Append("ath_id in(" + string.Join(",", athIDs.ToArray()) + ")");
-            if (!standParam.Joint.Equals("-1"))
+            if (standParam != null)
             {
-                caseStringBuilder.Append(" and joint='" + standParam.Joint+"'");
-            }
-            if (!standParam.Joint_Side.Equals("-1"))
-            {
-                caseStringBuilder.Append(" and joint_side='" + standParam.Joint_Side+"'");
-            }
-            if (!standParam.Plane.Equals("-1"))
-            {
-                caseStringBuilder.Append(" and plane='" + standParam.Plane+"'");
-            }
-            if (!standParam.Test_Mode.Equals("-1"))
-            {
-                caseStringBuilder.Append(" and test_mode='" + standParam.Test_Mode+"'");
-            }
-            if (standParam.Speed1 != "-1" && standParam.Speed2 != "-1")
-            {
-                caseStringBuilder.Append(" and CInt(speed1)>="+standParam.Speed1+" and CInt(speed2)<="+standParam.Speed2);
+                if (standParam?.Joint.Equals("-1") == false)
+                {
+                    caseStringBuilder.Append(" and joint='" + standParam.Joint + "'");
+                }
+                if (standParam?.Joint_Side.Equals("-1") == false)
+                {
+                    caseStringBuilder.Append(" and joint_side='" + standParam.Joint_Side + "'");
+                }
+                if (standParam?.Plane.Equals("-1") == false)
+                {
+                    caseStringBuilder.Append(" and plane='" + standParam.Plane + "'");
+                }
+                if (standParam?.Test_Mode.Equals("-1") == false)
+                {
+                    caseStringBuilder.Append(" and test_mode='" + standParam.Test_Mode + "'");
+                }
+                if (standParam?.Speed1 != "-1" && standParam?.Speed2 != "-1")
+                {
+                    caseStringBuilder.Append(" and CInt(speed1)>=" + standParam.Speed1 + " and CInt(speed2)<=" + standParam.Speed2);
+                }
             }
             List<Model.TB_TestInfo> testInfoList = testInfoBLL.GetModelList(caseStringBuilder.ToString());
             //List<Model.TB_TestInfo> willAddedTestInfoList = new List<Model.TB_TestInfo>();
             int count = 0;
             foreach (var item in testInfoList)
             {
-                if (!standTestRefeBLL.Exists(item.ID,StandInfo.ID))
+                if (!standTestRefeBLL.Exists(item.ID, StandInfo.ID))
                 {
                     Model.TB_StandTestRefe refe = new Model.TB_StandTestRefe();
                     refe.StandID = StandInfo.ID;
@@ -175,17 +178,17 @@ namespace DSJL.Modules.Standard
                     count++;
                 }
             }
-            if (count==0)
+            if (count == 0)
             {
                 MessageBox.Show("没有找到测试数据！", "系统信息", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else 
+            else
             {
                 DialogResult = true;
                 MessageBox.Show("添加了" + count + "条测试数据！", "系统信息", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
             }
-         
+
         }
 
         //全选

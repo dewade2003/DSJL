@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.IO;
-using DSJL.DBUtility;
-using System.Data;
 using DSJL.Modules.Test;
 using DSJL.Modules.Standard;
 using DSJL.Modules.Test.Export;
@@ -26,8 +23,6 @@ namespace DSJL.Modules
         BLL.TB_TestInfo testInfoBLL = new BLL.TB_TestInfo();
         List<Model.TestInfoModel> testInfoModelList=new List<Model.TestInfoModel>();
         BLL.TB_AthleteInfo athleteInfoBLL = new BLL.TB_AthleteInfo();
-
-        Dictionary<int, List<Model.TestInfoModel>> testInfoModelListDict = new Dictionary<int, List<Model.TestInfoModel>>();
 
         ContextMenu menu;//列表右键菜单
 
@@ -62,8 +57,12 @@ namespace DSJL.Modules
                 //    testInfoModelListDict.Remove(testManager.SelectedItem.ID);
                 //}
                 //testManager.RefrenshList();
-                TestInfoModelCache.Refrensh(testManager.SelectedItem.ID);
-                RefrenshDataGridSource();
+                if (testManager.SelectedItem!=null)
+                {
+                    TestInfoModelCache.Refrensh(testManager.SelectedItem.ID);
+                    RefrenshDataGridSource();
+                }
+          
             }
         }
 

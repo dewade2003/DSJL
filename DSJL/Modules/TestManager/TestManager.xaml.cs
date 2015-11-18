@@ -50,7 +50,7 @@ namespace DSJL.Compoments
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            RefrenshList();
+                RefrenshList();
         }
 
         public void RefrenshList()

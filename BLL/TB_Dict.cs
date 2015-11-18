@@ -120,7 +120,8 @@ namespace DSJL.BLL
 					{
 						model.Dict_GroupID=int.Parse(dt.Rows[n]["Dict_GroupID"].ToString());
 					}
-					model.Dict_Value=dt.Rows[n]["Dict_Value"].ToString();
+                    model.Dict_GroupID2= dt.Rows[n]["Dict_GroupID2"].ToString();
+                    model.Dict_Value=dt.Rows[n]["Dict_Value"].ToString();
 					model.Dict_Key=dt.Rows[n]["Dict_Key"].ToString();
 					model.actionone=dt.Rows[n]["actionone"].ToString();
 					model.actiontwo=dt.Rows[n]["actiontwo"].ToString();

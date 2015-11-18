@@ -64,8 +64,23 @@ namespace DSJL.Model
 			set{ _stand_parentid=value;}
 			get{return _stand_parentid;}
 		}
-		#endregion Model
+        #endregion Model
 
-	}
+        #region extend Model
+        public string StringID{
+            get;
+            set;
+        }
+
+        public string StandFileName {
+            get;
+            set;
+        }
+
+        public int Tag {
+            get;set;
+        }
+        #endregion
+    }
 }
 

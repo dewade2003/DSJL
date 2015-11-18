@@ -26,6 +26,13 @@ namespace DSJL.Modules.Standard
         List<Model.TestInfoModel> testInfoModelList;
 
         static Model.TB_StandardInfo selectStandInfo1, selectStandInfo2;
+        public List<Model.TestInfoModel> TestInfoModelList
+        {
+            set
+            {
+                testInfoModelList = value;
+            }
+        }
 
         public AddToStandardWindow()
         {
@@ -36,12 +43,7 @@ namespace DSJL.Modules.Standard
             standList = new List<Model.TB_StandardInfo>();
         }
 
-        public List<Model.TestInfoModel> TestInfoModelList
-        {
-            set {
-                testInfoModelList = value;
-            }
-        }
+     
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
